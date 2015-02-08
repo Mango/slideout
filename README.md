@@ -6,7 +6,7 @@
 
 [Check out the demo](https://mango.github.io/slideout/) to see it in action (on your mobile or emulate touches on your browser).
 
-<img src="https://cldup.com/miAzFnxjWM.gif" alt="Slideout demo">
+<img src="http://i.imgur.com/AWgwlVW.gif" alt="Slideout demo">
 
 ## Installation
 
