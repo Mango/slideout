@@ -4,9 +4,9 @@
 
 ## Demo
 
-[Check out the demo](https://mango.github.io/slideout/) to see it in action (on mobile or emulate touches on your browser).
+[Check out the demo](https://mango.github.io/slideout/) to see it in action (on your mobile or emulate touches on your browser).
 
-http://i.imgur.com/B3owSlI.gif
+![Slideout demo](http://i.imgur.com/B3owSlI.gif)
 
 ## Installation
 
