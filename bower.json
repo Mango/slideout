@@ -30,5 +30,5 @@
     "touch"
   ],
   "main": "dist/sildeout",
-  "license": "MIT",
+  "license": "MIT"
 }
