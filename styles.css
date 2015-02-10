@@ -1,0 +1,212 @@
+html,
+body {
+  font: 100%/1.4em "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  margin: 0 auto;
+  color: #333333;
+  -webkit-text-size-adjust: none;
+}
+
+/*
+ * Container
+ */
+.container {
+  padding: 0.625em;
+  margin: 0 0 .5em;
+}
+
+.container h1,
+.container h2,
+.container h3,
+.container h4,
+.container h5,
+.container h6 {
+  margin-top: 0;
+  margin-bottom:0;
+}
+
+/*
+ * Boxes
+ */
+.box {
+  border: 1px solid #DCDCDC;
+  background-color: #fff;
+}
+
+/*
+* List Menu
+*/
+.list-menu {
+  padding: 0;
+}
+
+.list-menu li {
+  border-bottom: 1px solid #3C3C3C;
+  position: relative;
+  list-style: none;
+  padding: 0;
+}
+
+.list-menu li:last-child {
+    border-bottom: none;
+}
+
+.list-menu li > a {
+  display: block;
+  padding: 14px 10px 12px 10px;
+  position: relative;
+  z-index: 1;
+  color: #777;
+  text-decoration: none;
+}
+
+.list-menu li:active {
+  background: #222;
+  color:#666;
+}
+
+/*
+ * List Gallery
+ */
+.gallery {
+  padding:0;
+  margin:0;
+}
+
+.gallery li {
+  border-bottom: 1px solid #DCDCDC;
+  position: relative;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  list-style: none;
+  padding: 0;
+}
+
+.gallery li:last-child {
+    border-bottom: none;
+}
+
+.gallery li > a {
+  display: block;
+  overflow: hidden;
+  padding: 0.625em 0;
+  text-decoration: none;
+}
+
+.gallery li > a:hover {
+  text-decoration: none;
+}
+
+.gallery li > a * {
+  color: #333333;
+}
+
+.gallery .gallery-icon:after {
+  content: "\f054";
+  line-height: 1em;
+  margin-top: -0.45em;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  font-size: 1em;
+}
+
+.gallery-img {
+  max-width: 100%;
+  padding-right: 0.625em;
+  float: left;
+  display: block;
+  width: 20%;
+}
+
+.gallery-text {
+  vertical-align: middle;
+}
+
+@media all and (min-width: 34em) {
+  .gallery {
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .gallery li {
+    display: block;
+    width: 50%;
+    float: left;
+    border: none;
+    padding: 0.5em;
+  }
+
+  .gallery li > a {
+    display: block;
+    padding: 0;
+  }
+
+  .gallery-img {
+    float: none;
+  }
+
+  .gallery-img,
+  .gallery-text,
+  .gallery li > a {
+    display: block;
+    width: auto;
+    padding: 0;
+  }
+
+  .gallery-text {
+    padding: 0.5em 0;
+  }
+}
+
+@media all and (min-width: 54em) {
+  .gallery li {
+    width: 33.33333333%;
+  }
+}
+.btn {
+  background-color: #fff;
+  border:1px solid #DCDCDC;
+  padding:6px 10px;
+  font-size:1.2em;
+}
+
+.inline-block {
+  display:inline-block;
+  margin: 0 5px;
+}
+
+.slideout-menu {
+  background-color: #333;
+  color: #777;
+}
+
+.slideout-panel {
+  background: linear-gradient(to bottom,#F3F3F3,#E8E8E8);
+  box-shadow: 0 0 20px 5px rgba(0,0,0,.1);
+  padding:10px;
+}
+
+.demo-footer {
+  margin: 30px auto 10px;
+  text-align: center;
+}
+
+.heart {
+  font-style: normal;
+  font-weight: 500;
+  color: #c0392b;
+  text-decoration: none;
+}
+
+#github-button {
+  display: block;
+  margin: 20px auto 0;
+  position: relative;
+  left: 40px;
+}
+
+.github-buttons {
+  text-align: center;
+  margin: 1em 0;
+}
