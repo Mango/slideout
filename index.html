@@ -17,7 +17,7 @@
   </head>
   <body>
 
-    <nav id="menu" class="slideout-menu">
+    <nav id="menu">
       <div class="container">
         <h2>Menu</h2>
       </div>
@@ -50,7 +50,7 @@
       </ul>
     </nav>
 
-    <main id="main" class="slideout-panel">
+    <main id="main">
       <header class="box container">
         <button class="btn js-slideout-toggle">☰</button>
         <h2 class="inline-block">Slideout</h2>
@@ -137,10 +137,11 @@
       </footer>
     </main>
 
-    <script src="slideout.min.js"></script>
+    <script src="dist/slideout.min.js"></script>
     <script>
       var slideout = new Slideout({
         'panel': document.getElementById('main'),
+        'menu': document.getElementById('menu'),
         'padding': 256,
         'tolerance': 70
       });
