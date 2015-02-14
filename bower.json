@@ -3,7 +3,7 @@
   "repository": "git@github.com:mango/sildeout.git",
   "description": "A slide-out navigation menu for your web apps.",
   "author": "Guille Paz <guille87paz@gmail.com>",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
     "decouple": "0.0.1"
   },
