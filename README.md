@@ -34,13 +34,13 @@
   </head>
   <body>
 
-    <nav id="menu" class="slideout-menu">
+    <nav id="menu">
       <header>
         <h2>Menu</h2>
       </header>
     </nav>
 
-    <main id="main" class="slideout-panel">
+    <main id="main">
       <header>
         <button class="btn js-slideout-toggle">☰</button>
         <h2>Panel</h2>
@@ -95,6 +95,7 @@ body {
 ```js
 var slideout = new Slideout({
   'panel': document.getElementById('main'),
+  'menu': document.getElementById('menu'),
   'padding': 256,
   'tolerance': 70
 });
@@ -107,12 +108,19 @@ Create a new instance of `Slideout`.
 
 - `options` (Object) - Options to customize a new instance of Slideout.
 - `options.panel` (HTMLElement) - The DOM element that contains all your application content (`.slideout-panel`).
+- `options.menu` (HTMLElement) - The DOM element that contains your menu application (`.slideout-menu`).
 - `[options.duration]` (Number) - The time (milliseconds) to open/close the slideout. Default: `300`.
 - `[options.fx]` (String) - The CSS effect to use when animating the opening and closing of the slideout. Default: `ease`.
 - `[options.padding]` (Number) - Default: `256`.
 - `[options.tolerance]` (Number) - Default: `70`.
 
 ```js
+var slideout = new Slideout({
+  'panel': document.getElementById('main'),
+  'menu': document.getElementById('menu'),
+  'padding': 256,
+  'tolerance': 70
+});
 ```
 
 ### Slideout.open();
