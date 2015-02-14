@@ -46,15 +46,21 @@ function Slideout(options) {
   this._opening = false;
   this._moved = false;
   this._opened = false;
+  this._preventOpen = false;
 
   // Sets panel
   this.panel = options.panel;
+  this.menu = options.menu;
+
+  // Sets  classnames
+  this.panel.className += ' slideout-panel';
+  this.menu.className += ' slideout-menu';
 
   // Sets options
   this._fx = options.fx || 'ease';
-  this._duration = options.duration || 300;
-  this._tolerance = options.tolerance || 70;
-  this._padding = options.padding || 256;
+  this._duration = parseInt(options.duration, 10) || 300;
+  this._tolerance = parseInt(options.tolerance, 10) || 70;
+  this._padding = parseInt(options.padding, 10) || 256;
 
   // Init touch events
   this._initTouchEvents();
@@ -70,7 +76,7 @@ Slideout.prototype.open = function() {
   this._opened = true;
   setTimeout(function() {
     self.panel.style.transition = '';
-  }, 350);
+  }, this._duration + 50);
   return this;
 };
 
@@ -79,12 +85,13 @@ Slideout.prototype.open = function() {
  */
 Slideout.prototype.close = function() {
   var self = this;
+  if (!this.isOpen() && !this._opening) { return this; }
   this._translateXTo(0);
   this._opened = false;
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = '';
-  }, 350);
+  }, this._duration + 50);
   return this;
 };
 
@@ -92,8 +99,7 @@ Slideout.prototype.close = function() {
  * Toggles (open/close) slideout menu.
  */
 Slideout.prototype.toggle = function() {
-  this.isOpen() ? this.close() : this.open();
-  return this;
+  return this.isOpen() ? this.close() : this.open();
 };
 
 /**
@@ -113,15 +119,6 @@ Slideout.prototype._translateXTo = function(translateX) {
 };
 
 /**
- *
- */
-Slideout.prototype._close = function(eve) {
-  eve.preventDefault();
-  eve.stopPropagation();
-  this.close();
-};
-
-/**
  * Initializes touch event
  */
 Slideout.prototype._initTouchEvents = function() {
@@ -130,7 +127,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Decouple scroll event
    */
-  decouple(doc, 'scroll', function(eve) {
+  decouple(doc, 'scroll', function() {
     if (!self._moved) {
       clearTimeout(scrollTimeout);
       scrolling = true;
@@ -156,6 +153,7 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
+    self._preventOpen = (!self.isOpen() && self.menu.clientWidth !== 0);
   });
 
   /**
@@ -164,7 +162,6 @@ Slideout.prototype._initTouchEvents = function() {
   this.panel.addEventListener('touchcancel', function() {
     self._moved = false;
     self._opening = false;
-    self._startOffsetX = eve.touches[0].pageX;
   });
 
   /**
@@ -172,11 +169,7 @@ Slideout.prototype._initTouchEvents = function() {
    */
   this.panel.addEventListener(touch.end, function() {
     if (self._moved) {
-      if (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) {
-        self.open();
-      } else {
-        self.close();
-      }
+      (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;
   });
@@ -185,23 +178,17 @@ Slideout.prototype._initTouchEvents = function() {
    * Translates panel on touchmove
    */
   this.panel.addEventListener(touch.move, function(eve) {
-
     if (scrolling) { return; }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
     var translateX = self._currentOffsetX = dif_x;
 
-    if (translateX > self._padding) {
-      return;
-    }
-
-    self._opening = true;
+    if (Math.abs(translateX) > self._padding) { return; }
 
     if (Math.abs(dif_x) > 20) {
+      self._opening = true;
 
-      if (self._opened && dif_x > 0 || !self._opened && dif_x < 0) {
-        return;
-      }
+      if (self._opened && dif_x > 0 || !self._opened && dif_x < 0) { return; }
 
       if (!self._moved && html.className.search('slideout-open') === -1) {
         html.className += ' slideout-open';
