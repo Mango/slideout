@@ -1,4 +1,4 @@
-# slideout
+# slideout [![Build Status](https://secure.travis-ci.org/mango/slideout.png)](http://travis-ci.org/mango/slideout) [![devDependency Status](https://david-dm.org/mango/slideout/dev-status.png)](https://david-dm.org/mango/slideout#info=devDependencies)
 
 > A touch slideout navigation menu for your web apps.
 
@@ -161,7 +161,7 @@ $ npm run dist
 ```
 
 ```
-$ npm test [TODO]
+$ npm test
 ```
 
 ## With ❤ by

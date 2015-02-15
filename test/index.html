@@ -1,0 +1,154 @@
+<!doctype html>
+<!--[if IEMobile 7 ]><html class="iem7"><![endif]-->
+<!--[if IE 8]><html class="ie8 lt-ie10"><![endif]-->
+<!--[if IE 9]><html class="ie9 lt-ie10"><![endif]-->
+<!--[if gt IE 9]><!--><html lang=""><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/1.13.0/mocha.min.css">
+    <link rel="stylesheet" href="http://necolas.github.io/normalize.css/3.0.2/normalize.css">
+    <link rel="stylesheet" href="http://mango.github.io/slideout/styles.css">
+    <link rel="stylesheet" href="../index.css">
+    <title>Slideout</title>
+  </head>
+  <body>
+
+    <nav id="menu">
+      <div class="container">
+        <h2>Menu</h2>
+      </div>
+
+      <ul class="list-menu">
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+      </ul>
+
+      <ul class="list-menu">
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+      </ul>
+
+      <ul class="list-menu">
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#" class="list-row list-icon">Lorem ipsum dolor sit amet</a></li>
+      </ul>
+    </nav>
+
+    <main id="main">
+      <header class="box container">
+        <button class="btn js-slideout-toggle">☰</button>
+        <h2 class="inline-block">Panel</h2>
+      </header>
+
+      <div class="container box">
+        <ul class="gallery">
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+          </a>
+          </li>
+
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+          </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="container box">
+        <ul class="gallery">
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+          </a>
+          </li>
+
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+          </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="container box">
+        <ul class="gallery">
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+          </a>
+          </li>
+
+          <li>
+            <a href="#">
+            <img class="gallery-img" src="http://bradfrost.github.com/this-is-responsive/patterns/images/fpo_square.png">
+            <h4>Title of Content</h4>
+          </a>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <div id="mocha"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/1.13.0/mocha.min.js"></script>
+    <script>
+      window.require = false;
+      mocha.setup('bdd');
+      function assert(expr, msg) {
+        if (!expr) throw new Error(msg || 'failed');
+      }
+    </script>
+    <script src="../dist/slideout.js"></script>
+    <script src="test.js"></script>
+    <script>
+      window.onload = function() {
+        var runner = mocha.run();
+      };
+    </script>
+  </body>
+</html>
