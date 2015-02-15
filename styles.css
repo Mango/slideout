@@ -6,186 +6,108 @@ body {
   -webkit-text-size-adjust: none;
 }
 
-/*
- * Container
- */
-.container {
-  padding: 0.625em;
-  margin: 0 0 .5em;
+.menu {
+  background-image: linear-gradient(145deg, #1D1F20, #404348);
 }
 
-.container h1,
-.container h2,
-.container h3,
-.container h4,
-.container h5,
-.container h6 {
-  margin-top: 0;
-  margin-bottom:0;
+.menu,
+.menu a {
+  color: #fff;
 }
 
-/*
- * Boxes
- */
-.box {
-  border: 1px solid #DCDCDC;
-  background-color: #fff;
-}
-
-/*
-* List Menu
-*/
-.list-menu {
-  padding: 0;
-}
-
-.list-menu li {
-  border-bottom: 1px solid #3C3C3C;
-  position: relative;
-  list-style: none;
-  padding: 0;
-}
-
-.list-menu li:last-child {
-    border-bottom: none;
-}
-
-.list-menu li > a {
-  display: block;
-  padding: 14px 10px 12px 10px;
-  position: relative;
-  z-index: 1;
-  color: #777;
+.menu a {
   text-decoration: none;
 }
 
-.list-menu li:active {
-  background: #222;
-  color:#666;
+.menu a:hover {
+  text-decoration: underline;
 }
 
-/*
- * List Gallery
- */
-.gallery {
-  padding:0;
+.menu-header {
+  border-bottom: 1px solid #2a2d2f;
+  padding: 20px 0 20px 60px;
+  background: url('github.png') no-repeat 15px 15px;
+  background-size: 32px;
+}
+
+.menu-header-title {
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.menu-section {
+  margin: 25px 0;
+}
+
+.menu-section-title {
+  text-transform: uppercase;
+  color: #85888d;
+  font-weight: 200;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 0 20px;
   margin:0;
 }
 
-.gallery li {
-  border-bottom: 1px solid #DCDCDC;
-  position: relative;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  list-style: none;
-  padding: 0;
+.menu-section-list {
+  padding:0;
+  margin: 10px 0;
+  list-style:none;
 }
 
-.gallery li:last-child {
-    border-bottom: none;
-}
-
-.gallery li > a {
+.menu-section-list a {
   display: block;
-  overflow: hidden;
-  padding: 0.625em 0;
+  padding: 10px 20px;
+}
+
+.menu-section-list a:hover {
+  background-color: #5ca743;
   text-decoration: none;
 }
 
-.gallery li > a:hover {
-  text-decoration: none;
+.menu-footer {
+  border-top: 1px solid #323438;
+  padding: 20px 0 20px 50px;
+  background: url('mango.png') no-repeat 15px 20px;
+  background-size: 24px;
+  opacity: .3;
 }
 
-.gallery li > a * {
-  color: #333333;
+.panel {
+  height: 800px;
 }
 
-.gallery .gallery-icon:after {
-  content: "\f054";
-  line-height: 1em;
-  margin-top: -0.45em;
+.panel-header {
+  padding: 15px 10px;
+  background-color: #f4f5f6;
+  border-bottom: 1px solid #e2e5e9;
+}
+
+.panel-header h1 {
+  display: inline-block;
+  margin: 0;
+  font-size: 1.5em;
+  line-height: 1.35em;
+  margin-left: 75px;
+}
+
+.btn-hamburger {
+  border: none;
+  background: transparent;
+  font-size: 2em;
+  color: #878787;
+  border-right: 1px solid #e2e5e9;
   position: absolute;
-  top: 50%;
-  right: 15px;
-  font-size: 1em;
+  top: 0;
+  left: 0;
+  padding: 20px;
 }
 
-.gallery-img {
-  max-width: 100%;
-  padding-right: 0.625em;
-  float: left;
-  display: block;
-  width: 20%;
+.panel-section {
+  padding: 10px 20px;
 }
 
-.gallery-text {
-  vertical-align: middle;
-}
-
-@media all and (min-width: 34em) {
-  .gallery {
-    margin: 0 auto;
-    overflow: hidden;
-  }
-
-  .gallery li {
-    display: block;
-    width: 50%;
-    float: left;
-    border: none;
-    padding: 0.5em;
-  }
-
-  .gallery li > a {
-    display: block;
-    padding: 0;
-  }
-
-  .gallery-img {
-    float: none;
-  }
-
-  .gallery-img,
-  .gallery-text,
-  .gallery li > a {
-    display: block;
-    width: auto;
-    padding: 0;
-  }
-
-  .gallery-text {
-    padding: 0.5em 0;
-  }
-}
-
-@media all and (min-width: 54em) {
-  .gallery li {
-    width: 33.33333333%;
-  }
-}
-.btn {
-  background-color: #fff;
-  border:1px solid #DCDCDC;
-  padding:6px 10px;
-  font-size:1.2em;
-}
-
-.inline-block {
-  display:inline-block;
-  margin: 0 5px;
-}
-
-.slideout-menu {
-  background-color: #333;
-  color: #777;
-}
-
-.slideout-panel {
-  background: linear-gradient(to bottom,#F3F3F3,#E8E8E8);
-  box-shadow: 0 0 20px 5px rgba(0,0,0,.1);
-  padding:10px;
-}
 
 .demo-footer {
   margin: 30px auto 10px;
