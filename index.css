@@ -20,7 +20,6 @@ body {
 .slideout-panel {
   position: relative;
   z-index: 1;
-  background: #fff;
 }
 
 .slideout-open,
