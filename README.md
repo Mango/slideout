@@ -1,12 +1,12 @@
 # slideout [![Build Status](https://secure.travis-ci.org/Mango/slideout.png)](http://travis-ci.org/Mango/slideout) [![devDependency Status](https://david-dm.org/Mango/slideout/dev-status.png)](https://david-dm.org/Mango/slideout#info=devDependencies)
 
-> A touch slideout navigation menu for your web apps.
+> A touch slideout navigation menu for your mobile web apps.
 
 ## Demo
 
 [Check out the demo](https://mango.github.io/slideout/) to see it in action (on your mobile or emulate touches on your browser).
 
-<img src="http://i.imgur.com/AWgwlVW.gif" alt="Slideout demo">
+<img src="http://i.imgur.com/AWgwlVW.gif" alt="Slideout.js demo">
 
 ## Installation
 
