@@ -178,7 +178,7 @@ Slideout.prototype._initTouchEvents = function() {
    * Translates panel on touchmove
    */
   this.panel.addEventListener(touch.move, function(eve) {
-    if (scrolling) { return; }
+    if (scrolling || self._preventOpen) { return; }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
     var translateX = self._currentOffsetX = dif_x;
