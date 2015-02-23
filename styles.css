@@ -81,6 +81,7 @@ a {
 .panel {
   text-align: center;
   padding-top: 50px;
+  min-height: 100%;
 }
 
 .title {
@@ -136,6 +137,7 @@ a {
   top: 0;
   left: 0;
   padding: 20px;
+  outline:none;
 }
 
 .btn-hamburger:after {
