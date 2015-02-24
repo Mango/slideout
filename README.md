@@ -12,7 +12,7 @@
 
     $ npm install slideout
 
-    $ bower install slideout
+    $ bower install https://github.com/Mango/slideout.git
 
     $ component install mango/slideout
 
