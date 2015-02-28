@@ -1,0 +1,347 @@
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+html,
+body {
+  font: 100%/1.4em 'Calibre Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  color: #222;
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+pre {
+  margin: 0;
+}
+
+body,
+.panel {
+  background-color: #fff;
+}
+
+.menu {
+  background-image: linear-gradient(145deg, #1D1F20, #404348);
+}
+
+a {
+  color: #4B5;
+  text-decoration: none;
+}
+
+.menu a {
+  color: #fff;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+.menu-header {
+  border-bottom: 1px solid #2a2d2f;
+  padding: 20px 0 20px 60px;
+  background: url('../assets/github.png') no-repeat 15px 15px;
+  background-size: 32px;
+}
+
+.menu-header-title {
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.menu-section {
+  margin: 25px 0;
+}
+
+.menu-section-title {
+  text-transform: uppercase;
+  color: #85888d;
+  font-weight: 200;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 0 20px;
+  margin:0;
+}
+
+.menu-section-list {
+  padding:0;
+  margin: 10px 0;
+  list-style:none;
+}
+
+.menu-section-list a {
+  display: block;
+  padding: 10px 20px;
+}
+
+.menu-section-list a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+.menu-footer {
+  border-top: 1px solid #323438;
+  padding: 20px 0 20px 50px;
+  background: url('../assets/mango.png') no-repeat 15px 20px;
+  background-size: 24px;
+  opacity: .3;
+}
+
+.panel {
+  text-align: center;
+  padding-top: 5px;
+  min-height: 100%;
+}
+
+/**
+ * Header
+ */
+.panel-header {
+  margin: 85px auto 55px;
+}
+
+.title {
+  font-size: 3.2em;
+  line-height: 1em;
+  margin: 0 0 15px;
+  color: #4B5;
+  font-weight: 400;
+  padding-top: 82px;
+  background: url('../assets/mango-logo.png') no-repeat center top;
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: 1.3em;
+  line-height: 1.2em;
+  margin:0 0 45px 0;
+  color: #767676;
+}
+
+/**
+ * Action buttons
+ */
+.panel-actions {
+  margin: 20px 0;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 0px 14px;
+  border-radius: 4px;
+  line-height: 50px;
+  display: inline-block;
+  border: 1px solid #4B5;
+  width: 35%;
+  font-size: 1.2em;
+}
+
+.btn-download {
+  margin-right: 5px;
+  background-color: #4B5;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-fork {
+  margin-left: 5px;
+  background-color: #fff;
+}
+
+/**
+ * iPhone
+ */
+.iphone {
+  background: url('../assets/iphone5.png') no-repeat;
+  position: relative;
+  margin: 0 auto;
+  width: 298px;
+  height: 597px;
+}
+
+.iphone video {
+  position: absolute;
+  top: 73px;
+  left: 25px;
+  height: 446px;
+  max-width: 100%;
+}
+
+/**
+ * hamburger
+ */
+.btn-hamburger {
+  border: none;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  outline:none;
+  background: url('../assets/menu.png') no-repeat left center;
+}
+
+.tooltip {
+  font-size: 20px;
+  line-height: 19px;
+  display: inline-block;
+  background: #4B5 url('../assets/happy.png') no-repeat 135px 15px;
+  color: #fff;
+  padding: 10px 45px 10px 20px;
+  border-radius: 4px;
+  position: relative;
+  left: 60px;
+}
+
+.tooltip:before {
+  content: '';
+  display:inline-block;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid #4B5;
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  margin-top: -6px;
+}
+
+/**
+ * Boxes
+ */
+.box {
+  border: 1px solid #4b5;
+  border-radius: 4px;
+  text-align: left;
+  margin: 50px auto;
+  width: 60%;
+  position: relative;
+}
+
+.box:before,
+.box:after {
+  content: ' ';
+  display: inline-block;
+  width: 1px;
+  height: 50px;
+  border-left: 1px solid #4b5;
+  position: absolute;
+  left: 50%;
+}
+
+.box:before {
+  top: -50px;
+}
+
+.box:after {
+  bottom: -50px;
+}
+
+.box-title {
+  margin: 0;
+  padding:10px 20px;
+  border-bottom: 1px solid #4b5;
+  color: #4b5;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+.box-content {
+  padding:20px;
+  background-color: #f8f8f8;
+}
+
+/**
+ * Medium Screens
+ */
+@media all and (min-width:40em) {
+
+  .btn-hamburger {
+    top: 20px;
+    left: 30px;
+  }
+
+  .panel-header {
+    margin-top: 15px;
+    width: 455px;
+  }
+
+  .title {
+    font-size: 4.2em;
+  }
+
+  .subtitle {
+    font-size: 1.8em;
+  }
+
+  .btn-download {
+    margin-right: 20px;
+  }
+
+  .btn-fork {
+    margin-left: 20px;
+  }
+}
+
+/**
+ * Large Screens
+ */
+@media all and (min-width: 54em) {}
+
+/**
+ * Footer
+ */
+.panel-footer {
+  margin: 10px auto 20px;
+}
+
+.heart {
+  font-style: normal;
+  font-weight: 500;
+  color: #c0392b;
+  text-decoration: none;
+}
+
+#github-button {
+  display: block;
+  margin: 20px auto 0;
+  width: 100px;
+  padding: 15px 20px 5px;
+}
+
+.github-buttons {
+  text-align: center;
+  margin: 1em 0;
+}
+
+/**
+ * Slideout module styles
+ */
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.slideout-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  width: 256px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  display: none;
+}
+
+.slideout-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.slideout-open,
+.slideout-open body {
+  overflow: hidden;
+}
+
+.slideout-open .slideout-menu {
+  display: block;
+}
