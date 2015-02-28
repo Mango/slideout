@@ -131,7 +131,11 @@ $ component install mango/slideout</pre>
         if (eve.target.nodeName === 'A') { slideout.close(); }
       });
 
-      window.onload = function() { aload(); }
+      window.onload = function() {
+        aload();
+        document.querySelector('.iphone').className += ' shown';
+        document.querySelector('.tooltip').className += ' shake';
+      }
     </script>
   </body>
 </html>

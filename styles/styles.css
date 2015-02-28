@@ -104,6 +104,7 @@ a {
   line-height: 1em;
   margin: 0 0 15px;
   color: #4B5;
+  /*fill: #4B5;*/
   font-weight: 400;
   padding-top: 82px;
   background: url('../assets/mango-logo.png') no-repeat center top;
@@ -209,8 +210,7 @@ a {
   border: 1px solid #4b5;
   border-radius: 4px;
   text-align: left;
-  margin: 50px auto;
-  width: 60%;
+  margin: 50px 10px;
   position: relative;
 }
 
@@ -258,7 +258,7 @@ a {
   }
 
   .panel-header {
-    margin-top: 15px;
+    margin-top: 40px;
     width: 455px;
   }
 
@@ -277,12 +277,29 @@ a {
   .btn-fork {
     margin-left: 20px;
   }
+
+  .iphone {
+    transition: transform 1s ease, top 1s ease;
+    transform: translateY(305px);
+    top: 305px;
+  }
+
+  .iphone.shown {
+    transform: translateY(0);
+    top: 0;
+  }
 }
 
 /**
  * Large Screens
  */
-@media all and (min-width: 54em) {}
+@media all and (min-width: 54em) {
+  .box {
+    width: 70%;
+    max-width: 1200px;
+    margin: 50px auto;
+  }
+}
 
 /**
  * Footer
@@ -301,7 +318,7 @@ a {
 #github-button {
   display: block;
   margin: 20px auto 0;
-  width: 100px;
+  width: 75px;
   padding: 15px 20px 5px;
 }
 
@@ -344,4 +361,39 @@ body {
 
 .slideout-open .slideout-menu {
   display: block;
+}
+
+/* Animation
+---------------------------------- */
+@-webkit-keyframes shake {
+  0%, 100% {
+    -webkit-transform:translate3d(0, 0, 0);
+    transform:translate3d(0, 0, 0);
+  }
+
+  50% {
+    -webkit-transform:translate3d(-10px, 0, 0);
+    transform:translate3d(-10px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    -webkit-transform:translate3d(0, 0, 0);
+    transform:translate3d(0, 0, 0);
+  }
+
+  50% {
+    -webkit-transform:translate3d(-10px, 0, 0);
+    transform:translate3d(-10px, 0, 0);
+  }
+}
+
+.shake {
+  -webkit-animation-name:shake;
+  animation-name:shake;
+  -webkit-animation-duration:2s;
+  animation-duration:2s;
+  -webkit-animation-iteration-count: 4;
+  animation-iteration-count: 4;
 }
