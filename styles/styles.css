@@ -78,14 +78,6 @@ a {
   text-decoration: none;
 }
 
-.menu-footer {
-  border-top: 1px solid #323438;
-  padding: 20px 0 20px 50px;
-  background: url('../assets/mango.png') no-repeat 15px 20px;
-  background-size: 24px;
-  opacity: .3;
-}
-
 .panel {
   text-align: center;
   padding-top: 5px;
@@ -104,7 +96,6 @@ a {
   line-height: 1em;
   margin: 0 0 15px;
   color: #4B5;
-  /*fill: #4B5;*/
   font-weight: 400;
   padding-top: 82px;
   background: url('../assets/mango-logo.png') no-repeat center top;
@@ -306,6 +297,10 @@ a {
  */
 .panel-footer {
   margin: 10px auto 20px;
+}
+
+.panel-footer p {
+  padding-bottom: 20px;
 }
 
 .heart {

@@ -11,7 +11,7 @@
     <meta name="MobileOptimized" content="320">
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
     <meta name="description" content="Slideout.js is a touch slideout navigation menu for your mobile web apps.">
     <meta name="keywords" content="slideout, offcanvas, javascript, menu, touch">
     <meta name="author" content="Mango">
@@ -25,7 +25,7 @@
   </head>
   <body>
 
-    <nav id="menu" class="menu">
+    <nav id="menu" class="menu slideout-menu">
       <a href="https://github.com/mango/slideout" target="_blank">
         <header class="menu-header">
           <span class="menu-header-title">View on Github</span>
@@ -58,13 +58,9 @@
           <li><a href="https://twitter.com/getmango" target="_blank">Follow Us</a></li>
         </ul>
       </section>
-
-      <footer class="menu-footer">
-        with <span class="heart">❤</span>
-      </footer>
     </nav>
 
-    <main id="main" class="panel">
+    <main id="main" class="panel slideout-panel">
 
       <header class="panel-header">
         <button class="btn-hamburger js-slideout-toggle">
@@ -79,7 +75,7 @@
       </header>
 
       <div class="panel-demo iphone">
-        <video src="assets/demo.mp4" poster="assets/poster.png" loop autoplay type="video/mp4"></video>
+        <video data-aload="assets/demo.mp4" poster="assets/poster.png" loop autoplay type="video/mp4"></video>
       </div>
 
       <section class="box">
@@ -94,14 +90,13 @@ $ component install mango/slideout</pre>
         </div>
       </section>
 
-      <section class="box">
+      <!-- <section class="box">
         <h2 class="box-title">Usage</h2>
         <div class="box-content">TODO</div>
-      </section>
+      </section> -->
 
       <footer class="panel-footer">
         <iframe  class="box" id="github-button" data-aload="https://ghbtns.com/github-btn.html?user=mango&amp;repo=slideout&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="152" height="30"></iframe>
-
         <p>with <span class="heart">❤</span> by <a href="https://getmango.com/" target="_blank">Mango</a></p>
       </footer>
     </main>
