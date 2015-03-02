@@ -79,7 +79,7 @@
       </header>
 
       <div class="panel-demo iphone">
-        <video data-aload="assets/demo.mp4" poster="assets/poster.png" loop autoplay></video>
+        <video src="assets/demo.mp4" poster="assets/poster.png" loop autoplay type="video/mp4"></video>
       </div>
 
       <section class="box">
@@ -116,11 +116,6 @@ $ component install mango/slideout</pre>
         'menu': document.getElementById('menu'),
         'padding': 256,
         'tolerance': 70
-      });
-
-      document.querySelector('.js-slideout-toggle').addEventListener('touchend', function(eve) {
-        eve.preventDefault();
-        slideout.toggle();
       });
 
       document.querySelector('.js-slideout-toggle').addEventListener('click', function() {
