@@ -1,12 +1,21 @@
-# slideout [![Build Status](https://secure.travis-ci.org/Mango/slideout.png)](http://travis-ci.org/Mango/slideout) [![devDependency Status](https://david-dm.org/Mango/slideout/dev-status.png)](https://david-dm.org/Mango/slideout#info=devDependencies)
+# Slideout.js [![Build Status](https://secure.travis-ci.org/Mango/slideout.png)](http://travis-ci.org/Mango/slideout) [![devDependency Status](https://david-dm.org/Mango/slideout/dev-status.png)](https://david-dm.org/Mango/slideout#info=devDependencies)
 
 > A touch slideout navigation menu for your mobile web apps.
+
+## Features
+
+- Dependecy-free (Zepto/jQuery).
+- Simple markup.
+- Native scrolling.
+- Easy customization.
+- CSS transforms & transitions.
+- Just 4 Kb!
 
 ## Demo
 
 [Check out the demo](https://mango.github.io/slideout/) to see it in action (on your mobile or emulate touches on your browser).
 
-<img src="http://i.imgur.com/AWgwlVW.gif" alt="Slideout.js demo">
+<img src="https://i.imgur.com/AWgwlVW.gif" alt="Slideout.js demo">
 
 ## Installation
 
@@ -18,42 +27,25 @@
 
 ## Usage
 
-### HTML
+Implementing Slideout.js into your project is easy.
+
+1. First of all, you'll need to create your markup. You should have a menu (`#menu`) and a main content (`#panel`) into your body.
+
 ```html
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="cleartype" content="on">
-    <meta name="MobileOptimized" content="320">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Slideout Demo</title>
-  </head>
-  <body>
+<nav id="menu">
+  <header>
+    <h2>Menu</h2>
+  </header>
+</nav>
 
-    <nav id="menu">
-      <header>
-        <h2>Menu</h2>
-      </header>
-    </nav>
-
-    <main id="main">
-      <header>
-        <button class="btn js-slideout-toggle">☰</button>
-        <h2>Panel</h2>
-      </header>
-    </main>
-
-    <script src="slideout.js"></script>
-  </body>
-</html>
+<main id="panel">
+  <header>
+    <h2>Panel</h2>
+  </header>
+</main>
 ```
 
-### CSS
-You should add the following CSS in your application.
+2. Add the Slideout.js styles (index.css) in your web application.
 
 ```css
 html,
@@ -76,9 +68,8 @@ body {
 }
 
 .slideout-panel {
-  position: relative;
+  position:relative;
   z-index: 1;
-  transform: translate3d(0, 0, 0);
 }
 
 .slideout-open,
@@ -91,14 +82,93 @@ body {
 }
 ```
 
-### JavaScript
-```js
-var slideout = new Slideout({
-  'panel': document.getElementById('main'),
-  'menu': document.getElementById('menu'),
-  'padding': 256,
-  'tolerance': 70
-});
+3. Then you just include Slideout.js and create a new instace with some options:
+
+```html
+<script src="dist/slideout.min.js"></script>
+<script>
+  var slideout = new Slideout({
+    'panel': document.getElementById('panel'),
+    'menu': document.getElementById('menu'),
+    'padding': 256,
+    'tolerance': 70
+  });
+</script>
+```
+
+#### Full example
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Slideout Demo</title>
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+
+      .slideout-menu {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 0;
+        width: 256px;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        display: none;
+      }
+
+      .slideout-panel {
+        position:relative;
+        z-index: 1;
+      }
+
+      .slideout-open,
+      .slideout-open body {
+        overflow: hidden;
+      }
+
+      .slideout-open .slideout-menu {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav id="menu">
+      <h2>Menu</h2>
+    </nav>
+
+    <main id="main">
+      <header>
+        <button>☰</button>
+        <h2>Panel</h2>
+      </header>
+    </main>
+
+    <script src="dist/slideout.min.js"></script>
+    <script>
+      var slideout = new Slideout({
+        'panel': document.getElementById('panel'),
+        'menu': document.getElementById('menu'),
+        'padding': 256,
+        'tolerance': 70
+      });
+    </script>
+
+  </body>
+</html>
 ```
 
 ## API
