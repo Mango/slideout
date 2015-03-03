@@ -114,8 +114,8 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
-  this.panel.style[prefix + 'transform'] = 'translate3d(' + translateX + 'px, 0, 0)';
+  this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx + ', transform ' + this._duration + 'ms ' + this._fx;
+  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
 };
 
 /**
@@ -178,6 +178,7 @@ Slideout.prototype._initTouchEvents = function() {
    * Translates panel on touchmove
    */
   this.panel.addEventListener(touch.move, function(eve) {
+
     if (scrolling || self._preventOpen) { return; }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
@@ -199,7 +200,7 @@ Slideout.prototype._initTouchEvents = function() {
         self._opening = false;
       }
 
-      self.panel.style[prefix + 'transform'] = 'translate3d(' + translateX + 'px, 0, 0)';
+      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
 
       self._moved = true;
     }
