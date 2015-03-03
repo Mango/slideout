@@ -78,7 +78,7 @@ describe('Slideout', function () {
 
     it('should translateX the panel to the given padding.', function () {
       assert(slideout.panel.style.transform === 'translate3d(256px, 0, 0)');
-      assert(slideout.panel.style.transition === 'transform 300ms ease');
+      assert(slideout.panel.style.transition.search(/transform 300ms ease/) !== -1);
     });
 
     it('should set _opened to true.', function () {
