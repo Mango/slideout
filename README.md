@@ -4,7 +4,7 @@
 
 ## Features
 
-- Dependecy-free (Zepto/jQuery).
+- Dependecy-free.
 - Simple markup.
 - Native scrolling.
 - Easy customization.
@@ -170,6 +170,13 @@ Then you just include Slideout.js and create a new instace with some options:
   </body>
 </html>
 ```
+
+## Browser Support
+
+- Chrome (IOS, Android, desktop)
+- Firefox (Android, desktop)
+- Safari (IOS, Android, desktop)
+- Opera (desktop)
 
 ## API
 
