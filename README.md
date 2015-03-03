@@ -150,7 +150,7 @@ Then you just include Slideout.js and create a new instace with some options:
       <h2>Menu</h2>
     </nav>
 
-    <main id="main">
+    <main id="panel">
       <header>
         <button>☰</button>
         <h2>Panel</h2>
