@@ -151,12 +151,17 @@ a {
   height: 597px;
 }
 
+.iphone img,
 .iphone video {
   position: absolute;
   top: 73px;
   left: 25px;
   height: 446px;
   max-width: 100%;
+}
+
+.iphone video {
+  display: none;
 }
 
 /**
@@ -291,6 +296,14 @@ a {
     max-width: 1200px;
     margin: 50px auto;
   }
+
+  .iphone video {
+    display: block;
+  }
+
+  .iphone img {
+    display: none;
+  }
 }
 
 /**
@@ -314,7 +327,7 @@ a {
 #github-button {
   display: block;
   margin: 20px auto 0;
-  width: 75px;
+  width: 90px;
   padding: 15px 20px 5px;
 }
 
@@ -332,6 +345,7 @@ body {
   height: 100%;
 }
 
+.menu,
 .slideout-menu {
   position: fixed;
   left: 0;
@@ -345,6 +359,7 @@ body {
   display: none;
 }
 
+.panel,
 .slideout-panel {
   position: relative;
   z-index: 1;
