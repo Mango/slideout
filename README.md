@@ -177,6 +177,7 @@ Then you just include Slideout.js and create a new instace with some options:
 - Firefox (Android, desktop)
 - Safari (IOS, Android, desktop)
 - Opera (desktop)
+- IE 10+ (desktop)
 
 ## API
 
