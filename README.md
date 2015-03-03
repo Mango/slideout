@@ -29,7 +29,7 @@
 
 Implementing Slideout.js into your project is easy.
 
-1. First of all, you'll need to create your markup. You should have a menu (`#menu`) and a main content (`#panel`) into your body.
+First of all, you'll need to create your markup. You should have a menu (`#menu`) and a main content (`#panel`) into your body.
 
 ```html
 <nav id="menu">
@@ -45,7 +45,7 @@ Implementing Slideout.js into your project is easy.
 </main>
 ```
 
-2. Add the Slideout.js styles (index.css) in your web application.
+Add the Slideout.js styles (index.css) in your web application.
 
 ```css
 html,
@@ -82,7 +82,7 @@ body {
 }
 ```
 
-3. Then you just include Slideout.js and create a new instace with some options:
+Then you just include Slideout.js and create a new instace with some options:
 
 ```html
 <script src="dist/slideout.min.js"></script>
