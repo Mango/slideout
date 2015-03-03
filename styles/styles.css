@@ -333,16 +333,17 @@ a {
   text-decoration: none;
 }
 
-#github-button {
+.share-buttons {
   display: block;
   margin: 20px auto 0;
-  width: 90px;
   padding: 15px 20px 5px;
+  width: 190px;
+  overflow: hidden;
 }
 
-.github-buttons {
-  text-align: center;
-  margin: 1em 0;
+#github-button {
+  float: left;
+  width: 90px;
 }
 
 /**
