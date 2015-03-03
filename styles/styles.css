@@ -135,9 +135,18 @@ a {
   font-weight: 600;
 }
 
+.btn-download:hover {
+  background-color: #3da84b;
+  border-color: #369643;
+}
+
 .btn-fork {
   margin-left: 5px;
   background-color: #fff;
+}
+
+.btn-fork:hover {
+  background-color: rgba(0,0,0,.02);
 }
 
 /**
