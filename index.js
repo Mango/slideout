@@ -72,10 +72,11 @@ function Slideout(options) {
 Slideout.prototype.open = function() {
   var self = this;
   if (html.className.search('slideout-open') === -1) { html.className += ' slideout-open'; }
+  this._setTransition();
   this._translateXTo(this._padding);
   this._opened = true;
   setTimeout(function() {
-    self.panel.style.transition = '';
+    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
   }, this._duration + 50);
   return this;
 };
@@ -86,11 +87,12 @@ Slideout.prototype.open = function() {
 Slideout.prototype.close = function() {
   var self = this;
   if (!this.isOpen() && !this._opening) { return this; }
+  this._setTransition();
   this._translateXTo(0);
   this._opened = false;
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
-    self.panel.style.transition = '';
+    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
   }, this._duration + 50);
   return this;
 };
@@ -114,8 +116,14 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx + ', transform ' + this._duration + 'ms ' + this._fx;
   this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+};
+
+/**
+ * Set transition properties
+ */
+Slideout.prototype._setTransition = function() {
+  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
 };
 
 /**
