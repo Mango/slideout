@@ -12,7 +12,7 @@
     "touch"
   ],
   "dependencies": {
-    "decouple": "0.0.1"
+    "pazguille/decouple": "0.0.1"
   },
   "development": {},
   "license": "MIT",
