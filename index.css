@@ -22,7 +22,6 @@ body {
   z-index: 1;
 }
 
-.slideout-open,
 .slideout-open body {
   overflow: hidden;
 }
