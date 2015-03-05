@@ -1,12 +1,15 @@
-var fs = require('fs');
-var jsdom = require('jsdom');
-var html = fs.readFileSync('./test/index.html', 'utf-8');
-window = jsdom.jsdom(html).parentWindow;
-var Slideout = require('../');
-var assert = require('better-assert');
+if (exports) {
+  var fs = require('fs');
+  var jsdom = require('jsdom');
+  var html = fs.readFileSync('./test/index.html', 'utf-8');
+  window = jsdom.jsdom(html).parentWindow;
+  var Slideout = require('../');
+  var assert = require('better-assert');
+}
+
 var doc = window.document;
 var slideout = new Slideout({
-  'panel': doc.getElementById('main'),
+  'panel': doc.getElementById('panel'),
   'menu': doc.getElementById('menu')
 });
 
@@ -77,7 +80,8 @@ describe('Slideout', function () {
     });
 
     it('should translateX the panel to the given padding.', function () {
-      assert(slideout.panel.style.transform === 'translate3d(256px, 0, 0)');
+      var translate3d = exports ? 'translate3d(256px, 0, 0)' : 'translate3d(256px, 0px, 0px)';
+      assert(slideout.panel.style.transform === translate3d);
       assert(slideout.panel.style.transition.search(/transform 300ms ease/) !== -1);
     });
 
@@ -104,7 +108,8 @@ describe('Slideout', function () {
     });
 
     it('should translateX the panel to 0.', function () {
-      assert(slideout.panel.style.transform === 'translate3d(0px, 0, 0)');
+      var translate3d = exports ? 'translate3d(0px, 0, 0)' : 'translate3d(0px, 0px, 0px)';
+      assert(slideout.panel.style.transform === translate3d);
       assert(slideout.panel.style.transition === '');
     });
 
