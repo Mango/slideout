@@ -138,7 +138,7 @@ Slideout.prototype.off = function(evt, callback) {
         for(var i=0; i < events[evt].length; i++) {
             if( callback == events[evt][i] ) {
                 events[evt].splice(i, 1);
-                this.off(evt, msg);
+                this.off(evt, callback);
                 break;
             }
         }
