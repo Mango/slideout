@@ -87,6 +87,7 @@ Slideout.prototype.open = function() {
   this._opened = true;
   setTimeout(function() {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    fireEvent('open');
   }, this._duration + 50);
   return this;
 };
@@ -103,6 +104,7 @@ Slideout.prototype.close = function() {
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    fireEvent('close');
   }, this._duration + 50);
   return this;
 };
