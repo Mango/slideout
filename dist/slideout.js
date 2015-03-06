@@ -34,6 +34,15 @@ var prefix = (function prefix() {
   if ('KhtmlOpacity' in styleDeclaration) { return '-khtml-'; }
   return '';
 }());
+var events = {
+    'open' : [],
+    'close' : []
+};
+var fireEvent = function(evt) {
+    for(var i=0; i < events[evt].length; i++) {
+        events[evt][i]();
+    }
+};
 
 /**
  * Slideout constructor
@@ -110,6 +119,28 @@ Slideout.prototype.toggle = function() {
  */
 Slideout.prototype.isOpen = function() {
   return this._opened;
+};
+
+/**
+ * Add an event listener
+ */
+Slideout.prototype.on = function(evt, callback) {
+    (events[evt] || []).push(callback);
+};
+
+/**
+ * Remove a previously added event handler
+ */
+Slideout.prototype.off = function(evt, callback) {
+    if( evt in events ) {
+        for(var i=0; i < events[evt].length; i++) {
+            if( callback == events[evt][i] ) {
+                events[evt].splice(i, 1);
+                this.off(evt, msg);
+                break;
+            }
+        }
+    }
 };
 
 /**
