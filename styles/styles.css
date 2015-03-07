@@ -338,13 +338,13 @@ a {
   display: block;
   margin: 20px auto 0;
   padding: 15px 20px 5px;
-  width: 190px;
+  width: 200px;
   overflow: hidden;
 }
 
 #github-button {
   float: left;
-  width: 90px;
+  width: 100px;
 }
 
 /**
