@@ -51,7 +51,6 @@ function Slideout(options) {
   // Sets panel
   this.panel = options.panel;
   this.menu = options.menu;
-  this.wrapper = options.panel.parentNode;
 
   // Sets  classnames
   this.panel.className += ' slideout-panel';
@@ -78,7 +77,6 @@ Slideout.prototype.open = function() {
   this._opened = true;
   setTimeout(function() {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
-    self.wrapper.style.overflow = 'hidden';
   }, this._duration + 50);
   return this;
 };
@@ -95,7 +93,6 @@ Slideout.prototype.close = function() {
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
-    self.wrapper.style.overflow = '';
   }, this._duration + 50);
   return this;
 };
