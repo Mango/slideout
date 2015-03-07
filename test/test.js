@@ -13,6 +13,12 @@ var slideout = new Slideout({
   'menu': doc.getElementById('menu')
 });
 
+var slideoutRight = new Slideout({
+  'panel': doc.getElementById('panel'),
+  'menu': doc.getElementById('menu-right'),
+  'position': 'right'
+});
+
 describe('Slideout', function () {
 
   it('should be defined.', function () {
@@ -85,6 +91,18 @@ describe('Slideout', function () {
       assert(slideout.panel.style.transition.search(/transform 300ms ease/) !== -1);
     });
 
+    it('should translateX the panel to a negative padding when using right position.', function () {
+      var translate3d = exports ? 'translate3d(-256px, 0, 0)' : 'translate3d(-256px, 0px, 0px)';
+      slideoutRight.open();
+      assert(slideoutRight.panel.style.transform === translate3d);
+      assert(slideoutRight.panel.style.transition.search(/transform 300ms ease/) !== -1);
+      slideoutRight.close();
+    });
+
+    it('should set the menu\'s visibility to visible.', function () {
+      assert(slideout.menu.style.visibility === 'visible');
+    });
+
     it('should set _opened to true.', function () {
       assert(slideout._opened === true);
     });
@@ -111,6 +129,10 @@ describe('Slideout', function () {
       var translate3d = exports ? 'translate3d(0px, 0, 0)' : 'translate3d(0px, 0px, 0px)';
       assert(slideout.panel.style.transform === translate3d);
       assert(slideout.panel.style.transition === '');
+    });
+
+    it('should set the menu\'s visibility to hidden.', function () {
+      assert(slideout.menu.style.visibility === 'hidden');
     });
 
     it('should set _opened to false.', function () {

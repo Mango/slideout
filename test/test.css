@@ -111,6 +111,11 @@ a {
   height: 50px;
 }
 
+.btn-hamburger.right {
+  left: auto;
+  right: 12px;
+}
+
 /**
  * Boxes
  */
@@ -163,6 +168,11 @@ a {
   .btn-hamburger {
     top: 20px;
     left: 30px;
+  }
+
+  .btn-hamburger.right {
+    left: auto;
+    right: 30px;
   }
 
   .panel-header {

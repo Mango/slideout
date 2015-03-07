@@ -58,9 +58,16 @@ function Slideout(options) {
 
   // Sets options
   this._fx = options.fx || 'ease';
+  this._position = options.position || 'left';
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = parseInt(options.padding, 10) || 256;
+
+  // Sets right-side panel classname
+  this.menu.className += (this._position === 'left') ? '' : ' slideout-menu-right';
+
+  // Hides the menu for first show
+  this._setVisibility(false);
 
   // Init touch events
   this._initTouchEvents();
@@ -71,9 +78,11 @@ function Slideout(options) {
  */
 Slideout.prototype.open = function() {
   var self = this;
+  var translateX = (this._position === 'left') ? this._padding : this._padding * -1;
   if (html.className.search('slideout-open') === -1) { html.className += ' slideout-open'; }
   this._setTransition();
-  this._translateXTo(this._padding);
+  this._setVisibility(true);
+  this._translateXTo(translateX);
   this._opened = true;
   setTimeout(function() {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
@@ -93,6 +102,7 @@ Slideout.prototype.close = function() {
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self._setVisibility(false);
   }, this._duration + 50);
   return this;
 };
@@ -120,10 +130,17 @@ Slideout.prototype._translateXTo = function(translateX) {
 };
 
 /**
- * Set transition properties
- */
+* Set transition properties
+*/
 Slideout.prototype._setTransition = function() {
   this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+};
+
+/**
+* Set menu visibility
+*/
+Slideout.prototype._setVisibility = function(visible) {
+  this.menu.style['visibility'] = (visible) ? 'visible' : 'hidden';
 };
 
 /**
