@@ -350,7 +350,6 @@ a {
 /**
  * Slideout module styles
  */
-html,
 body {
   width: 100%;
   height: 100%;
@@ -377,7 +376,8 @@ body {
 }
 
 .slideout-open,
-.slideout-open body {
+.slideout-open body,
+.slideout-open .slideout-panel {
   overflow: hidden;
 }
 
