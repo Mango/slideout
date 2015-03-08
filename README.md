@@ -21,6 +21,8 @@
 
     $ npm install slideout
 
+    $ spm install slideout
+
     $ bower install https://github.com/Mango/slideout.git
 
     $ component install mango/slideout
@@ -240,6 +242,10 @@ $ npm run dist
 
 ```
 $ npm test
+```
+
+```
+$ npm run hint
 ```
 
 ## With ❤ by

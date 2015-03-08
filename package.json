@@ -7,7 +7,8 @@
   "scripts": {
     "build": "node browserify.js",
     "test": "npm run build && node_modules/.bin/_mocha",
-    "dist": "node browserify.js && uglifyjs ./dist/slideout.js -m -o ./dist/slideout.min.js"
+    "dist": "node browserify.js && uglifyjs ./dist/slideout.js -m -o ./dist/slideout.min.js",
+    "hint": "jshint index.js"
   },
   "dependencies": {
     "decouple": "0.0.1"
@@ -15,9 +16,10 @@
   "devDependencies": {
     "better-assert": "1.0.1",
     "browserify": "7.0.3",
-    "jsdom": "^3.1.1",
+    "jsdom": "3.1.1",
     "mocha": "2.1.0",
-    "uglify-js": "2.4.15"
+    "uglify-js": "2.4.15",
+    "jshint": "2.6.3"
   },
   "main": "index.js",
   "keywords": [
@@ -26,5 +28,11 @@
     "menu",
     "touch"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "spm": {
+    "dependencies": {
+      "decouple": "0.0.1"
+    },
+    "main": "index.js"
+  }
 }

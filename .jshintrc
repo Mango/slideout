@@ -1,0 +1,22 @@
+{
+  "bitwise": false,
+  "curly": true,
+  "eqeqeq": true,
+  "expr": true,
+  "forin": true,
+  "freeze": true,
+  "funcscope": true,
+  "globalstrict": true,
+  "nonbsp": true,
+  "unused": true,
+  "debug": true,
+  "evil": true,
+  "lastsemic": true,
+  "loopfunc": true,
+  "proto": true,
+  "scripturl": true,
+  "strict": true,
+  "browser": true,
+  "browserify": true,
+  "node": true
+}
