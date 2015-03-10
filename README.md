@@ -50,7 +50,6 @@ First of all, you'll need to create your markup. You should have a menu (`#menu`
 Add the Slideout.js styles (index.css) in your web application.
 
 ```css
-html,
 body {
   width: 100%;
   height: 100%;
@@ -75,7 +74,8 @@ body {
 }
 
 .slideout-open,
-.slideout-open body {
+.slideout-open body,
+.slideout-open .slideout-panel {
   overflow: hidden;
 }
 
