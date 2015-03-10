@@ -17,6 +17,11 @@ body {
   display: none;
 }
 
+.slideout-menu-right {
+  left: auto;
+  z-index: 1;
+}
+
 .slideout-panel {
   position:relative;
   z-index: 1;

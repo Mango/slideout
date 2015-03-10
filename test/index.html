@@ -36,11 +36,30 @@
       </section>
     </nav>
 
+    <nav id="menu-right" class="menu">
+      <a href="https://github.com/mango/slideout" target="_blank">
+        <header class="menu-header">
+          <span class="menu-header-title">Tests</span>
+        </header>
+      </a>
+
+      <section class="menu-section">
+        <h3 class="menu-section-title">Docs</h3>
+        <ul class="menu-section-list">
+          <li><a href="https://github.com/mango/slideout#installation" target="_blank">Installation</a></li>
+          <li><a href="https://github.com/mango/slideout#usage" target="_blank">Usage</a></li>
+          <li><a href="https://github.com/mango/slideout#api" target="_blank">API</a></li>
+          <li><a href="https://github.com/mango/slideout#npm-scripts" target="_blank">npm-scripts</a></li>
+        </ul>
+      </section>
+    </nav>
+
     <main id="panel" class="panel">
 
       <header class="panel-header">
         <button class="btn-hamburger js-slideout-toggle"></button>
         <h1 class="title">Slideout.js</h1>
+        <button class="btn-hamburger right js-slideout-right-toggle"></button>
       </header>
 
       <section class="box">
@@ -69,7 +88,11 @@
           slideout.toggle();
         });
 
-        document.querySelector('.menu').addEventListener('click', function(eve) {
+        document.querySelector('.js-slideout-right-toggle').addEventListener('click', function() {
+          slideoutRight.toggle();
+        });
+
+        document.querySelector('.menu, .menu-right').addEventListener('click', function(eve) {
           if (eve.target.nodeName === 'A') { slideout.close(); }
         });
 
