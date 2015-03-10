@@ -4,7 +4,7 @@
 
 ## Features
 
-- Dependecy-free.
+- Dependency-free.
 - Simple markup.
 - Native scrolling.
 - Easy customization.
@@ -63,7 +63,7 @@ body {
   right: 0;
   z-index: 0;
   width: 256px;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   display: none;
 }
@@ -112,7 +112,6 @@ Then you just include Slideout.js and create a new instace with some options:
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <style>
-      html,
       body {
         width: 100%;
         height: 100%;
@@ -126,7 +125,7 @@ Then you just include Slideout.js and create a new instace with some options:
         right: 0;
         z-index: 0;
         width: 256px;
-        overflow-y: scroll;
+        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         display: none;
       }
@@ -137,7 +136,8 @@ Then you just include Slideout.js and create a new instace with some options:
       }
 
       .slideout-open,
-      .slideout-open body {
+      .slideout-open body,
+      .slideout-open .slideout-panel {
         overflow: hidden;
       }
 
