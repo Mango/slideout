@@ -1,4 +1,4 @@
-# Slideout.js [![Build Status](https://secure.travis-ci.org/Mango/slideout.png)](http://travis-ci.org/Mango/slideout) [![devDependency Status](https://david-dm.org/Mango/slideout/dev-status.png)](https://david-dm.org/Mango/slideout#info=devDependencies)
+# Slideout.js [![NPM version][npm-image]][npm-link] [![Build status][travis-image]][travis-link] [![devDependency status][devdeps-image]][devdeps-link]
 
 > A touch slideout navigation menu for your mobile web apps.
 
@@ -256,3 +256,10 @@ $ npm run hint
 
 ## License
 MIT license. Copyright © 2015 [Mango](http://getmango.com).
+
+[npm-image]: https://img.shields.io/npm/v/slideout.svg?style=flat
+[npm-link]: https://npmjs.org/package/slideout
+[travis-image]: https://img.shields.io/travis/Mango/slideout.svg?style=flat
+[travis-link]: https://travis-ci.org/Mango/slideout
+[devdeps-image]: https://img.shields.io/david/dev/mango/slideout.svg?style=flat
+[devdeps-link]: https://david-dm.org/mango/slideout#info=peerDependencies
