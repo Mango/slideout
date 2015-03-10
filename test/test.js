@@ -73,6 +73,15 @@ describe('Slideout', function () {
   });
 
   describe('.open()', function () {
+    var checkBefore = false;
+    var checkAfter = false;
+    doc.addEventListener('slideoutBeforeOpen',function() {
+      checkBefore = checkBefore || true;
+    });
+    doc.addEventListener('slideoutAfterOpen',function() {
+      checkAfter = checkAfter || true;
+    });
+        
     it('should add "slideout-open" classname to HTML.', function () {
       assert(doc.documentElement.className.search('slideout-open') === -1);
       slideout.open();
@@ -82,11 +91,16 @@ describe('Slideout', function () {
     it('should translateX the panel to the given padding.', function () {
       var translate3d = exports ? 'translate3d(256px, 0, 0)' : 'translate3d(256px, 0px, 0px)';
       assert(slideout.panel.style.transform === translate3d);
-      assert(slideout.panel.style.transition.search(/transform 300ms ease/) !== -1);
+      assert(slideout.panel.style.transition.search(/transform 300ms/) !== -1);
     });
 
     it('should set _opened to true.', function () {
       assert(slideout._opened === true);
+    });
+    
+    it('should emit the slideoutBeforeOpen and slideoutAfterOpen event', function() {
+      assert(checkBefore);
+      assert(checkAfter);
     });
   });
 
@@ -97,6 +111,14 @@ describe('Slideout', function () {
   });
 
   describe('.close()', function () {
+    var checkBefore = false;
+    var checkAfter = false;
+    doc.addEventListener('slideoutBeforeClose',function() {
+      checkBefore = checkBefore || true;
+    });
+    doc.addEventListener('slideoutAfterClose',function() {
+      checkAfter = checkAfter || true;
+    });
     it('should remove "slideout-open" classname to HTML.', function (done) {
       assert(doc.documentElement.className.search('slideout-open') !== -1);
       slideout.close();
@@ -115,6 +137,11 @@ describe('Slideout', function () {
 
     it('should set _opened to false.', function () {
       assert(slideout._opened === false);
+    });
+    
+    it('should emit the slideoutBeforeClose and slideoutAfterClose event', function() {
+      assert(checkBefore);
+      assert(checkAfter);
     });
   });
 
