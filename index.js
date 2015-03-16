@@ -61,6 +61,7 @@ function Slideout(options) {
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = parseInt(options.padding, 10) || 256;
+  this._fromedge = options.fromedge || typeof options.fromedge == 'undefined';
 
   // Init touch events
   this._initTouchEvents();
@@ -158,9 +159,11 @@ Slideout.prototype._initTouchEvents = function() {
    * Resets values on touchstart
    */
   this.panel.addEventListener(touch.start, function(eve) {
+    var off_x = eve.touches[0].pageX;
+    if(self._fromedge && !self.isOpen() && off_x > screen.width/3){ self._preventOpen = true; return; }
     self._moved = false;
     self._opening = false;
-    self._startOffsetX = eve.touches[0].pageX;
+    self._startOffsetX = off_x;
     self._preventOpen = (!self.isOpen() && self.menu.clientWidth !== 0);
   });
 
