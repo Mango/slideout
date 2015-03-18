@@ -93,7 +93,8 @@ Then you just include Slideout.js and create a new instance with some options:
     'panel': document.getElementById('panel'),
     'menu': document.getElementById('menu'),
     'padding': 256,
-    'tolerance': 70
+    'tolerance': 70,
+    'fromedge': true
   });
 </script>
 ```
@@ -165,7 +166,8 @@ Then you just include Slideout.js and create a new instance with some options:
         'panel': document.getElementById('panel'),
         'menu': document.getElementById('menu'),
         'padding': 256,
-        'tolerance': 70
+        'tolerance': 70,
+        'fromedge': true
       });
     </script>
 
@@ -193,13 +195,15 @@ Create a new instance of `Slideout`.
 - `[options.fx]` (String) - The CSS effect to use when animating the opening and closing of the slideout. Default: `ease`.
 - `[options.padding]` (Number) - Default: `256`.
 - `[options.tolerance]` (Number) - Default: `70`.
+- `[options.fromedge]` (Boolean) - Slide the panel only if the touch started on the left 33% of the screen. Default: `true`.
 
 ```js
 var slideout = new Slideout({
   'panel': document.getElementById('main'),
   'menu': document.getElementById('menu'),
   'padding': 256,
-  'tolerance': 70
+  'tolerance': 70,
+  'fromedge': true
 });
 ```
 
