@@ -149,7 +149,7 @@ Slideout.prototype._initTouchEvents = function() {
    * Prevents touchmove event if slideout is moving
    */
   doc.addEventListener(touch.move, function(eve) {
-    if (self._moved) {
+    if (self._moved || self._opened) {
       eve.preventDefault();
     }
   });
