@@ -61,6 +61,7 @@ function Slideout(options) {
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = parseInt(options.padding, 10) || 256;
+  this._disableEvents = options.disableEvents || false;
 
   // Init touch events
   this._initTouchEvents();
@@ -131,6 +132,8 @@ Slideout.prototype._setTransition = function() {
  */
 Slideout.prototype._initTouchEvents = function() {
   var self = this;
+
+  if(this._disableEvents) { return; }
 
   /**
    * Decouple scroll event
