@@ -193,6 +193,7 @@ Create a new instance of `Slideout`.
 - `[options.fx]` (String) - The CSS effect to use when animating the opening and closing of the slideout. Default: `ease`.
 - `[options.padding]` (Number) - Default: `256`.
 - `[options.tolerance]` (Number) - Default: `70`.
+- `[options.disableEvents]` (Boolean) - Default: `false`.
 
 ```js
 var slideout = new Slideout({
