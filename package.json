@@ -11,7 +11,8 @@
     "hint": "jshint index.js"
   },
   "dependencies": {
-    "decouple": "0.0.1"
+    "decouple": "0.0.1",
+    "component-emitter": "1.2.0"
   },
   "devDependencies": {
     "better-assert": "1.0.1",

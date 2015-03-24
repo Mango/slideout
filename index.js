@@ -4,6 +4,7 @@
  * Module dependencies
  */
 var decouple = require('decouple');
+var Emitter = require('component-emitter');
 
 /**
  * Privates
@@ -33,6 +34,17 @@ var prefix = (function prefix() {
   if ('KhtmlOpacity' in styleDeclaration) { return '-khtml-'; }
   return '';
 }());
+function extend(destination, from) {
+  for (var prop in from) {
+    if (from[prop]) {
+      destination[prop] = from[prop];
+    }
+  }
+  return destination;
+}
+function inherits(child, uber) {
+  child.prototype = extend(child.prototype || {}, uber.prototype);
+}
 
 /**
  * Slideout constructor
@@ -67,16 +79,23 @@ function Slideout(options) {
 }
 
 /**
+ * Inherits from Emitter
+ */
+inherits(Slideout, Emitter);
+
+/**
  * Opens the slideout menu.
  */
 Slideout.prototype.open = function() {
   var self = this;
+  this.emit('beforeopen');
   if (html.className.search('slideout-open') === -1) { html.className += ' slideout-open'; }
   this._setTransition();
   this._translateXTo(this._padding);
   this._opened = true;
   setTimeout(function() {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.emit('open');
   }, this._duration + 50);
   return this;
 };
@@ -87,12 +106,14 @@ Slideout.prototype.open = function() {
 Slideout.prototype.close = function() {
   var self = this;
   if (!this.isOpen() && !this._opening) { return this; }
+  this.emit('beforeclose');
   this._setTransition();
   this._translateXTo(0);
   this._opened = false;
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.emit('close');
   }, this._duration + 50);
   return this;
 };
@@ -209,7 +230,7 @@ Slideout.prototype._initTouchEvents = function() {
       }
 
       self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
-
+      self.emit('translate', translateX);
       self._moved = true;
     }
 

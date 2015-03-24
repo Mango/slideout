@@ -28,7 +28,19 @@ describe('Slideout', function () {
   });
 
   describe('should have the following methods:', function () {
-    var methods = ['open', 'close', 'toggle', 'isOpen', '_initTouchEvents', '_translateXTo', '_setTransition'];
+    var methods = [
+      'open',
+      'close',
+      'toggle',
+      'isOpen',
+      '_initTouchEvents',
+      '_translateXTo',
+      '_setTransition',
+      'on',
+      'once',
+      'off',
+      'emit'
+    ];
     var i = 0;
     var len = methods.length;
     for (i; i < len; i += 1) {
