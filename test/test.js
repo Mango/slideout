@@ -8,10 +8,28 @@ if (exports) {
 }
 
 var doc = window.document;
+var beforeopenEvent = false;
+var openEvent = false;
+var beforecloseEvent = false;
+var closeEvent = false;
 var slideout = new Slideout({
   'panel': doc.getElementById('panel'),
   'menu': doc.getElementById('menu')
 });
+
+slideout
+  .on('beforeopen', function() {
+    beforeopenEvent = true;
+  })
+  .on('open', function() {
+    openEvent = true;
+  })
+  .on('beforeclose', function() {
+    beforecloseEvent = true;
+  })
+  .on('close', function() {
+    closeEvent = true;
+  });
 
 describe('Slideout', function () {
 
@@ -100,6 +118,18 @@ describe('Slideout', function () {
     it('should set _opened to true.', function () {
       assert(slideout._opened === true);
     });
+
+    it('should emit "beforeopen" event.', function () {
+      assert(beforeopenEvent === true);
+    });
+
+    it('should emit "open" event.', function (done) {
+      setTimeout(function(){
+        assert(openEvent === true);
+        done();
+      }, 400);
+
+    });
   });
 
   describe('.isOpen()', function () {
@@ -127,6 +157,14 @@ describe('Slideout', function () {
 
     it('should set _opened to false.', function () {
       assert(slideout._opened === false);
+    });
+
+    it('should emit "beforeclose" event.', function () {
+      assert(beforecloseEvent === true);
+    });
+
+    it('should emit "close" event.', function () {
+      assert(closeEvent === true);
     });
   });
 
