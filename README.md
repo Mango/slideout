@@ -204,14 +204,14 @@ var slideout = new Slideout({
 ```
 
 ### Slideout.open();
-Opens the slideout menu. It emits `beforeopen`, `open` and `translate` events.
+Opens the slideout menu. It emits `beforeopen` and `open` events.
 
 ```js
 slideout.open();
 ```
 
 ### Slideout.close();
-Closes the slideout menu. It emits `beforeclose`, `close` and `translate` events.
+Closes the slideout menu. It emits `beforeclose` and `close` events.
 
 ```js
 slideout.close();
