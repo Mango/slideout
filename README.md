@@ -238,7 +238,7 @@ changing state.
 ```js
 slideout.change(function () {
   alert('open? ' + slideout.isOpen());
-}); // alerts the user after the state of the slideout has finished changed.
+}); // alerts the user after a state change.
 ```
 
 ## npm-scripts
