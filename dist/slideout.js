@@ -65,7 +65,27 @@ function Slideout(options) {
 
   // Init touch events
   this._initTouchEvents();
+
+  // Init the change callbacks
+  this._callbacks = [];
 }
+
+/**
+ * Runs the callbacks associated with the slideout
+ */
+Slideout.prototype._runCallbacks = function () {
+  for(var i = 0; i < this._callbacks.length; ++i) {
+    this._callbacks[i]();
+  }
+};
+
+/**
+ * Stores callback functions that are called after the slideout
+ * finishes changing state
+ */
+Slideout.prototype.change = function (callback) {
+  this._callbacks[this._callbacks.length] = callback;
+};
 
 /**
  * Opens the slideout menu.
@@ -78,6 +98,7 @@ Slideout.prototype.open = function() {
   this._opened = true;
   setTimeout(function() {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self._runCallbacks();
   }, this._duration + 50);
   return this;
 };
@@ -94,6 +115,7 @@ Slideout.prototype.close = function() {
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self._runCallbacks();
   }, this._duration + 50);
   return this;
 };
