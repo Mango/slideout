@@ -231,6 +231,16 @@ Returns `true` if the slideout is currently open, and `false` if it is closed.
 slideout.isOpen(); // true or false
 ```
 
+### Slideout.change(callback);
+Adds `callback` to the list of functions to be called after the slideout finishes
+changing state.
+
+```js
+slideout.change(function () {
+  alert('open? ' + slideout.isOpen());
+}); // alerts the user after a state change.
+```
+
 ## npm-scripts
 ```
 $ npm run build
