@@ -74,10 +74,12 @@ function Slideout(options) {
  */
 Slideout.prototype.open = function() {
   var self = this;
+  doc.dispatchEvent(this._createEvent('slideoutBeforeOpen'));
   if (html.className.search('slideout-open') === -1) { html.className += ' slideout-open'; }
   this._setTransition();
   this._translateXTo(this._padding);
   this._opened = true;
+  doc.dispatchEvent(this._createEvent('slideoutAfterOpen'));
   setTimeout(function() {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
   }, this._duration + 50);
@@ -89,10 +91,12 @@ Slideout.prototype.open = function() {
  */
 Slideout.prototype.close = function() {
   var self = this;
+  doc.dispatchEvent(this._createEvent('slideoutBeforeClose'));
   if (!this.isOpen() && !this._opening) { return this; }
   this._setTransition();
   this._translateXTo(0);
   this._opened = false;
+  doc.dispatchEvent(this._createEvent('slideoutAfterClose'));
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
@@ -163,6 +167,7 @@ Slideout.prototype._initTouchEvents = function() {
   this.panel.addEventListener(touch.start, function(eve) {
     self._moved = false;
     self._opening = false;
+    if (typeof(eve.touches) === 'undefined') { return; }
     self._startOffsetX = eve.touches[0].pageX;
     self._preventOpen = (!self.isOpen() && self.menu.clientWidth !== 0);
   });
@@ -190,7 +195,7 @@ Slideout.prototype._initTouchEvents = function() {
    */
   this.panel.addEventListener(touch.move, function(eve) {
 
-    if (scrolling || self._preventOpen) { return; }
+    if (scrolling || self._preventOpen || typeof(eve.touches) === 'undefined') { return; }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
     var translateX = self._currentOffsetX = dif_x;
@@ -218,6 +223,15 @@ Slideout.prototype._initTouchEvents = function() {
 
   });
 
+};
+
+/**
+ * Creates and returns a CustomEvent with the given name
+ */
+Slideout.prototype._createEvent = function(name) {
+  var v = window.document.createEvent('CustomEvent');
+  v.initEvent(name, true,true );
+  return v;
 };
 
 /**
