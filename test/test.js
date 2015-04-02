@@ -83,7 +83,8 @@ describe('Slideout', function () {
       '_fx',
       '_duration',
       '_tolerance',
-      '_padding'
+      '_padding',
+      '_touch'
     ];
     var i = 0;
     var len = properties.length;
