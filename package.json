@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "decouple": "0.0.1",
-    "component-emitter": "1.2.0"
+    "emitter": "git+https://github.com/mango/emitter.git#0.0.1"
   },
   "devDependencies": {
     "better-assert": "1.0.1",
@@ -20,7 +20,8 @@
     "jsdom": "3.1.1",
     "mocha": "2.1.0",
     "uglify-js": "2.4.15",
-    "jshint": "2.6.3"
+    "jshint": "2.6.3",
+    "babelify": "5.0.4"
   },
   "main": "index.js",
   "keywords": [
