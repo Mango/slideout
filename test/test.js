@@ -3,7 +3,7 @@ if (exports) {
   var jsdom = require('jsdom');
   var html = fs.readFileSync('./test/index.html', 'utf-8');
   window = jsdom.jsdom(html).parentWindow;
-  var Slideout = require('../');
+  var Slideout = require('../dist/slideout.js');
   var assert = require('better-assert');
 }
 
