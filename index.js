@@ -61,6 +61,9 @@ function Slideout(options) {
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = parseInt(options.padding, 10) || 256;
+  this._disableEvents = options.disableEvents || false;
+  this._fromedge = options.fromedge || typeof options.fromedge === 'undefined';
+  this._innerMenuElementSelector = options.innerMenuElementSelector || '';
 
   // Init touch events
   this._initTouchEvents();
@@ -94,6 +97,7 @@ Slideout.prototype.close = function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
   }, this._duration + 50);
+  self.panel.style[prefix + 'transform'] = self.panel.style.transform = self.panel.style[prefix + 'transform'].replace(self.transformStyle, '');
   return this;
 };
 
@@ -117,6 +121,7 @@ Slideout.prototype.isOpen = function() {
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
   this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+  this.transformStyle = this.panel.style.transform;
 };
 
 /**
@@ -132,6 +137,7 @@ Slideout.prototype._setTransition = function() {
 Slideout.prototype._initTouchEvents = function() {
   var self = this;
 
+  if(this._disableEvents) { return; }
   /**
    * Decouple scroll event
    */
@@ -149,7 +155,7 @@ Slideout.prototype._initTouchEvents = function() {
    * Prevents touchmove event if slideout is moving
    */
   doc.addEventListener(touch.move, function(eve) {
-    if (self._moved) {
+    if (self._moved || self._opened || html.className.search('slideout-open') > -1) {
       eve.preventDefault();
     }
   });
@@ -158,9 +164,11 @@ Slideout.prototype._initTouchEvents = function() {
    * Resets values on touchstart
    */
   this.panel.addEventListener(touch.start, function(eve) {
+    var off_x = eve.touches[0].pageX;
+    if(self._fromedge && !self.isOpen() && off_x > screen.width/3){ self._preventOpen = true; return; }
     self._moved = false;
     self._opening = false;
-    self._startOffsetX = eve.touches[0].pageX;
+    self._startOffsetX = off_x;
     self._preventOpen = (!self.isOpen() && self.menu.clientWidth !== 0);
   });
 
@@ -175,8 +183,12 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Toggles slideout on touchend
    */
-  this.panel.addEventListener(touch.end, function() {
-    if (self._moved) {
+  this.panel.addEventListener(touch.end, function(e) {
+    var element = e.changedTouches[0].target;
+    if(element.className.indexOf(self._innerMenuElementSelector) > -1) {
+        return;
+    }
+    if (self._moved || self._opened) {
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;

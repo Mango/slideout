@@ -109,7 +109,7 @@ describe('Slideout', function () {
 
     it('should translateX the panel to 0.', function () {
       var translate3d = exports ? 'translate3d(0px, 0, 0)' : 'translate3d(0px, 0px, 0px)';
-      assert(slideout.panel.style.transform === translate3d);
+      assert(slideout.panel.style.transform === '');
       assert(slideout.panel.style.transition === '');
     });
 
