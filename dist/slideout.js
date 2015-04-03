@@ -93,7 +93,7 @@ Slideout.prototype.close = function() {
   this._opened = false;
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.panel.style.transition = self.panel.style[ '-webkit-transition' ] = self.panel.style[ '-webkit-transform' ] = self.panel.style[ 'transform' ] = '';
   }, this._duration + 50);
   return this;
 };
