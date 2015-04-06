@@ -80,7 +80,7 @@ Slideout.prototype.open = function() {
   this._translateXTo(this._padding);
   this._opened = true;
   setTimeout(function() {
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.panel.style.transition = self.panel.style[prefix + 'transition'] = '';
   }, this._duration + 50);
   return this;
 };
@@ -96,7 +96,7 @@ Slideout.prototype.close = function() {
   this._opened = false;
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.panel.style.transition = self.panel.style[prefix + 'transition'] = self.panel.style[prefix + 'transform'] = self.panel.style['transform'] = '';
   }, this._duration + 50);
   return this;
 };
