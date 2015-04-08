@@ -1,10 +1,10 @@
-# Slideout.js [![Build Status](https://secure.travis-ci.org/Mango/slideout.png)](http://travis-ci.org/Mango/slideout) [![devDependency Status](https://david-dm.org/Mango/slideout/dev-status.png)](https://david-dm.org/Mango/slideout#info=devDependencies)
+# Slideout.js [![NPM version][npm-image]][npm-link] [![Build status][travis-image]][travis-link] [![devDependency status][devdeps-image]][devdeps-link]
 
 > A touch slideout navigation menu for your mobile web apps.
 
 ## Features
 
-- Dependecy-free.
+- Dependency-free.
 - Simple markup.
 - Native scrolling.
 - Easy customization.
@@ -20,6 +20,8 @@
 ## Installation
 
     $ npm install slideout
+
+    $ spm install slideout
 
     $ bower install https://github.com/Mango/slideout.git
 
@@ -48,7 +50,6 @@ First of all, you'll need to create your markup. You should have a menu (`#menu`
 Add the Slideout.js styles (index.css) in your web application.
 
 ```css
-html,
 body {
   width: 100%;
   height: 100%;
@@ -62,7 +63,7 @@ body {
   right: 0;
   z-index: 0;
   width: 256px;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   display: none;
 }
@@ -73,7 +74,8 @@ body {
 }
 
 .slideout-open,
-.slideout-open body {
+.slideout-open body,
+.slideout-open .slideout-panel {
   overflow: hidden;
 }
 
@@ -82,7 +84,7 @@ body {
 }
 ```
 
-Then you just include Slideout.js and create a new instace with some options:
+Then you just include Slideout.js and create a new instance with some options:
 
 ```html
 <script src="dist/slideout.min.js"></script>
@@ -110,7 +112,6 @@ Then you just include Slideout.js and create a new instace with some options:
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <style>
-      html,
       body {
         width: 100%;
         height: 100%;
@@ -124,7 +125,7 @@ Then you just include Slideout.js and create a new instace with some options:
         right: 0;
         z-index: 0;
         width: 256px;
-        overflow-y: scroll;
+        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         display: none;
       }
@@ -135,7 +136,8 @@ Then you just include Slideout.js and create a new instace with some options:
       }
 
       .slideout-open,
-      .slideout-open body {
+      .slideout-open body,
+      .slideout-open .slideout-panel {
         overflow: hidden;
       }
 
@@ -150,9 +152,9 @@ Then you just include Slideout.js and create a new instace with some options:
       <h2>Menu</h2>
     </nav>
 
-    <main id="main">
+    <main id="panel">
       <header>
-        <button>☰</button>
+        <button class="toggle-button">☰</button>
         <h2>Panel</h2>
       </header>
     </main>
@@ -164,6 +166,11 @@ Then you just include Slideout.js and create a new instace with some options:
         'menu': document.getElementById('menu'),
         'padding': 256,
         'tolerance': 70
+      });
+
+      // Toggle button
+      document.querySelector('.toggle-button').addEventListener('click', function() {
+        slideout.toggle();
       });
     </script>
 
@@ -191,6 +198,7 @@ Create a new instance of `Slideout`.
 - `[options.fx]` (String) - The CSS effect to use when animating the opening and closing of the slideout. Default: `ease`.
 - `[options.padding]` (Number) - Default: `256`.
 - `[options.tolerance]` (Number) - Default: `70`.
+- `[options.touch]` (Boolean) - Set this option to false to disable Slideout touch events. Default: `true`.
 
 ```js
 var slideout = new Slideout({
@@ -242,6 +250,26 @@ $ npm run dist
 $ npm test
 ```
 
+```
+$ npm run hint
+```
+
+## FAQ
+
+### How to add a toggle button.
+
+```js
+// vanilla js
+document.querySelector('.toggle-button').addEventListener('click', function() {
+  slideout.toggle();
+});
+
+// jQuery
+$('.toggle-button').on('click', function() {
+    slideout.toggle();
+});
+```
+
 ## With ❤ by
 - Guille Paz (Front-end developer | Web standards lover)
 - E-mail: [guille87paz@gmail.com](mailto:guille87paz@gmail.com)
@@ -250,3 +278,10 @@ $ npm test
 
 ## License
 MIT license. Copyright © 2015 [Mango](http://getmango.com).
+
+[npm-image]: https://img.shields.io/npm/v/slideout.svg?style=flat
+[npm-link]: https://npmjs.org/package/slideout
+[travis-image]: https://img.shields.io/travis/Mango/slideout.svg?style=flat
+[travis-link]: https://travis-ci.org/Mango/slideout
+[devdeps-image]: https://img.shields.io/david/dev/mango/slideout.svg?style=flat
+[devdeps-link]: https://david-dm.org/mango/slideout#info=peerDependencies
