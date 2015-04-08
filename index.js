@@ -1,9 +1,11 @@
 'use strict';
 
+
 /**
  * Module dependencies
  */
 var decouple = require('decouple');
+var isBrowser = (window.document && window.document.documentElement);
 
 /**
  * Privates
@@ -11,14 +13,15 @@ var decouple = require('decouple');
 var scrollTimeout;
 var scrolling = false;
 var doc = window.document;
-var html = doc.documentElement;
-var msPointerSupported = window.navigator.msPointerEnabled;
+var html = isBrowser ? doc.documentElement : null;
+var msPointerSupported = isBrowser ? window.navigator.msPointerEnabled : null;
 var touch = {
   'start': msPointerSupported ? 'MSPointerDown' : 'touchstart',
   'move': msPointerSupported ? 'MSPointerMove' : 'touchmove',
   'end': msPointerSupported ? 'MSPointerUp' : 'touchend'
 };
 var prefix = (function prefix() {
+  if (!isBrowser) return '';
   var regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
   var styleDeclaration = doc.getElementsByTagName('script')[0].style;
   for (var prop in styleDeclaration) {
