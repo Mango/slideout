@@ -47,7 +47,7 @@ function Slideout(options) {
   this._moved = false;
   this._opened = false;
   this._preventOpen = false;
-  this._touch = options.touch == undefined ? true : options.touch && true;
+  this._touch = options.touch === undefined ? true : options.touch && true;
 
   // Sets panel
   this.panel = options.panel;
@@ -79,7 +79,7 @@ Slideout.prototype.open = function() {
   this._translateXTo(this._padding);
   this._opened = true;
   setTimeout(function() {
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.panel.style.transition = self.panel.style[prefix + 'transition'] = '';
   }, this._duration + 50);
   return this;
 };
@@ -95,7 +95,7 @@ Slideout.prototype.close = function() {
   this._opened = false;
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.panel.style.transition = self.panel.style[prefix + 'transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
   }, this._duration + 50);
   return this;
 };
