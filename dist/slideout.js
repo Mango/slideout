@@ -34,6 +34,15 @@ var prefix = (function prefix() {
   if ('KhtmlOpacity' in styleDeclaration) { return '-khtml-'; }
   return '';
 }());
+var events = {
+    'open' : [],
+    'close' : []
+};
+var fireEvent = function(evt) {
+    for(var i=0; i < events[evt].length; i++) {
+        events[evt][i]();
+    }
+};
 
 /**
  * Slideout constructor
@@ -81,6 +90,7 @@ Slideout.prototype.open = function() {
   this._opened = true;
   setTimeout(function() {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    fireEvent('open');
   }, this._duration + 50);
   return this;
 };
@@ -97,6 +107,7 @@ Slideout.prototype.close = function() {
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    fireEvent('close');
   }, this._duration + 50);
   return this;
 };
@@ -113,6 +124,28 @@ Slideout.prototype.toggle = function() {
  */
 Slideout.prototype.isOpen = function() {
   return this._opened;
+};
+
+/**
+ * Add an event listener
+ */
+Slideout.prototype.on = function(evt, callback) {
+    (events[evt] || []).push(callback);
+};
+
+/**
+ * Remove a previously added event handler
+ */
+Slideout.prototype.off = function(evt, callback) {
+    if( evt in events ) {
+        for(var i=0; i < events[evt].length; i++) {
+            if( callback == events[evt][i] ) {
+                events[evt].splice(i, 1);
+                this.off(evt, callback);
+                break;
+            }
+        }
+    }
 };
 
 /**
