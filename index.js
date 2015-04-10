@@ -4,7 +4,7 @@
  * Module dependencies
  */
 var decouple = require('decouple');
-var Emitter = require('component-emitter');
+var Emitter = require('emitter');
 
 /**
  * Privates
@@ -182,6 +182,9 @@ Slideout.prototype._initTouchEvents = function() {
    * Resets values on touchstart
    */
   this.panel.addEventListener(touch.start, function(eve) {
+
+    if (typeof eve.touches === 'undefined') { return; }
+
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
@@ -211,7 +214,7 @@ Slideout.prototype._initTouchEvents = function() {
    */
   this.panel.addEventListener(touch.move, function(eve) {
 
-    if (scrolling || self._preventOpen) { return; }
+    if (scrolling || self._preventOpen || typeof eve.touches === 'undefined') { return; }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
     var translateX = self._currentOffsetX = dif_x;
@@ -233,7 +236,7 @@ Slideout.prototype._initTouchEvents = function() {
       }
 
       self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
-      self.emit('translate', translateX);
+      self.emit('translate', translateX, self._opening);
       self._moved = true;
     }
 

@@ -3,7 +3,7 @@
   "repository": "git@github.com:mango/slideout.git",
   "description": "A touch slideout navigation menu for your mobile web apps.",
   "author": "Guille Paz <guille87paz@gmail.com>",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "scripts": {
     "build": "node browserify.js",
     "test": "npm run build && node_modules/.bin/_mocha",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "decouple": "0.0.1",
-    "component-emitter": "1.2.0"
+    "emitter": "git+https://github.com/Mango/emitter.git#0.0.4"
   },
   "devDependencies": {
     "better-assert": "1.0.1",

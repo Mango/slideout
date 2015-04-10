@@ -23,7 +23,7 @@
 
     $ spm install slideout
 
-    $ bower install https://github.com/Mango/slideout.git
+    $ bower install slideout.js
 
     $ component install mango/slideout
 
@@ -154,7 +154,7 @@ Then you just include Slideout.js and create a new instance with some options:
 
     <main id="panel">
       <header>
-        <button>☰</button>
+        <button class="toggle-button">☰</button>
         <h2>Panel</h2>
       </header>
     </main>
@@ -166,6 +166,11 @@ Then you just include Slideout.js and create a new instance with some options:
         'menu': document.getElementById('menu'),
         'padding': 256,
         'tolerance': 70
+      });
+
+      // Toggle button
+      document.querySelector('.toggle-button').addEventListener('click', function() {
+        slideout.toggle();
       });
     </script>
 
@@ -285,6 +290,22 @@ $ npm test
 
 ```
 $ npm run hint
+```
+
+## FAQ
+
+### How to add a toggle button.
+
+```js
+// vanilla js
+document.querySelector('.toggle-button').addEventListener('click', function() {
+  slideout.toggle();
+});
+
+// jQuery
+$('.toggle-button').on('click', function() {
+    slideout.toggle();
+});
 ```
 
 ## With ❤ by
