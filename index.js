@@ -236,7 +236,7 @@ Slideout.prototype._initTouchEvents = function() {
       }
 
       self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
-      self.emit('translate', translateX, self._opening);
+      self.emit('translate', translateX);
       self._moved = true;
     }
 
