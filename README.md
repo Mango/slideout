@@ -9,7 +9,7 @@
 - Native scrolling.
 - Easy customization.
 - CSS transforms & transitions.
-- Just 6 Kb!
+- Just 2 Kb! (min & gzip)
 
 ## Demo
 
