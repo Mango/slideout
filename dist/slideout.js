@@ -63,6 +63,14 @@ function Slideout(options) {
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = parseInt(options.padding, 10) || 256;
+  this._side = options.side || "left";
+
+  this._multiplier = 1;
+
+  if(this._side === "right") {
+    this._multiplier = -1;
+    this._padding = -1 * this._padding;
+  }
 
   // Init touch events
   if(this._touch) {
@@ -199,10 +207,12 @@ Slideout.prototype._initTouchEvents = function() {
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
     var translateX = self._currentOffsetX = dif_x;
 
-    if (Math.abs(translateX) > self._padding) { return; }
+    if (Math.abs(translateX) > Math.abs(self._padding) ) { return; }
 
     if (Math.abs(dif_x) > 20) {
       self._opening = true;
+
+      dif_x = dif_x * self._multiplier;
 
       if (self._opened && dif_x > 0 || !self._opened && dif_x < 0) { return; }
 
@@ -211,7 +221,7 @@ Slideout.prototype._initTouchEvents = function() {
       }
 
       if (dif_x <= 0) {
-        translateX = dif_x + self._padding;
+        translateX = (dif_x * self._multiplier) + self._padding;
         self._opening = false;
       }
 
@@ -221,7 +231,6 @@ Slideout.prototype._initTouchEvents = function() {
     }
 
   });
-
 };
 
 /**
