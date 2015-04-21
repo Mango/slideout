@@ -6,12 +6,13 @@
   "version": "0.1.6",
   "scripts": {
     "build": "node browserify.js",
-    "test": "npm run build && node_modules/.bin/_mocha",
+    "test": "npm run build && _mocha",
     "dist": "node browserify.js && uglifyjs ./dist/slideout.js -m -o ./dist/slideout.min.js",
     "hint": "jshint index.js"
   },
   "dependencies": {
-    "decouple": "0.0.1"
+    "decouple": "0.0.1",
+    "emitter": "git+https://github.com/Mango/emitter.git#0.0.4"
   },
   "devDependencies": {
     "better-assert": "1.0.1",
@@ -31,7 +32,8 @@
   "license": "MIT",
   "spm": {
     "dependencies": {
-      "decouple": "0.0.1"
+      "decouple": "0.0.1",
+      "emitter": "git+https://github.com/Mango/emitter.git#0.0.4"
     },
     "main": "index.js"
   }

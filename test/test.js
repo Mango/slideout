@@ -8,10 +8,28 @@ if (exports) {
 }
 
 var doc = window.document;
+var beforeopenEvent = false;
+var openEvent = false;
+var beforecloseEvent = false;
+var closeEvent = false;
 var slideout = new Slideout({
   'panel': doc.getElementById('panel'),
   'menu': doc.getElementById('menu')
 });
+
+slideout
+  .on('beforeopen', function() {
+    beforeopenEvent = true;
+  })
+  .on('open', function() {
+    openEvent = true;
+  })
+  .on('beforeclose', function() {
+    beforecloseEvent = true;
+  })
+  .on('close', function() {
+    closeEvent = true;
+  });
 
 describe('Slideout', function () {
 
@@ -28,7 +46,19 @@ describe('Slideout', function () {
   });
 
   describe('should have the following methods:', function () {
-    var methods = ['open', 'close', 'toggle', 'isOpen', '_initTouchEvents', '_translateXTo', '_setTransition'];
+    var methods = [
+      'open',
+      'close',
+      'toggle',
+      'isOpen',
+      '_initTouchEvents',
+      '_translateXTo',
+      '_setTransition',
+      'on',
+      'once',
+      'off',
+      'emit'
+    ];
     var i = 0;
     var len = methods.length;
     for (i; i < len; i += 1) {
@@ -89,6 +119,18 @@ describe('Slideout', function () {
     it('should set _opened to true.', function () {
       assert(slideout._opened === true);
     });
+
+    it('should emit "beforeopen" event.', function () {
+      assert(beforeopenEvent === true);
+    });
+
+    it('should emit "open" event.', function (done) {
+      setTimeout(function(){
+        assert(openEvent === true);
+        done();
+      }, 400);
+
+    });
   });
 
   describe('.isOpen()', function () {
@@ -109,13 +151,20 @@ describe('Slideout', function () {
     });
 
     it('should translateX the panel to 0.', function () {
-      var translate3d = exports ? 'translate3d(0px, 0, 0)' : 'translate3d(0px, 0px, 0px)';
-      assert(slideout.panel.style.transform === translate3d);
+      assert(slideout.panel.style.transform === '');
       assert(slideout.panel.style.transition === '');
     });
 
     it('should set _opened to false.', function () {
       assert(slideout._opened === false);
+    });
+
+    it('should emit "beforeclose" event.', function () {
+      assert(beforecloseEvent === true);
+    });
+
+    it('should emit "close" event.', function () {
+      assert(closeEvent === true);
     });
   });
 

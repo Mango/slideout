@@ -9,7 +9,7 @@
 - Native scrolling.
 - Easy customization.
 - CSS transforms & transitions.
-- Just 4 Kb!
+- Just 2 Kb! (min & gzip)
 
 ## Demo
 
@@ -210,14 +210,14 @@ var slideout = new Slideout({
 ```
 
 ### Slideout.open();
-Opens the slideout menu.
+Opens the slideout menu. It emits `beforeopen` and `open` events.
 
 ```js
 slideout.open();
 ```
 
 ### Slideout.close();
-Closes the slideout menu.
+Closes the slideout menu. It emits `beforeclose` and `close` events.
 
 ```js
 slideout.close();
@@ -235,6 +235,44 @@ Returns `true` if the slideout is currently open, and `false` if it is closed.
 
 ```js
 slideout.isOpen(); // true or false
+```
+
+### Slideout.on(event, listener);
+```js
+slideout.on('open', function() { ... });
+```
+
+### Slideout.once(event, listener);
+```js
+slideout.once('open', function() { ... });
+```
+
+### Slideout.off(event, listener);
+```js
+slideout.off('open', listener);
+```
+
+### Slideout.emit(event, ...data);
+```js
+slideout.emit('open');
+```
+
+## Events
+
+An instance of Slideout emits the following events:
+
+- `beforeclose`
+- `close`
+- `beforeopen`
+- `open`
+- `translate`
+
+The slideout emits `translate` event only when it is opening/closing via touch events.
+
+```js
+slideout.on('translate', function(translated) {
+  console.log(translated); // 120 in px
+});
 ```
 
 ## npm-scripts
