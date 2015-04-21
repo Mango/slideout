@@ -59,7 +59,7 @@ function Slideout(options) {
   this._moved = false;
   this._opened = false;
   this._preventOpen = false;
-  this._touch = options.touch == undefined ? true : options.touch && true;
+  this._touch = options.touch === undefined ? true : options.touch && true;
 
   // Sets panel
   this.panel = options.panel;
