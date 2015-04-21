@@ -74,6 +74,8 @@ function Slideout(options) {
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = parseInt(options.padding, 10) || 256;
+  this._closeOnClick = options.closeOnClick || false;
+  this._grabWidth = parseInt(options.grabWidth, 10) || 0;
 
   // Init touch events
   if(this._touch) {
@@ -178,6 +180,15 @@ Slideout.prototype._initTouchEvents = function() {
     }
   });
 
+  if (this._closeOnClick) {
+    /**
+     * Close menu when panel is clicked while open
+     */
+    this.panel.addEventListener('click', function() {
+      if (self.isOpen) { self.close(); }
+    });
+  }
+
   /**
    * Resets values on touchstart
    */
@@ -187,8 +198,10 @@ Slideout.prototype._initTouchEvents = function() {
 
     self._moved = false;
     self._opening = false;
-    self._startOffsetX = eve.touches[0].pageX;
-    self._preventOpen = (!self.isOpen() && self.menu.clientWidth !== 0);
+            
+    var offset = eve.touches[0].pageX;
+    self._startOffsetX = offset;
+    self._preventOpen = (!self.isOpen() && (self.menu.clientWidth !== 0 || (self._grabWidth && offset > self._grabWidth)));
   });
 
   /**
