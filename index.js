@@ -73,10 +73,12 @@ function Slideout(options) {
   this._fx = options.fx || 'ease';
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
-  this._padding = parseInt(options.padding, 10) || 256;
+  this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
+  this._orientation = options.side === 'right' ? -1 : 1;
+  this._translateTo *= this._orientation;
 
   // Init touch events
-  if(this._touch) {
+  if (this._touch) {
     this._initTouchEvents();
   }
 }
@@ -94,7 +96,7 @@ Slideout.prototype.open = function() {
   this.emit('beforeopen');
   if (html.className.search('slideout-open') === -1) { html.className += ' slideout-open'; }
   this._setTransition();
-  this._translateXTo(this._padding);
+  this._translateXTo(this._translateTo);
   this._opened = true;
   setTimeout(function() {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
@@ -224,15 +226,15 @@ Slideout.prototype._initTouchEvents = function() {
     if (Math.abs(dif_x) > 20) {
       self._opening = true;
 
-      if (self._opened && dif_x > 0 || !self._opened && dif_x < 0) { return; }
+      var oriented_dif_x = dif_x * self._orientation;
+      if (self._opened && oriented_dif_x > 0 || !self._opened && oriented_dif_x < 0) { return; }
+      if (oriented_dif_x <= 0) {
+        translateX = dif_x + self._padding * self._orientation;
+        self._opening = false;
+      }
 
       if (!self._moved && html.className.search('slideout-open') === -1) {
         html.className += ' slideout-open';
-      }
-
-      if (dif_x <= 0) {
-        translateX = dif_x + self._padding;
-        self._opening = false;
       }
 
       self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
