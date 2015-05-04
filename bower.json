@@ -6,7 +6,7 @@
   "version": "0.1.8",
   "dependencies": {
     "decouple": "0.0.1",
-    "emitter-es6": "0.0.6"
+    "emitter-es6": "0.0.7"
   },
   "ignore": [
     ".*",
