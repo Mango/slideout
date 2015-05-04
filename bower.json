@@ -3,9 +3,10 @@
   "repository": "https://github.com/Mango/slideout",
   "description": "A touch slideout navigation menu for your mobile web apps.",
   "author": "Guille Paz <guille87paz@gmail.com>",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "dependencies": {
-    "decouple": "0.0.1"
+    "decouple": "0.0.1",
+    "emitter-es6": "0.0.6"
   },
   "ignore": [
     ".*",
