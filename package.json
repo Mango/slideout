@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "decouple": "0.0.1",
-    "emitter": "git+https://github.com/Mango/emitter.git#0.0.4"
+    "emitter": "git+https://github.com/Mango/emitter.git#0.0.7"
   },
   "devDependencies": {
     "better-assert": "1.0.1",
@@ -33,7 +33,7 @@
   "spm": {
     "dependencies": {
       "decouple": "0.0.1",
-      "emitter": "git+https://github.com/Mango/emitter.git#0.0.6"
+      "emitter": "git+https://github.com/Mango/emitter.git#0.0.7"
     },
     "main": "index.js"
   }
