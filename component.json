@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "pazguille/decouple": "0.0.1",
-    "Mango/emitter": "0.0.6"
+    "Mango/emitter": "0.0.7"
   },
   "development": {},
   "license": "MIT",
