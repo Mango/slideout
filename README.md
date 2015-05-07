@@ -238,6 +238,20 @@ Returns `true` if the slideout is currently open, and `false` if it is closed.
 slideout.isOpen(); // true or false
 ```
 
+### Slideout.enableTouch();
+Enables opening the slideout via touch events.
+
+```js
+slideout.enableTouch();
+```
+
+### Slideout.disableTouch();
+Disables opening the slideout via touch events.
+
+```js
+slideout.disableTouch();
+```
+
 ### Slideout.on(event, listener);
 ```js
 slideout.on('open', function() { ... });

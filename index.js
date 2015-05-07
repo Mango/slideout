@@ -190,7 +190,7 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
-    self._preventOpen = (!self.isOpen() && self.menu.clientWidth !== 0);
+    self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
   });
 
   /**
@@ -244,6 +244,16 @@ Slideout.prototype._initTouchEvents = function() {
 
   });
 
+};
+
+Slideout.prototype.enableTouch = function() {
+  this._touch = true;
+  return this;
+};
+
+Slideout.prototype.disableTouch = function() {
+  this._touch = false;
+  return this;
 };
 
 /**
