@@ -323,6 +323,24 @@ $('.toggle-button').on('click', function() {
 });
 ```
 
+### How to open slideout from right side.
+
+You should define `left: auto` on the class `.slideout-menu`.
+```css
+.slideout-menu {
+  left: auto;
+}
+```
+
+Then, use the `side` option with the value `right`.
+```js
+var slideout = new Slideout({
+  'panel': document.getElementById('content'),
+  'menu': document.getElementById('menu'),
+  'side': 'right'
+});
+```
+
 ## With ❤ by
 - Guille Paz (Front-end developer | Web standards lover)
 - E-mail: [guille87paz@gmail.com](mailto:guille87paz@gmail.com)
