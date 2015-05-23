@@ -36,5 +36,12 @@
       "emitter": "git+https://github.com/Mango/emitter.git#0.0.7"
     },
     "main": "index.js"
+  },
+  "filename": "slideout.min.js",
+  "autoupdate": {
+    "source": "git",
+    "target": "git://github.com/Mango/slideout.git",
+    "basePath": "dist",
+    "files": ["*.js"]
   }
 }
