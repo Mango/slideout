@@ -66,8 +66,9 @@ function Slideout(options) {
   this.menu = options.menu;
 
   // Sets  classnames
-  this.panel.className += ' slideout-panel';
-  this.menu.className += ' slideout-menu';
+  if(this.panel.className.search('slideout-panel') === -1) { this.panel.className += ' slideout-panel'; }
+  if(this.menu.className.search('slideout-menu') === -1) { this.menu.className += ' slideout-menu'; }
+
 
   // Sets options
   this._fx = options.fx || 'ease';
