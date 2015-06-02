@@ -208,6 +208,7 @@ Create a new instance of `Slideout`.
 - `[options.tolerance]` (Number) - Default: `70`.
 - `[options.touch]` (Boolean) - Set this option to false to disable Slideout touch events. Default: `true`.
 - `[options.side]` (String) - The side to open the slideout (`left` or `right`). Default: `left`.
+- `[options.heightFix]` (Boolean) - Sets a 'min-width' property on #panel to ensure it is as high as the window on resize. Default: `false`.
 
 ```js
 var slideout = new Slideout({

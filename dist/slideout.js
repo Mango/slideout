@@ -13,6 +13,7 @@ var Emitter = require('emitter');
 var scrollTimeout;
 var scrolling = false;
 var doc = window.document;
+var win = window;
 var html = doc.documentElement;
 var msPointerSupported = window.navigator.msPointerEnabled;
 var touch = {
@@ -61,6 +62,7 @@ function Slideout(options) {
   this._opened = false;
   this._preventOpen = false;
   this._touch = options.touch === undefined ? true : options.touch && true;
+  this._heightFix = options.heightFix === undefined ? false : options.heightFix && true;
 
   // Sets panel
   this.panel = options.panel;
@@ -79,6 +81,11 @@ function Slideout(options) {
   this._orientation = options.side === 'right' ? -1 : 1;
   this._translateTo *= this._orientation;
 
+  // Init 'panel' height fix
+  if (this._heightFix) {
+    this._initHeightFix();
+  }
+  
   // Init touch events
   if (this._touch) {
     this._initTouchEvents();
@@ -153,6 +160,23 @@ Slideout.prototype._translateXTo = function(translateX) {
 Slideout.prototype._setTransition = function() {
   this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
 };
+
+/**
+ * Set 'panel' to min height of the window on 'resize' and 'load' to prevent ugly slideout if window is larger than 'panel'.
+ */
+Slideout.prototype._initHeightFix = function() {
+  var self = this;
+  
+  function checkHeight() {
+    var windowHeight = window.innerHeight;
+    if (self.panel.offsetHeight != windowHeight) {
+      self.panel.style['min-height'] = windowHeight + 'px';
+    }
+  }
+  
+  checkHeight();
+  win.addEventListener('resize', checkHeight);
+}
 
 /**
  * Initializes touch event
