@@ -218,7 +218,7 @@ Slideout.prototype._initTouchEvents = function() {
    */
   this.panel.addEventListener(touch.move, function(eve) {
 
-    if (scrolling || self._preventOpen || typeof eve.touches === 'undefined') { return; }
+    if (scrolling || self._preventOpen || typeof eve.touches === 'undefined' || self.isDisabled(eve.target)) { return; }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
     var translateX = self._currentOffsetX = dif_x;
@@ -257,6 +257,11 @@ Slideout.prototype.disableTouch = function() {
   this._touch = false;
   return this;
 };
+
+Slideout.prototype.isDisabled = function (el) {
+  while ((el = el.parentElement) && !el.classList.contains('disabled'));
+  return (typeof el == 'object' && el != null) ? true : false;
+}
 
 /**
  * Expose Slideout
