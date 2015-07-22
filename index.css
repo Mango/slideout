@@ -11,7 +11,7 @@ body {
   right: 0;
   z-index: 0;
   width: 256px;
-  overflow-y: auto;
+  overflow-y: scroll; /* needs to be set to scroll for -webkit-overflow-scrolling: touch; to work */
   -webkit-overflow-scrolling: touch;
   display: none;
 }
@@ -24,6 +24,7 @@ body {
 .slideout-open,
 .slideout-open body,
 .slideout-open .slideout-panel {
+  height: 100%; /* In certain cases where the .slideout-panel class is applied, that element also needs to be set to height: 100%; to prevent scrolling the .slide-panel element when the .slideout-menu is open/active. */
   overflow: hidden;
 }
 
