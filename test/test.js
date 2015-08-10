@@ -176,8 +176,20 @@ describe('Slideout', function () {
       slideout.toggle();
       setTimeout(function(){
         assert(doc.documentElement.className.search('slideout-open') === -1);
-        done()
+        done();
       }, 350);
+    });
+  });
+
+  describe('.destroy()', function() {
+    it('should destroy the instance internals allowing a new one to be created in it\'s place.', function(){
+      slideout.destroy();
+      slideout = new Slideout({
+        'panel': doc.getElementById('panel'),
+        'menu': doc.getElementById('menu')
+      });
+      slideout.open();
+      setTimeout(function(){ slideout.close(); }, 750);
     });
   });
 });
