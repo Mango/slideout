@@ -32,7 +32,7 @@
   "license": "MIT",
   "spm": {
     "dependencies": {
-      "decouple": "0.0.1",
+      "decouple": "0.0.2",
       "emitter": "git+https://github.com/Mango/emitter.git#0.0.7"
     },
     "main": "index.js"
