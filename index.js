@@ -192,7 +192,11 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
 
-    var offset = eve.touches[0].pageX;
+    if (self._orientation === 1)
+      var offset = eve.touches[0].pageX;
+    else
+      var offset = window.innerWidth - eve.touches[0].pageX;
+
     self._startOffsetX = offset;
     self._preventOpen = (!self._touch || (!self.isOpen() && (self.menu.clientWidth !== 0 || (self._grabWidth && offset > self._grabWidth))));
   });
