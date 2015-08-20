@@ -349,6 +349,16 @@ var slideout = new Slideout({
 });
 ```
 
+### How to allow opening only from far left/right
+
+Define the `grabWidth` option:
+```js
+'grabWidth': 50
+```
+
+The slideout is only triggered when the user starts so swipe in
+this area on the left or right side, depending on the `side` option.
+
 ## With ❤ by
 - Guille Paz (Front-end developer | Web standards lover)
 - E-mail: [guille87paz@gmail.com](mailto:guille87paz@gmail.com)

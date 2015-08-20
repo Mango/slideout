@@ -60,6 +60,7 @@ function Slideout(options) {
   this._opened = false;
   this._preventOpen = false;
   this._touch = options.touch === undefined ? true : options.touch && true;
+  this._grabWidth = parseInt(options.grabWidth, 10) || 0;
 
   // Sets panel
   this.panel = options.panel;
@@ -190,8 +191,14 @@ Slideout.prototype._initTouchEvents = function() {
 
     self._moved = false;
     self._opening = false;
-    self._startOffsetX = eve.touches[0].pageX;
-    self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
+
+    if (self._orientation === 1)
+      var offset = eve.touches[0].pageX;
+    else
+      var offset = window.innerWidth - eve.touches[0].pageX;
+
+    self._startOffsetX = offset;
+    self._preventOpen = (!self._touch || (!self.isOpen() && (self.menu.clientWidth !== 0 || (self._grabWidth && offset > self._grabWidth))));
   });
 
   /**
