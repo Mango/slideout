@@ -143,7 +143,7 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translate(' + translateX + 'px, 0)';
 };
 
 /**
@@ -238,7 +238,7 @@ Slideout.prototype._initTouchEvents = function() {
         html.className += ' slideout-open';
       }
 
-      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translate(' + translateX + 'px, 0)';
       self.emit('translate', translateX);
       self._moved = true;
     }
