@@ -162,7 +162,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Decouple scroll event
    */
-  decouple(doc, 'scroll', function() {
+  this._onScrollFn = decouple(doc, 'scroll', function() {
     if (!self._moved) {
       clearTimeout(scrollTimeout);
       scrolling = true;
@@ -175,47 +175,50 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Prevents touchmove event if slideout is moving
    */
-  doc.addEventListener(touch.move, function(eve) {
+  this._preventMove = function(eve) {
     if (self._moved) {
       eve.preventDefault();
     }
-  });
+  };
+  doc.addEventListener(touch.move, this._preventMove);
 
   /**
    * Resets values on touchstart
    */
-  this.panel.addEventListener(touch.start, function(eve) {
-
+  this._resetTouchFn = function(eve) {
     if (typeof eve.touches === 'undefined') { return; }
 
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
     self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
-  });
+  };
+  this.panel.addEventListener(touch.start, this._resetTouchFn);
 
   /**
    * Resets values on touchcancel
    */
-  this.panel.addEventListener('touchcancel', function() {
+  this._onTouchCancelFn = function() {
     self._moved = false;
     self._opening = false;
-  });
+  };
+  this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
 
   /**
    * Toggles slideout on touchend
    */
-  this.panel.addEventListener(touch.end, function() {
+  this._onTouchEndFn = function() {
     if (self._moved) {
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;
-  });
+  };
+  this.panel.addEventListener(touch.end, this._onTouchEndFn);
 
   /**
    * Translates panel on touchmove
    */
-  this.panel.addEventListener(touch.move, function(eve) {
+  this._onTouchMoveFn = function(eve) {
 
     if (scrolling || self._preventOpen || typeof eve.touches === 'undefined') { return; }
 
@@ -243,8 +246,8 @@ Slideout.prototype._initTouchEvents = function() {
       self._moved = true;
     }
 
-  });
-
+  };
+  this.panel.addEventListener(touch.move, this._onTouchMoveFn);
 };
 
 Slideout.prototype.enableTouch = function() {
@@ -254,6 +257,25 @@ Slideout.prototype.enableTouch = function() {
 
 Slideout.prototype.disableTouch = function() {
   this._touch = false;
+  return this;
+};
+
+Slideout.prototype.destroy = function() {
+  // Close before clean
+  this.close();
+
+  // Remove event listeners
+  doc.removeEventListener(touch.move, this._preventMove);
+  this.panel.removeEventListener(touch.start, this._resetTouchFn);
+  this.panel.removeEventListener('touchcancel', this._onTouchCancelFn);
+  this.panel.removeEventListener(touch.end, this._onTouchEndFn);
+  this.panel.removeEventListener(touch.move, this._onTouchMoveFn);
+  doc.removeEventListener('scroll', this._onScrollFn);
+
+  // Remove methods
+  this.open = this.close = function() {};
+  
+  // Return the instance so it can be easily dereferenced  
   return this;
 };
 

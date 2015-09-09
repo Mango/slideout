@@ -246,6 +246,13 @@ Returns `true` if the slideout is currently open, and `false` if it is closed.
 slideout.isOpen(); // true or false
 ```
 
+### Slideout.destroy();
+Cleans up the instance so another slideout can be created on the same area.
+
+```js
+slideout.destroy();
+```
+
 ### Slideout.enableTouch();
 Enables opening the slideout via touch events.
 
