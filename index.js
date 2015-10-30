@@ -176,7 +176,7 @@ Slideout.prototype._initTouchEvents = function() {
    * Prevents touchmove event if slideout is moving
    */
   this._preventMove = function(eve) {
-    if (self._moved) {
+    if (self._moved || self._opened) {
       eve.preventDefault();
     }
   };
@@ -250,16 +250,25 @@ Slideout.prototype._initTouchEvents = function() {
   this.panel.addEventListener(touch.move, this._onTouchMoveFn);
 };
 
+/**
+ * Enable opening the slideout via touch events.
+ */
 Slideout.prototype.enableTouch = function() {
   this._touch = true;
   return this;
 };
 
+/**
+ * Disable opening the slideout via touch events.
+ */
 Slideout.prototype.disableTouch = function() {
   this._touch = false;
   return this;
 };
 
+/**
+ * Destroy an instance of slideout.
+ */
 Slideout.prototype.destroy = function() {
   // Close before clean
   this.close();
@@ -274,8 +283,8 @@ Slideout.prototype.destroy = function() {
 
   // Remove methods
   this.open = this.close = function() {};
-  
-  // Return the instance so it can be easily dereferenced  
+
+  // Return the instance so it can be easily dereferenced
   return this;
 };
 
