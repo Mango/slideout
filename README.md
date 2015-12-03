@@ -1,4 +1,4 @@
-# Slideout.js [![NPM version][npm-image]][npm-link] [![Build status][travis-image]][travis-link] [![devDependency status][devdeps-image]][devdeps-link]
+# Slideout.js [![NPM version][npm-image]][npm-link] [![License][lic-image]][npm-link] [![Build status][travis-image]][travis-link] [![Dependency status][deps-image]][deps-link] [![devDependency status][devdeps-image]][devdeps-link] [![downloads][dt-image]][npm-link]
 
 > A touch slideout navigation menu for your mobile web apps.
 
@@ -9,7 +9,7 @@
 - Native scrolling.
 - Easy customization.
 - CSS transforms & transitions.
-- Just 4 Kb!
+- Just 2 Kb! (min & gzip)
 
 ## Demo
 
@@ -18,6 +18,14 @@
 <img src="https://i.imgur.com/AWgwlVW.gif" alt="Slideout.js demo">
 
 ## Installation
+
+Slideout is available on cdnjs
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.11/slideout.min.js"></script>
+```
+
+Also you can use one of many package managers
 
     $ npm install slideout
 
@@ -199,6 +207,7 @@ Create a new instance of `Slideout`.
 - `[options.padding]` (Number) - Default: `256`.
 - `[options.tolerance]` (Number) - Default: `70`.
 - `[options.touch]` (Boolean) - Set this option to false to disable Slideout touch events. Default: `true`.
+- `[options.side]` (String) - The side to open the slideout (`left` or `right`). Default: `left`.
 
 ```js
 var slideout = new Slideout({
@@ -210,14 +219,14 @@ var slideout = new Slideout({
 ```
 
 ### Slideout.open();
-Opens the slideout menu.
+Opens the slideout menu. It emits `beforeopen` and `open` events.
 
 ```js
 slideout.open();
 ```
 
 ### Slideout.close();
-Closes the slideout menu.
+Closes the slideout menu. It emits `beforeclose` and `close` events.
 
 ```js
 slideout.close();
@@ -235,6 +244,65 @@ Returns `true` if the slideout is currently open, and `false` if it is closed.
 
 ```js
 slideout.isOpen(); // true or false
+```
+
+### Slideout.destroy();
+Cleans up the instance so another slideout can be created on the same area.
+
+```js
+slideout.destroy();
+```
+
+### Slideout.enableTouch();
+Enables opening the slideout via touch events.
+
+```js
+slideout.enableTouch();
+```
+
+### Slideout.disableTouch();
+Disables opening the slideout via touch events.
+
+```js
+slideout.disableTouch();
+```
+
+### Slideout.on(event, listener);
+```js
+slideout.on('open', function() { ... });
+```
+
+### Slideout.once(event, listener);
+```js
+slideout.once('open', function() { ... });
+```
+
+### Slideout.off(event, listener);
+```js
+slideout.off('open', listener);
+```
+
+### Slideout.emit(event, ...data);
+```js
+slideout.emit('open');
+```
+
+## Events
+
+An instance of Slideout emits the following events:
+
+- `beforeclose`
+- `close`
+- `beforeopen`
+- `open`
+- `translate`
+
+The slideout emits `translate` event only when it is opening/closing via touch events.
+
+```js
+slideout.on('translate', function(translated) {
+  console.log(translated); // 120 in px
+});
 ```
 
 ## npm-scripts
@@ -270,6 +338,24 @@ $('.toggle-button').on('click', function() {
 });
 ```
 
+### How to open slideout from right side.
+
+You should define `left: auto` on the class `.slideout-menu`.
+```css
+.slideout-menu {
+  left: auto;
+}
+```
+
+Then, use the `side` option with the value `right`.
+```js
+var slideout = new Slideout({
+  'panel': document.getElementById('content'),
+  'menu': document.getElementById('menu'),
+  'side': 'right'
+});
+```
+
 ## With ❤ by
 - Guille Paz (Front-end developer | Web standards lover)
 - E-mail: [guille87paz@gmail.com](mailto:guille87paz@gmail.com)
@@ -279,9 +365,13 @@ $('.toggle-button').on('click', function() {
 ## License
 MIT license. Copyright © 2015 [Mango](http://getmango.com).
 
-[npm-image]: https://img.shields.io/npm/v/slideout.svg?style=flat
+[npm-image]: https://img.shields.io/npm/v/slideout.svg
+[lic-image]: https://img.shields.io/npm/l/slideout.svg
 [npm-link]: https://npmjs.org/package/slideout
-[travis-image]: https://img.shields.io/travis/Mango/slideout.svg?style=flat
+[travis-image]: https://img.shields.io/travis/Mango/slideout.svg
 [travis-link]: https://travis-ci.org/Mango/slideout
-[devdeps-image]: https://img.shields.io/david/dev/mango/slideout.svg?style=flat
-[devdeps-link]: https://david-dm.org/mango/slideout#info=peerDependencies
+[deps-image]: https://img.shields.io/david/mango/slideout.svg
+[deps-link]: https://david-dm.org/mango/slideout
+[devdeps-image]: https://img.shields.io/david/dev/mango/slideout.svg
+[devdeps-link]: https://david-dm.org/mango/slideout#info=devDependencies
+[dt-image]: https://img.shields.io/npm/dt/slideout.svg
