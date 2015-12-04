@@ -1,4 +1,6 @@
-# Slideout.js [![NPM version][npm-image]][npm-link] [![License][lic-image]][npm-link] [![Build status][travis-image]][travis-link] [![Dependency status][deps-image]][deps-link] [![devDependency status][devdeps-image]][devdeps-link] [![downloads][dt-image]][npm-link]
+# Slideout.js
+
+[![NPM version][npm-image]][npm-link] [![License][lic-image]][npm-link] [![Build status][travis-image]][travis-link] [![Coverage Status][coverage-image]][coverage-link] [![Dependency status][deps-image]][deps-link] [![devDependency status][devdeps-image]][devdeps-link] [![downloads][dt-image]][npm-link]
 
 > A touch slideout navigation menu for your mobile web apps.
 
@@ -375,3 +377,5 @@ MIT license. Copyright © 2015 [Mango](http://getmango.com).
 [devdeps-image]: https://img.shields.io/david/dev/mango/slideout.svg
 [devdeps-link]: https://david-dm.org/mango/slideout#info=devDependencies
 [dt-image]: https://img.shields.io/npm/dt/slideout.svg
+[coverage-image]: https://img.shields.io/coveralls/Mango/slideout.svg
+[coverage-link]: https://coveralls.io/github/Mango/slideout
