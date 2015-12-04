@@ -6,21 +6,23 @@
   "version": "0.1.11",
   "scripts": {
     "build": "node browserify.js",
-    "test": "npm run build && _mocha",
+    "test": "npm run build && istanbul cover _mocha",
     "dist": "node browserify.js && uglifyjs ./dist/slideout.js -m -o ./dist/slideout.min.js",
     "hint": "jshint index.js"
   },
   "dependencies": {
-    "decouple": "0.0.1",
+    "decouple": "0.0.2",
     "emitter": "git+https://github.com/Mango/emitter.git#0.0.7"
   },
   "devDependencies": {
     "better-assert": "1.0.1",
     "browserify": "7.0.3",
+    "coveralls": "2.11.4",
+    "istanbul": "0.4.1",
     "jsdom": "3.1.1",
+    "jshint": "2.6.3",
     "mocha": "2.1.0",
-    "uglify-js": "2.4.15",
-    "jshint": "2.6.3"
+    "uglify-js": "2.4.24"
   },
   "main": "index.js",
   "keywords": [
@@ -42,6 +44,8 @@
     "source": "git",
     "target": "git://github.com/Mango/slideout.git",
     "basePath": "dist",
-    "files": ["*.js"]
+    "files": [
+      "*.js"
+    ]
   }
 }
