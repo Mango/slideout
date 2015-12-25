@@ -358,6 +358,28 @@ var slideout = new Slideout({
 });
 ```
 
+### How to enable slideout only on mobile devices.
+
+You should use `mediaqueries`:
+
+```css
+@media screen and (min-width: 780px) {
+  .slideout-panel {
+    margin-left: 256px;
+  }
+
+  .slideout-menu {
+    display: block;
+  }
+
+  .btn-hamburger {
+    display: none;
+  }
+}
+```
+Demo: http://codepen.io/anon/pen/xGEdvQ?editors=100
+
+
 ## With :heart: by
 - Guille Paz (Front-end developer | Web standards lover)
 - E-mail: [guille87paz@gmail.com](mailto:guille87paz@gmail.com)
