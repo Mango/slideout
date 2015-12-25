@@ -207,7 +207,7 @@ Create a new instance of `Slideout`.
 - `[options.duration]` (Number) - The time (milliseconds) to open/close the slideout. Default: `300`.
 - `[options.fx]` (String) - The CSS effect to use when animating the opening and closing of the slideout. Default: `ease`.
 - `[options.padding]` (Number) - Default: `256`.
-- `[options.tolerance]` (Number) - Default: `70`.
+- `[options.tolerance]` (Number) - The number of `px` needed for the menu can be opened completely, otherwise it closes. Default: `70`.
 - `[options.touch]` (Boolean) - Set this option to false to disable Slideout touch events. Default: `true`.
 - `[options.side]` (String) - The side to open the slideout (`left` or `right`). Default: `left`.
 
