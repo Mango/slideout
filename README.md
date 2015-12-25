@@ -361,7 +361,6 @@ var slideout = new Slideout({
 ### How to enable slideout only on mobile devices.
 
 You should use `mediaqueries`:
-
 ```css
 @media screen and (min-width: 780px) {
   .slideout-panel {
@@ -379,6 +378,34 @@ You should use `mediaqueries`:
 ```
 Demo: http://codepen.io/anon/pen/xGEdvQ?editors=100
 
+### How to use slideout with a fixed header.
+
+You should define a two class names: `fixed` and `fixed-open`.
+```css
+.fixed {
+  backface-visibility: hidden;
+  position: fixed;
+  z-index:2;
+  transition: transform 300ms ease;
+}
+
+.fixed-open {
+  transform: translate3d(256px, 0px, 0px);
+}
+```
+
+Then, using slideout's events you should add / remove the `fixed-open` class name from the fixed element.
+```js
+slideout.on('beforeopen', function() {
+  document.querySelector('.fixed').classList.add('fixed-open');
+});
+
+slideout.on('beforeclose', function() {
+  document.querySelector('.fixed').classList.remove('fixed-open');
+});
+```
+
+Demo: http://codepen.io/anon/pen/NqJGBp
 
 ## With :heart: by
 - Guille Paz (Front-end developer | Web standards lover)
