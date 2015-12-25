@@ -222,12 +222,13 @@ Slideout.prototype._initTouchEvents = function() {
 
     if (scrolling || self._preventOpen || typeof eve.touches === 'undefined') { return; }
 
+    var threshold = 20;  //only start to move panel, when user drags for more than threshold pixels
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
     var translateX = self._currentOffsetX = dif_x;
 
-    if (Math.abs(translateX) > self._padding) { return; }
+    if (Math.abs(translateX) > (self._padding + threshold)) { return; }
 
-    if (Math.abs(dif_x) > 20) {
+    if (Math.abs(dif_x) > threshold) {
       self._opening = true;
 
       var oriented_dif_x = dif_x * self._orientation;
@@ -236,6 +237,9 @@ Slideout.prototype._initTouchEvents = function() {
         translateX = dif_x + self._padding * self._orientation;
         self._opening = false;
       }
+
+      var translateX_sign = translateX < 0 ? -1 : 1
+      translateX = translateX - (threshold * translateX_sign);
 
       if (!self._moved && html.className.search('slideout-open') === -1) {
         html.className += ' slideout-open';
