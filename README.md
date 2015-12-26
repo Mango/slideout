@@ -81,6 +81,7 @@ body {
 .slideout-panel {
   position:relative;
   z-index: 1;
+  will-change: transform;
 }
 
 .slideout-open,
@@ -143,6 +144,7 @@ Then you just include Slideout.js and create a new instance with some options:
       .slideout-panel {
         position:relative;
         z-index: 1;
+        will-change: transform;
       }
 
       .slideout-open,
