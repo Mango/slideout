@@ -299,14 +299,28 @@ An instance of Slideout emits the following events:
 - `close`
 - `beforeopen`
 - `open`
+- `translatestart`
 - `translate`
+- `translateend`
 
-The slideout emits `translate` event only when it is opening/closing via touch events.
+The slideout emits `translatestart`, `translate` and `translateend` events only when it is opening/closing via touch events.
 
 ```js
-slideout.on('translate', function(translated) {
-  console.log(translated); // 120 in px
+slideout.on('translatestart', function() {
+  console.log('Start');
 });
+
+slideout.on('translate', function(translated) {
+  console.log('Translate: ' + translated); // 120 in px
+});
+
+slideout.on('translateend', function() {
+  console.log('End');
+});
+
+// 'Start'
+// 'Translate 120'
+// 'End'
 ```
 
 ## npm-scripts

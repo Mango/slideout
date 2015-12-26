@@ -218,6 +218,7 @@ Slideout.prototype._initTouchEvents = function() {
    */
   this._onTouchEndFn = function() {
     if (self._moved) {
+      self.emit('translateend');
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;
@@ -249,6 +250,10 @@ Slideout.prototype._initTouchEvents = function() {
 
       if (self._opened && oriented_dif_x > 0 || !self._opened && oriented_dif_x < 0) {
         return;
+      }
+
+      if (!self._moved) {
+        self.emit('translatestart');
       }
 
       if (oriented_dif_x <= 0) {
