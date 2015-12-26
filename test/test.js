@@ -111,8 +111,7 @@ describe('Slideout', function () {
     });
 
     it('should translateX the panel to the given padding.', function () {
-      var translate3d = exports ? 'translate3d(256px, 0, 0)' : 'translate3d(256px, 0px, 0px)';
-      assert(slideout.panel.style.transform === translate3d);
+      assert(slideout.panel.style.transform === 'translateX(256px)');
       assert(slideout.panel.style.transition.search(/transform 300ms ease/) !== -1);
     });
 

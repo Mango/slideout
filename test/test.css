@@ -14,6 +14,7 @@ body,
 }
 
 .menu {
+  background-color: #1D1F20;
   background-image: linear-gradient(145deg, #1D1F20, #404348);
 }
 
