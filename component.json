@@ -3,7 +3,7 @@
   "repo": "mango/slideout",
   "description": "A touch slideout navigation menu for your mobile web apps.",
   "author": "Guille Paz <guille87paz@gmail.com>",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "twitter": "@mango",
   "keywords": [
     "slideout",
@@ -12,7 +12,7 @@
     "touch"
   ],
   "dependencies": {
-    "pazguille/decouple": "0.0.1",
+    "pazguille/decouple": "0.0.2",
     "Mango/emitter": "0.0.7"
   },
   "development": {},
