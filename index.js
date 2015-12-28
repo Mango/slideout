@@ -60,6 +60,7 @@ function Slideout(options) {
   this._opened = false;
   this._preventOpen = false;
   this._touch = options.touch === undefined ? true : options.touch && true;
+  this._appendBodyClass = options.appendBodyClass === undefined ? true : options.appendBodyClass && true;
 
   // Sets panel
   this.panel = options.panel;
@@ -95,7 +96,9 @@ inherits(Slideout, Emitter);
 Slideout.prototype.open = function() {
   var self = this;
   this.emit('beforeopen');
-  if (html.className.search('slideout-open') === -1) { html.className += ' slideout-open'; }
+  if (this._appendBodyClass && html.className.search('slideout-open') === -1) { 
+    html.className += ' slideout-open'; 
+  }
   this._setTransition();
   this._translateXTo(this._translateTo);
   this._opened = true;
