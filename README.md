@@ -212,6 +212,7 @@ Create a new instance of `Slideout`.
 - `[options.tolerance]` (Number) - The number of `px` needed for the menu can be opened completely, otherwise it closes. Default: `70`.
 - `[options.touch]` (Boolean) - Set this option to false to disable Slideout touch events. Default: `true`.
 - `[options.side]` (String) - The side to open the slideout (`left` or `right`). Default: `left`.
+- `[options.ignore]` (String) - Selector that prevents dragging on matching elements. Default: ``.
 
 ```js
 var slideout = new Slideout({
