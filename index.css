@@ -17,7 +17,7 @@ body {
 }
 
 .slideout-panel {
-  position:relative;
+  position: relative;
   z-index: 1;
   will-change: transform;
 }
