@@ -54,6 +54,7 @@ describe('Slideout', function () {
       '_initTouchEvents',
       '_translateXTo',
       '_setTransition',
+      '_elementIsIgnored',
       'on',
       'once',
       'off',
@@ -189,6 +190,37 @@ describe('Slideout', function () {
       });
       slideout.open();
       setTimeout(function(){ slideout.close(); }, 750);
+    });
+  });
+
+  describe('._elementIsIgnored()', function() {
+    it('should return false when no ignore option.', function(){
+      slideout.destroy();
+      slideout = new Slideout({
+        'panel': doc.getElementById('panel'),
+        'menu': doc.getElementById('menu')
+      });
+      assert(slideout._elementIsIgnored(doc.getElementById('menu')) === false);
+    });
+
+    it('should return false when the provided element is not a children of a ignored path.', function(){
+      slideout.destroy();
+      slideout = new Slideout({
+        'panel': doc.getElementById('panel'),
+        'menu': doc.getElementById('menu'),
+        'ignore': '.menu-section-list'
+      });
+      assert(slideout._elementIsIgnored(doc.getElementById('menu')) === false);
+    });
+
+    it('should return true when the provided element is children of a ignored path.', function(){
+      slideout.destroy();
+      slideout = new Slideout({
+        'panel': doc.getElementById('panel'),
+        'menu': doc.getElementById('menu'),
+        'ignore': '.menu-section-list'
+      });
+      assert(slideout._elementIsIgnored(doc.querySelector('.menu-section-list a')) === true);
     });
   });
 });
