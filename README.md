@@ -392,7 +392,7 @@ You should use `mediaqueries`:
   }
 }
 ```
-Demo: http://codepen.io/anon/pen/xGEdvQ?editors=100
+Demo: http://codepen.io/pazguille/pen/mEdQvX
 
 ### How to use slideout with a fixed header.
 
