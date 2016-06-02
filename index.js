@@ -51,6 +51,8 @@ function inherits(child, uber) {
  */
 function Slideout(options) {
   options = options || {};
+  // Store the options
+  this._options = options;
 
   // Sets default values
   this._startOffsetX = 0;
@@ -69,6 +71,9 @@ function Slideout(options) {
   if(this.panel.className.search('slideout-panel') === -1) { this.panel.className += ' slideout-panel'; }
   if(this.menu.className.search('slideout-menu') === -1) { this.menu.className += ' slideout-menu'; }
 
+  if ((options.itemToMove == 'menu' || options.itemToMove == 'both') && this.menu.className.search('slideout-menu--move') === -1) {
+    this.menu.className += ' slideout-menu--move';
+  }
 
   // Sets options
   this._fx = options.fx || 'ease';
@@ -97,10 +102,16 @@ Slideout.prototype.open = function() {
   this.emit('beforeopen');
   if (html.className.search('slideout-open') === -1) { html.className += ' slideout-open'; }
   this._setTransition();
+  self._recalculateAll();
   this._translateXTo(this._translateTo);
   this._opened = true;
   setTimeout(function() {
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    if (self._options.itemToMove == "panel" || self._options.itemToMove == "both" || self._options.itemToMove == undefined) {
+      self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    }
+    if (self._options.itemToMove == "menu" || self._options.itemToMove == "both") {
+      self.menu.style.transition = self.menu.style['-webkit-transition'] = '';
+    }
     self.emit('open');
   }, this._duration + 50);
   return this;
@@ -120,7 +131,12 @@ Slideout.prototype.close = function() {
   this._opened = false;
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
+    if (self._options.itemToMove == "panel" || self._options.itemToMove == "both" || self._options.itemToMove == undefined) {
+      self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
+    }
+    if (self._options.itemToMove == "menu" || self._options.itemToMove == "both") {
+      self.menu.style.transition = self.menu.style['-webkit-transition'] = self.menu.style[prefix + 'transform'] = self.menu.style.transform = '';
+    }
     self.emit('close');
   }, this._duration + 50);
   return this;
@@ -141,11 +157,52 @@ Slideout.prototype.isOpen = function() {
 };
 
 /**
+ * Recalculates the slide out
+ */
+Slideout.prototype._recalculateAll = function () {
+
+    //this._options.padding = this.menu.clientWidth;
+
+    // Sets default values
+    this._startOffsetX = 0;
+    this._currentOffsetX = 0;
+    this._opening = false;
+    this._moved = false;
+    this._opened = false;
+    this._preventOpen = false;
+    this._touch = this._options.touch === undefined ? true : this._options.touch && true;
+    this._menuTriggerWidth = this._options.menuTriggerWidth === undefined ? 70 : this._options.menuTriggerWidth;
+
+    // Sets panel
+    this.panel = this._options.panel;
+    this.menu = this._options.menu;
+
+    // Sets  classnames
+    if (this.panel.className.search('slideout-panel') === -1) { this.panel.className += ' slideout-panel'; }
+    if (this.menu.className.search('slideout-menu') === -1) { this.menu.className += ' slideout-menu'; }
+
+
+    // Sets options
+    this._fx = this._options.fx || 'ease';
+    this._duration = parseInt(this._options.duration, 10) || 300;
+    this._tolerance = parseInt(this._options.tolerance, 10) || 70;
+    this._padding = this._translateTo = parseInt(this._options.padding, 10) || 256;
+    this._orientation = this._options.side === 'right' ? -1 : 1;
+    this._translateTo *= this._orientation;
+}
+
+/**
  * Translates panel and updates currentOffset with a given X point
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+  if (this._options.itemToMove == "panel" || this._options.itemToMove == "both" || this._options.itemToMove == undefined) {
+    this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+  }
+  if (this._options.itemToMove == "menu" || this._options.itemToMove == "both") {
+    this.menu.style[prefix + 'transform'] = this.menu.style.transform = 'translate3d(' + (translateX - this.menu.clientWidth) + 'px, 0, 0)';
+  }
+
   return this;
 };
 
@@ -153,7 +210,13 @@ Slideout.prototype._translateXTo = function(translateX) {
  * Set transition properties
  */
 Slideout.prototype._setTransition = function() {
-  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  if (this._options.itemToMove == "panel" || this._options.itemToMove == "both" || this._options.itemToMove == undefined) {
+    this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  }
+  if (this._options.itemToMove == "menu" || this._options.itemToMove == "both") {
+    this.menu.style[prefix + 'transition'] = this.menu.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  }
+
   return this;
 };
 
@@ -231,6 +294,10 @@ Slideout.prototype._initTouchEvents = function() {
    */
   this._onTouchMoveFn = function(eve) {
 
+    if (self._startOffsetX > self._menuTriggerWidth && !self.isOpen() && self._options.itemToMove == 'menu') {
+      return;
+    }
+
     if (scrolling || self._preventOpen || typeof eve.touches === 'undefined') {
       return;
     }
@@ -265,7 +332,13 @@ Slideout.prototype._initTouchEvents = function() {
         html.className += ' slideout-open';
       }
 
-      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
+      if (self._options.itemToMove == "panel" || self._options.itemToMove == "both" || self._options.itemToMove == undefined) {
+        self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
+      }
+      if (self._options.itemToMove == "menu" || self._options.itemToMove == "both") {
+        self.menu.style[prefix + 'transform'] = self.menu.style.transform = 'translate3d(' + (translateX - self.menu.clientWidth) + 'px, 0, 0)';
+      }
+
       self.emit('translate', translateX);
       self._moved = true;
     }
