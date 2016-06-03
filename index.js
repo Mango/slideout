@@ -45,6 +45,19 @@ function extend(destination, from) {
 function inherits(child, uber) {
   child.prototype = extend(child.prototype || {}, uber.prototype);
 }
+var matches = function (element, selector) {
+  var matches = element.matches ||
+         element.mozMatchesSelector ||
+         element.msMatchesSelector ||
+         element.oMatchesSelector ||
+         element.webkitMatchesSelector;
+
+  if (!matches) {
+    return false
+  }
+
+  return matches.call(element, selector)
+};
 
 /**
  * Slideout constructor
@@ -60,6 +73,7 @@ function Slideout(options) {
   this._opened = false;
   this._preventOpen = false;
   this._touch = options.touch === undefined ? true : options.touch && true;
+  this._ignore = options.ignore;
 
   // Sets panel
   this.panel = options.panel;
@@ -231,7 +245,7 @@ Slideout.prototype._initTouchEvents = function() {
    */
   this._onTouchMoveFn = function(eve) {
 
-    if (scrolling || self._preventOpen || typeof eve.touches === 'undefined') {
+    if (scrolling || self._preventOpen || typeof eve.touches === 'undefined' || self._elementIsIgnored(eve.target)) {
       return;
     }
 
@@ -270,6 +284,19 @@ Slideout.prototype._initTouchEvents = function() {
       self._moved = true;
     }
 
+  };
+
+  this._elementIsIgnored = function (el) {
+    if (self._ignore) {
+      while (el) {
+        if (matches(el, self._ignore)) {
+          return true;
+        }
+        el = el.parentNode;
+      }
+    }
+
+    return false;
   };
 
   this.panel.addEventListener(touch.move, this._onTouchMoveFn);
