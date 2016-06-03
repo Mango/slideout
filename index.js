@@ -75,6 +75,7 @@ function Slideout(options) {
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
+  this._unit = options.unit || 'px';
   this._orientation = options.side === 'right' ? -1 : 1;
   this._translateTo *= this._orientation;
 
@@ -145,7 +146,7 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + this._unit + ')';
   return this;
 };
 
@@ -265,7 +266,7 @@ Slideout.prototype._initTouchEvents = function() {
         html.className += ' slideout-open';
       }
 
-      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
+      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + self._unit + ')';
       self.emit('translate', translateX);
       self._moved = true;
     }
