@@ -14,6 +14,11 @@ body {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   display: none;
+
+}
+.slideout-menu--move {
+  transform: translate(-100%,0);
+  z-index: 2;
 }
 
 .slideout-panel {
