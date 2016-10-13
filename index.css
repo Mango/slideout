@@ -10,10 +10,29 @@ body {
   bottom: 0;
   right: 0;
   z-index: 0;
+  display: none;
+
   width: 256px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  display: none;
+}
+
+.slideout-right-menu {
+  position: fixed;
+  left: auto;
+  right: 0;
+}
+
+.slideout-slide-menu {
+  left: -256px;
+  display: block;
+  z-index: 10;
+  will-change: transform;
+}
+
+.slideout-slide-menu.slideout-right-menu {
+  right: -256px;
+  left: auto;
 }
 
 .slideout-panel {

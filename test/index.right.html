@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="test.css">
     <link rel="stylesheet" href="../index.css">
     <style>
-      .slideout-menu { left: auto; }
       .btn-hamburger { left: auto; right: 12px;}
       .box { height: 1500px; }
     </style>
@@ -21,7 +20,7 @@
   </head>
   <body>
 
-    <nav id="menu" class="menu">
+    <nav id="menu" class="menu slideout-right-menu slideout-slide-menu">
       <a href="https://github.com/mango/slideout" target="_blank">
         <header class="menu-header">
           <span class="menu-header-title">Tests</span>
@@ -90,6 +89,7 @@
         var slideout = new Slideout({
           'panel': document.getElementById('panel'),
           'menu': document.getElementById('menu'),
+          'mode': 'slide',
           'side': 'right'
         });
 
