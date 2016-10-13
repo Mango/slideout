@@ -14,9 +14,7 @@ var beforecloseEvent = false;
 var closeEvent = false;
 var slideout = new Slideout({
   'panel': doc.getElementById('panel'),
-  'menu': doc.getElementById('menu'),
-  'side': 'left',
-  'mode': 'slide'
+  'menu': doc.getElementById('menu')
 });
 
 slideout
@@ -152,6 +150,7 @@ describe('Slideout', function () {
     });
 
     it('should translateX the panel to 0.', function () {
+      // This won't pass. Needs rewriting.
       assert(slideout.panel.style.transform === '');
       assert(slideout.panel.style.transition === '');
     });
@@ -187,9 +186,7 @@ describe('Slideout', function () {
       slideout.destroy();
       slideout = new Slideout({
         'panel': doc.getElementById('panel'),
-        'menu': doc.getElementById('menu'),
-        'side': 'left',
-        'mode': 'slide'
+        'menu': doc.getElementById('menu')
       });
       slideout.open();
       setTimeout(function(){ slideout.close(); }, 750);
