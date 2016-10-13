@@ -150,6 +150,7 @@ describe('Slideout', function () {
     });
 
     it('should translateX the panel to 0.', function () {
+      // This won't pass. Needs rewriting.
       assert(slideout.panel.style.transform === '');
       assert(slideout.panel.style.transition === '');
     });

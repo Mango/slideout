@@ -78,6 +78,9 @@ function Slideout(options) {
   this._orientation = options.side === 'right' ? -1 : 1;
   this._translateTo *= this._orientation;
 
+  // Slideover fork feature
+  this._mode = options.mode || 'push';
+
   // Init touch events
   if (this._touch) {
     this._initTouchEvents();
@@ -100,7 +103,14 @@ Slideout.prototype.open = function() {
   this._translateXTo(this._translateTo);
   this._opened = true;
   setTimeout(function() {
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+
+    // Slideover fork feature
+    if(this._mode === 'push') {
+      self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    } else {
+      self.menu.style.transition = self.menu.style['-webkit-transition'] = '';
+    }
+
     self.emit('open');
   }, this._duration + 50);
   return this;
@@ -120,7 +130,14 @@ Slideout.prototype.close = function() {
   this._opened = false;
   setTimeout(function() {
     html.className = html.className.replace(/ slideout-open/, '');
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
+
+    // Slideover fork feature
+    if(this._mode === 'push') {
+      self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
+    } else {
+      self.menu.style.transition = self.menu.style['-webkit-transition'] = self.menu.style[prefix + 'transform'] = self.menu.style.transform = '';
+    }
+
     self.emit('close');
   }, this._duration + 50);
   return this;
@@ -145,7 +162,14 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+
+  // Slideover fork feature
+  if(this._mode === 'push') {
+    this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+  } else {
+    this.menu.style[prefix + 'transform'] = this.menu.style.transform = 'translateX(' + translateX + 'px)';
+  }
+
   return this;
 };
 
@@ -153,7 +177,14 @@ Slideout.prototype._translateXTo = function(translateX) {
  * Set transition properties
  */
 Slideout.prototype._setTransition = function() {
-  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+
+  // Slideover fork feature
+  if(this._mode === 'push') {
+    this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  } else {
+    this.menu.style[prefix + 'transition'] = this.menu.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  }
+
   return this;
 };
 
@@ -198,7 +229,15 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
-    self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
+
+
+    // Slideover fork feature
+    if(self._mode === 'push') {
+      self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
+    } else {
+      self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.style.transform !== ''));
+    }
+
   };
 
   this.panel.addEventListener(touch.start, this._resetTouchFn);
@@ -265,7 +304,15 @@ Slideout.prototype._initTouchEvents = function() {
         html.className += ' slideout-open';
       }
 
-      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
+
+      // Slideover fork feature
+      if(self._mode === 'push') {
+        self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
+      } else {
+        self.menu.style[prefix + 'transform'] = self.menu.style.transform = 'translateX(' + translateX + 'px)';
+      }
+
+
       self.emit('translate', translateX);
       self._moved = true;
     }
