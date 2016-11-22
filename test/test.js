@@ -84,7 +84,8 @@ describe('Slideout', function () {
       '_duration',
       '_tolerance',
       '_padding',
-      '_touch'
+      '_touch',
+      '_side'
     ];
     var i = 0;
     var len = properties.length;
@@ -100,7 +101,9 @@ describe('Slideout', function () {
 
   it('should add classnames to panel and menu DOM elements.', function () {
     assert(slideout.panel.className.search('slideout-panel') !== -1);
+    assert(slideout.panel.className.search('slideout-panel-left') !== -1);
     assert(slideout.menu.className.search('slideout-menu') !== -1);
+    assert(slideout.menu.className.search('slideout-menu-left') !== -1);
   });
 
   describe('.open()', function () {
