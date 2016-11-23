@@ -1,8 +1,9 @@
 if (exports) {
   var fs = require('fs');
-  var jsdom = require('jsdom');
+  var jsdom = require('jsdom').jsdom;
   var html = fs.readFileSync('./test/index.html', 'utf-8');
-  window = jsdom.jsdom(html).parentWindow;
+  var document = jsdom(html);
+  window = document.defaultView;
   var Slideout = require('../');
   var assert = require('better-assert');
 }

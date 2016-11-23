@@ -76,11 +76,17 @@ function Slideout(options) {
   this.menu = options.menu;
 
   // Sets  classnames
-  if (this.panel.className.search('slideout-panel') === -1) {
-    this.panel.className += (' slideout-panel slideout-panel-' + this._side);
+  if (!this.panel.classList.contains('slideout-panel')) {
+    this.panel.classList.add('slideout-panel');
   }
-  if (this.menu.className.search('slideout-menu') === -1) {
-    this.menu.className += (' slideout-menu slideout-menu-' + this._side);
+  if (!this.panel.classList.contains('slideout-panel-' + this._side)) {
+    this.panel.classList.add('slideout-panel-' + this._side);
+  }
+  if (!this.menu.classList.contains('slideout-menu')) {
+    this.menu.classList.add('slideout-menu');
+  }
+  if (!this.menu.classList.contains('slideout-menu-' + this._side)) {
+    this.menu.classList.add('slideout-menu-' + this._side);
   }
 
   // Sets options
@@ -108,8 +114,8 @@ inherits(Slideout, Emitter);
 Slideout.prototype.open = function() {
   var self = this;
   this.emit('beforeopen');
-  if (html.className.search('slideout-open') === -1) {
-    html.className += ' slideout-open';
+  if (!html.classList.contains('slideout-open')) {
+    html.classList.add('slideout-open');
   }
   this._setTransition();
   this._translateXTo(this._translateTo);
@@ -134,7 +140,7 @@ Slideout.prototype.close = function() {
   this._translateXTo(0);
   this._opened = false;
   setTimeout(function() {
-    html.className = html.className.replace(/(\s)?slideout-open/, '');
+    html.classList.remove('slideout-open');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
     self.emit('close');
   }, this._duration + 50);
@@ -280,8 +286,8 @@ Slideout.prototype._initTouchEvents = function() {
         self._opening = false;
       }
 
-      if (!self._moved && html.className.search('slideout-open') === -1) {
-        html.className += ' slideout-open';
+      if (!(self._moved && html.classList.contains('slideout-open'))) {
+        html.classList.add('slideout-open');
       }
 
       self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
