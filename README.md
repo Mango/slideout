@@ -24,7 +24,7 @@
 Slideout is available on cdnjs
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.13/slideout.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.0/slideout.min.js"></script>
 ```
 
 Also you can use one of many package managers
