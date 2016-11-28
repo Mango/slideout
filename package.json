@@ -3,12 +3,11 @@
   "repository": "git@github.com:mango/slideout.git",
   "description": "A touch slideout navigation menu for your mobile web apps.",
   "author": "Guille Paz <guille87paz@gmail.com>",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "build": "node browserify.js",
     "test": "npm run build && istanbul cover _mocha",
     "dist": "node browserify.js && uglifyjs ./dist/slideout.js -m -o ./dist/slideout.min.js",
-    "gzip": "gzip -9 ./dist/slideout.min.js && mv ./dist/slideout.min.js.gz ./dist/slideout.min.js",
     "hint": "jshint index.js"
   },
   "dependencies": {
