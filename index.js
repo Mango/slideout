@@ -45,6 +45,15 @@ function extend(destination, from) {
 function inherits(child, uber) {
   child.prototype = extend(child.prototype || {}, uber.prototype);
 }
+function hasIgnoredElements(el) {
+  while (el.parentNode) {
+    if (el.getAttribute('data-slideout-ignore') !== null) {
+      return el;
+    }
+    el = el.parentNode;
+  }
+  return null;
+}
 
 /**
  * Slideout constructor
@@ -60,22 +69,32 @@ function Slideout(options) {
   this._opened = false;
   this._preventOpen = false;
   this._touch = options.touch === undefined ? true : options.touch && true;
+  this._side = options.side || 'left';
 
   // Sets panel
   this.panel = options.panel;
   this.menu = options.menu;
 
   // Sets  classnames
-  if(this.panel.className.search('slideout-panel') === -1) { this.panel.className += ' slideout-panel'; }
-  if(this.menu.className.search('slideout-menu') === -1) { this.menu.className += ' slideout-menu'; }
-
+  if (!this.panel.classList.contains('slideout-panel')) {
+    this.panel.classList.add('slideout-panel');
+  }
+  if (!this.panel.classList.contains('slideout-panel-' + this._side)) {
+    this.panel.classList.add('slideout-panel-' + this._side);
+  }
+  if (!this.menu.classList.contains('slideout-menu')) {
+    this.menu.classList.add('slideout-menu');
+  }
+  if (!this.menu.classList.contains('slideout-menu-' + this._side)) {
+    this.menu.classList.add('slideout-menu-' + this._side);
+  }
 
   // Sets options
   this._fx = options.fx || 'ease';
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
-  this._orientation = options.side === 'right' ? -1 : 1;
+  this._orientation = this._side === 'right' ? -1 : 1;
   this._translateTo *= this._orientation;
 
   // Init touch events
@@ -95,7 +114,9 @@ inherits(Slideout, Emitter);
 Slideout.prototype.open = function() {
   var self = this;
   this.emit('beforeopen');
-  if (html.className.search('slideout-open') === -1) { html.className += ' slideout-open'; }
+  if (!html.classList.contains('slideout-open')) {
+    html.classList.add('slideout-open');
+  }
   this._setTransition();
   this._translateXTo(this._translateTo);
   this._opened = true;
@@ -119,7 +140,7 @@ Slideout.prototype.close = function() {
   this._translateXTo(0);
   this._opened = false;
   setTimeout(function() {
-    html.className = html.className.replace(/ slideout-open/, '');
+    html.classList.remove('slideout-open');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
     self.emit('close');
   }, this._duration + 50);
@@ -230,8 +251,12 @@ Slideout.prototype._initTouchEvents = function() {
    * Translates panel on touchmove
    */
   this._onTouchMoveFn = function(eve) {
-
-    if (scrolling || self._preventOpen || typeof eve.touches === 'undefined') {
+    if (
+      scrolling ||
+      self._preventOpen ||
+      typeof eve.touches === 'undefined' ||
+      hasIgnoredElements(eve.target)
+    ) {
       return;
     }
 
@@ -261,8 +286,8 @@ Slideout.prototype._initTouchEvents = function() {
         self._opening = false;
       }
 
-      if (!self._moved && html.className.search('slideout-open') === -1) {
-        html.className += ' slideout-open';
+      if (!(self._moved && html.classList.contains('slideout-open'))) {
+        html.classList.add('slideout-open');
       }
 
       self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';

@@ -73,13 +73,13 @@ body {
   right: 0;
   z-index: 0;
   width: 256px;
-  overflow-y: auto;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   display: none;
 }
 
 .slideout-panel {
-  position:relative;
+  position: relative;
   z-index: 1;
   will-change: transform;
 }
@@ -136,13 +136,13 @@ Then you just include Slideout.js and create a new instance with some options:
         right: 0;
         z-index: 0;
         width: 256px;
-        overflow-y: auto;
+        overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
         display: none;
       }
 
       .slideout-panel {
-        position:relative;
+        position: relative;
         z-index: 1;
         will-change: transform;
       }
@@ -429,6 +429,30 @@ slideout.on('beforeclose', function() {
 ```
 
 Demo: http://codepen.io/anon/pen/NqJGBp
+
+
+### How to disable dragging on some elements.
+You can use the attribute `data-slideout-ignore` to disable dragging on some elements:
+
+```html
+<nav id="menu">
+  <header>
+    <h2>Menu</h2>
+  </header>
+</nav>
+
+<main id="panel">
+  <header>
+    <h2>Panel</h2>
+  </header>
+  <div id="google-maps-container" data-slideout-ignore>
+    <h2>Map</h2>
+    <iframe>...</iframe>
+  </div>
+</main>
+```
+
+Demo: [TODO]
 
 ## With :heart: by
 - Guille Paz (Front-end developer | Web standards lover)
