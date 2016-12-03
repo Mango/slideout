@@ -330,6 +330,21 @@ slideout.on('translateend', function() {
 // 'End'
 ```
 
+## `data-slideout-ignore` attribute
+You can use the special HTML attribute `data-slideout-ignore` to disable dragging on some elements. For example, if you have to prevent `slideout` will open when touch on carousels, maps, iframes, etc.
+
+```html
+<main id="panel">
+  <header>
+    <h2>Panel</h2>
+  </header>
+  <div id="carousel" data-slideout-ignore>
+    <h2>Carousel</h2>
+    ...
+  </div>
+</main>
+```
+
 ## npm-scripts
 ```
 $ npm run build
@@ -445,14 +460,14 @@ You can use the attribute `data-slideout-ignore` to disable dragging on some ele
   <header>
     <h2>Panel</h2>
   </header>
-  <div id="google-maps-container" data-slideout-ignore>
-    <h2>Map</h2>
-    <iframe>...</iframe>
+  <div id="carousel" data-slideout-ignore>
+    <h2>Carousel</h2>
+    ...
   </div>
 </main>
 ```
 
-Demo: [TODO]
+Demo: http://codepen.io/pazguille/pen/PbQpEX
 
 ## With :heart: by
 - Guille Paz (Front-end developer | Web standards lover)
