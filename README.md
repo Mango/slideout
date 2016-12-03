@@ -215,6 +215,7 @@ Create a new instance of `Slideout`.
     - `ease-in-out`
     - `step-start`
     - `step-end`
+    - [`cubic-bezier`](http://cubic-bezier.com/)
 - `[options.padding]` (Number) - Default: `256`.
 - `[options.tolerance]` (Number) - The number of `px` needed for the menu can be opened completely, otherwise it closes. Default: `70`.
 - `[options.touch]` (Boolean) - Set this option to false to disable Slideout touch events. Default: `true`.
@@ -225,7 +226,8 @@ var slideout = new Slideout({
   'panel': document.getElementById('main'),
   'menu': document.getElementById('menu'),
   'padding': 256,
-  'tolerance': 70
+  'tolerance': 70,
+  'fx': 'cubic-bezier(.32,2,.55,.27)'
 });
 ```
 
