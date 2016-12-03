@@ -467,7 +467,47 @@ You can use the attribute `data-slideout-ignore` to disable dragging on some ele
 </main>
 ```
 
-Demo: http://codepen.io/pazguille/pen/PbQpEX
+### How to add an overlay to close the menu on click.
+You can do that using the powerful `slideout` API and a little extra CSS:
+
+```css
+.panel:before {
+  content: '';
+  display: block;
+  background-color: rgba(0,0,0,0);
+  transition: background-color 0.5s ease-in-out;
+}
+
+.panel-open:before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0,0,0,.5);
+  z-index: 99;
+}
+```
+
+```js
+function close(eve) {
+  eve.preventDefault();
+  slideout.close();
+}
+
+slideout
+  .on('beforeopen', function() {
+    this.panel.classList.add('panel-open');
+  })
+  .on('open', function() {
+    this.panel.addEventListener('click', close);
+  })
+  .on('beforeclose', function() {
+    this.panel.classList.remove('panel-open');
+    this.panel.removeEventListener('click', close);
+  });
+```
+
+Demo: http://codepen.io/pazguille/pen/BQYRYK
 
 ## With :heart: by
 - Guille Paz (Front-end developer | Web standards lover)
