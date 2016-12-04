@@ -34,6 +34,20 @@ var prefix = (function prefix() {
   if ('KhtmlOpacity' in styleDeclaration) { return '-khtml-'; }
   return '';
 }());
+var isBadIE = (function isBadIE() {
+  var agent = navigator.userAgent;
+  var msieIndex = agent.indexOf('MSIE');
+  var version = 0;
+
+  if (msieIndex > 0) {
+    version = parseInt(agent.substring(msieIndex + 5, agent.indexOf(".", msieIndex)));
+  } else if (!!agent.match(/Trident\/7\./)) {
+    version = 11;
+  }
+
+  return version > 0;
+}());
+
 function extend(destination, from) {
   for (var prop in from) {
     if (from[prop]) {
@@ -96,6 +110,11 @@ function Slideout(options) {
   this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
   this._orientation = this._side === 'right' ? -1 : 1;
   this._translateTo *= this._orientation;
+
+  // Lol IE <= 11
+  if (isBadIE) {
+    this._translateXTo(0); // can't animate left from auto
+  }
 
   // Init touch events
   if (this._touch) {
@@ -166,7 +185,11 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+  if (isBadIE) {
+    this.panel.style['left'] = translateX + 'px';
+  } else {
+    this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+  }
   return this;
 };
 
@@ -174,7 +197,11 @@ Slideout.prototype._translateXTo = function(translateX) {
  * Set transition properties
  */
 Slideout.prototype._setTransition = function() {
-  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  if (isBadIE) {
+    this.panel.style.transition = 'left ' + this._duration + 'ms ' + this._fx;
+  } else {
+    this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  }
   return this;
 };
 
