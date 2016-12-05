@@ -68,12 +68,20 @@ function Slideout(options) {
   this._moved = false;
   this._opened = false;
   this._preventOpen = false;
-  this._touch = options.touch === undefined ? true : options.touch && true;
-  this._side = options.side || 'left';
 
   // Sets panel
   this.panel = options.panel;
   this.menu = options.menu;
+
+  // Sets options
+  this._touch = options.touch === undefined ? true : options.touch && true;
+  this._side = options.side || 'left';
+  this._easing = options.fx || options.easing || 'ease';
+  this._duration = parseInt(options.duration, 10) || 300;
+  this._tolerance = parseInt(options.tolerance, 10) || 70;
+  this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
+  this._orientation = this._side === 'right' ? -1 : 1;
+  this._translateTo *= this._orientation;
 
   // Sets  classnames
   if (!this.panel.classList.contains('slideout-panel')) {
@@ -88,14 +96,6 @@ function Slideout(options) {
   if (!this.menu.classList.contains('slideout-menu-' + this._side)) {
     this.menu.classList.add('slideout-menu-' + this._side);
   }
-
-  // Sets options
-  this._fx = options.fx || 'ease';
-  this._duration = parseInt(options.duration, 10) || 300;
-  this._tolerance = parseInt(options.tolerance, 10) || 70;
-  this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
-  this._orientation = this._side === 'right' ? -1 : 1;
-  this._translateTo *= this._orientation;
 
   // Init touch events
   if (this._touch) {
@@ -174,7 +174,7 @@ Slideout.prototype._translateXTo = function(translateX) {
  * Set transition properties
  */
 Slideout.prototype._setTransition = function() {
-  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._easing;
   return this;
 };
 

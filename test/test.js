@@ -15,7 +15,7 @@ var beforecloseEvent = false;
 var closeEvent = false;
 var slideout = new Slideout({
   'panel': doc.getElementById('panel'),
-  'menu': doc.getElementById('menu')
+  'menu': doc.getElementById('menu'),
 });
 
 slideout
@@ -81,7 +81,7 @@ describe('Slideout', function () {
       '_opening',
       '_moved',
       '_opened',
-      '_fx',
+      '_easing',
       '_duration',
       '_tolerance',
       '_padding',

@@ -67,21 +67,30 @@ body {
 
 .slideout-menu {
   position: fixed;
-  left: 0;
   top: 0;
   bottom: 0;
-  right: 0;
-  z-index: 0;
   width: 256px;
+  min-height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  z-index: 0;
   display: none;
+}
+
+.slideout-menu-left {
+  left: 0;
+}
+
+.slideout-menu-right {
+  right: 0;
 }
 
 .slideout-panel {
   position: relative;
   z-index: 1;
   will-change: transform;
+  background-color: #FFF; /* A background-color is required */
+  min-height: 100vh;
 }
 
 .slideout-open,
@@ -196,7 +205,7 @@ Then you just include Slideout.js and create a new instance with some options:
 - Firefox (Android, desktop)
 - Safari (IOS, Android, desktop)
 - Opera (desktop)
-- IE 10+ (desktop)
+- IE 10+ (desktop and mobile)
 
 ## API
 
@@ -382,14 +391,7 @@ $('.toggle-button').on('click', function() {
 
 ### How to open slideout from right side.
 
-You should define `left: auto` on the class `.slideout-menu`.
-```css
-.slideout-menu {
-  left: auto;
-}
-```
-
-Then, use the `side` option with the value `right`.
+You should use the `side` option with the value `right`.
 ```js
 var slideout = new Slideout({
   'panel': document.getElementById('content'),
