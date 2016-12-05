@@ -216,7 +216,7 @@ Create a new instance of `Slideout`.
 - `options.panel` (HTMLElement) - The DOM element that contains all your application content (`.slideout-panel`).
 - `options.menu` (HTMLElement) - The DOM element that contains your menu application (`.slideout-menu`).
 - `[options.duration]` (Number) - The time (milliseconds) to open/close the slideout. Default: `300`.
-- `[options.fx]` (String) - The CSS effect to use when animating the opening and closing of the slideout. Default: `ease`. Possible values:
+- `[options.easing]` (String) - The CSS effect to use when animating the opening and closing of the slideout. Default: `ease`. Possible values:
     - `ease`
     - `linear`
     - `ease-in`
@@ -236,7 +236,7 @@ var slideout = new Slideout({
   'menu': document.getElementById('menu'),
   'padding': 256,
   'tolerance': 70,
-  'fx': 'cubic-bezier(.32,2,.55,.27)'
+  'easing': 'cubic-bezier(.32,2,.55,.27)'
 });
 ```
 
