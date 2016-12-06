@@ -422,32 +422,46 @@ Demo: http://codepen.io/pazguille/pen/mEdQvX
 
 ### How to use slideout with a fixed header.
 
-You should define a two class names: `fixed` and `fixed-open`.
+First, you should define the styles for your fixed header:
 ```css
-.fixed {
-  backface-visibility: hidden;
+.fixed-header {
   position: fixed;
-  z-index:2;
-  transition: transform 300ms ease;
-}
-
-.fixed-open {
-  transform: translate3d(256px, 0px, 0px);
+  width: 100%;
+  height: 50px;
+  backface-visibility: hidden;
+  z-index: 2;
+  background-color: red;
 }
 ```
 
-Then, using slideout's events you should add / remove the `fixed-open` class name from the fixed element.
+Then, using slideout's events you should translate the fixed header:
 ```js
-slideout.on('beforeopen', function() {
-  document.querySelector('.fixed').classList.add('fixed-open');
+var fixed = document.querySelector('.fixed-header');
+
+slideout.on('translate', function(translated) {
+  fixed.style.transform = 'translateX(' + translated + 'px)';
 });
 
-slideout.on('beforeclose', function() {
-  document.querySelector('.fixed').classList.remove('fixed-open');
+slideout.on('beforeopen', function () {
+  fixed.style.transition = 'transform 300ms ease';
+  fixed.style.transform = 'translateX(256px)';
+});
+
+slideout.on('beforeclose', function () {
+  fixed.style.transition = 'transform 300ms ease';
+  fixed.style.transform = 'translateX(0px)';
+});
+
+slideout.on('open', function () {
+  fixed.style.transition = '';
+});
+
+slideout.on('close', function () {
+  fixed.style.transition = '';
 });
 ```
 
-Demo: http://codepen.io/anon/pen/NqJGBp
+Demo: http://codepen.io/pazguille/pen/ZBxdgw
 
 
 ### How to disable dragging on some elements.
