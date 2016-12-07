@@ -1,7 +1,5 @@
 <!doctype html>
-<!--[if IE 8]><html class="ie8 lt-ie10"><![endif]-->
-<!--[if IE 9]><html class="ie9 lt-ie10"><![endif]-->
-<!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles/styles.css">
@@ -27,19 +25,14 @@
   <body>
 
     <nav id="menu" class="menu">
-      <a href="https://github.com/mango/slideout" target="_blank">
-        <header class="menu-header">
-          <span class="menu-header-title">View on Github</span>
-        </header>
-      </a>
-
       <section class="menu-section">
         <h3 class="menu-section-title">Docs</h3>
         <ul class="menu-section-list">
           <li><a href="https://github.com/mango/slideout#installation" target="_blank">Installation</a></li>
           <li><a href="https://github.com/mango/slideout#usage" target="_blank">Usage</a></li>
           <li><a href="https://github.com/mango/slideout#api" target="_blank">API</a></li>
-          <li><a href="https://github.com/mango/slideout#npm-scripts" target="_blank">npm-scripts</a></li>
+          <li><a href="https://github.com/mango/slideout#browser-support" target="_blank">Browser Support</a></li>
+          <li><a href="https://github.com/mango/slideout#faq" target="_blank">FAQ</a></li>
         </ul>
       </section>
 
@@ -48,22 +41,15 @@
         <ul class="menu-section-list">
           <li><a href="https://github.com/mango/slideout" target="_blank">Fork it</a></li>
           <li><a href="https://github.com/mango/slideout/issues/new" target="_blank">Create an issue</a></li>
-          <li><a href="https://github.com/mango/slideout/releases/">Download</a></li>
-        </ul>
-      </section>
-
-      <section class="menu-section">
-        <h3 class="menu-section-title">Mango</h3>
-        <ul class="menu-section-list">
-          <li><a href="https://getmango.com" target="_blank">About Mango</a></li>
-          <li><a href="https://twitter.com/getmango" target="_blank">Follow Us</a></li>
+          <li><a href="https://github.com/mango/slideout/releases/" target="_blank">Download</a></li>
+          <li><a href="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js" target="_blank">CDN</a></li>
         </ul>
       </section>
     </nav>
 
     <main id="main" class="panel">
-
       <header class="panel-header">
+        <a href="https://github.com/mango/slideout" target="_blank" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
         <button class="btn-hamburger js-slideout-toggle">
           <span class="tooltip">Open slideout</span>
         </button>
@@ -89,7 +75,7 @@
             <li>Native scrolling.</li>
             <li>Easy customization.</li>
             <li>CSS transforms &amp; transitions.</li>
-            <li>Just 4 Kb!</li>
+            <li>Just 2 Kb!</li>
           </ul>
         </div>
       </section>
@@ -132,20 +118,30 @@ body {
 
 .slideout-menu {
   position: fixed;
-  left: 0;
   top: 0;
   bottom: 0;
-  right: 0;
-  z-index: 0;
   width: 256px;
-  overflow-y: auto;
+  min-height: 100vh;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  z-index: 0;
   display: none;
+}
+
+.slideout-menu-left {
+  left: 0;
+}
+
+.slideout-menu-right {
+  right: 0;
 }
 
 .slideout-panel {
   position: relative;
   z-index: 1;
+  will-change: transform;
+  background-color: #FFF; /* A background-color is required */
+  min-height: 100vh;
 }
 
 .slideout-open,
@@ -176,15 +172,15 @@ body {
       <footer class="panel-footer">
         <div class="box share-buttons">
           <iframe id="github-button" data-aload="https://ghbtns.com/github-btn.html?user=mango&amp;repo=slideout&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="152" height="30"></iframe>
-          <iframe id="twitter" allowtransparency="true" frameborder="0" width="100" height="22" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.html?text=Slideout.js%3a%20A%20touch%20slideout%20navigation%20menu%20for%20your%20mobile%20web%20apps&url=https://mango.github.io/slideout"></iframe>
+          <iframe id="twitter" allowtransparency="true" frameborder="0" width="62" height="22" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.html?text=Slideout.js%3a%20A%20touch%20slideout%20navigation%20menu%20for%20your%20mobile%20web%20apps&url=https://mango.github.io/slideout"></iframe>
         </div>
-        <p>with <span class="heart">❤</span> by <a href="https://getmango.com/en" target="_blank">Mango</a></p>
+        <p>with <span class="heart">❤</span> by <a href="https://twitter.com/pazguille" target="_blank">pazguille</a></p>
       </footer>
     </main>
 
     <script>
       // slideout.js
-      !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var t;"undefined"!=typeof window?t=window:"undefined"!=typeof global?t=global:"undefined"!=typeof self&&(t=self),t.Slideout=e()}}(function(){var e,t,n;return function i(e,t,n){function o(r,a){if(!t[r]){if(!e[r]){var u=typeof require=="function"&&require;if(!a&&u)return u(r,!0);if(s)return s(r,!0);var l=new Error("Cannot find module '"+r+"'");throw l.code="MODULE_NOT_FOUND",l}var f=t[r]={exports:{}};e[r][0].call(f.exports,function(t){var n=e[r][1][t];return o(n?n:t)},f,f.exports,i,e,t,n)}return t[r].exports}var s=typeof require=="function"&&require;for(var r=0;r<n.length;r++)o(n[r]);return o}({1:[function(e,t,n){"use strict";var i=e("decouple");var o=e("emitter");var s;var r=false;var a=window.document;var u=a.documentElement;var l=window.navigator.msPointerEnabled;var f={start:l?"MSPointerDown":"touchstart",move:l?"MSPointerMove":"touchmove",end:l?"MSPointerUp":"touchend"};var c=function v(){var e=/^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;var t=a.getElementsByTagName("script")[0].style;for(var n in t){if(e.test(n)){return"-"+n.match(e)[0].toLowerCase()+"-"}}if("WebkitOpacity"in t){return"-webkit-"}if("KhtmlOpacity"in t){return"-khtml-"}return""}();function h(e,t){for(var n in t){if(t[n]){e[n]=t[n]}}return e}function p(e,t){e.prototype=h(e.prototype||{},t.prototype)}function d(e){e=e||{};this._startOffsetX=0;this._currentOffsetX=0;this._opening=false;this._moved=false;this._opened=false;this._preventOpen=false;this._touch=e.touch===undefined?true:e.touch&&true;this.panel=e.panel;this.menu=e.menu;if(this.panel.className.search("slideout-panel")===-1){this.panel.className+=" slideout-panel"}if(this.menu.className.search("slideout-menu")===-1){this.menu.className+=" slideout-menu"}this._fx=e.fx||"ease";this._duration=parseInt(e.duration,10)||300;this._tolerance=parseInt(e.tolerance,10)||70;this._padding=this._translateTo=parseInt(e.padding,10)||256;this._orientation=e.side==="right"?-1:1;this._translateTo*=this._orientation;if(this._touch){this._initTouchEvents()}}p(d,o);d.prototype.open=function(){var e=this;this.emit("beforeopen");if(u.className.search("slideout-open")===-1){u.className+=" slideout-open"}this._setTransition();this._translateXTo(this._translateTo);this._opened=true;setTimeout(function(){e.panel.style.transition=e.panel.style["-webkit-transition"]="";e.emit("open")},this._duration+50);return this};d.prototype.close=function(){var e=this;if(!this.isOpen()&&!this._opening){return this}this.emit("beforeclose");this._setTransition();this._translateXTo(0);this._opened=false;setTimeout(function(){u.className=u.className.replace(/ slideout-open/,"");e.panel.style.transition=e.panel.style["-webkit-transition"]=e.panel.style[c+"transform"]=e.panel.style.transform="";e.emit("close")},this._duration+50);return this};d.prototype.toggle=function(){return this.isOpen()?this.close():this.open()};d.prototype.isOpen=function(){return this._opened};d.prototype._translateXTo=function(e){this._currentOffsetX=e;this.panel.style[c+"transform"]=this.panel.style.transform="translate3d("+e+"px, 0, 0)"};d.prototype._setTransition=function(){this.panel.style[c+"transition"]=this.panel.style.transition=c+"transform "+this._duration+"ms "+this._fx};d.prototype._initTouchEvents=function(){var e=this;this._onScrollFn=i(a,"scroll",function(){if(!e._moved){clearTimeout(s);r=true;s=setTimeout(function(){r=false},250)}});this._preventMove=function(t){if(e._moved){t.preventDefault()}};a.addEventListener(f.move,this._preventMove);this._resetTouchFn=function(t){if(typeof t.touches==="undefined"){return}e._moved=false;e._opening=false;e._startOffsetX=t.touches[0].pageX;e._preventOpen=!e._touch||!e.isOpen()&&e.menu.clientWidth!==0};this.panel.addEventListener(f.start,this._resetTouchFn);this._onTouchCancelFn=function(){e._moved=false;e._opening=false};this.panel.addEventListener("touchcancel",this._onTouchCancelFn);this._onTouchEndFn=function(){if(e._moved){e._opening&&Math.abs(e._currentOffsetX)>e._tolerance?e.open():e.close()}e._moved=false};this.panel.addEventListener(f.end,this._onTouchEndFn);this._onTouchMoveFn=function(t){if(r||e._preventOpen||typeof t.touches==="undefined"){return}var n=t.touches[0].clientX-e._startOffsetX;var i=e._currentOffsetX=n;if(Math.abs(i)>e._padding){return}if(Math.abs(n)>20){e._opening=true;var o=n*e._orientation;if(e._opened&&o>0||!e._opened&&o<0){return}if(o<=0){i=n+e._padding*e._orientation;e._opening=false}if(!e._moved&&u.className.search("slideout-open")===-1){u.className+=" slideout-open"}e.panel.style[c+"transform"]=e.panel.style.transform="translate3d("+i+"px, 0, 0)";e.emit("translate",i);e._moved=true}};this.panel.addEventListener(f.move,this._onTouchMoveFn)};d.prototype.enableTouch=function(){this._touch=true;return this};d.prototype.disableTouch=function(){this._touch=false;return this};d.prototype.destroy=function(){this.close();a.removeEventListener(f.move,this._preventMove);this.panel.removeEventListener(f.start,this._resetTouchFn);this.panel.removeEventListener("touchcancel",this._onTouchCancelFn);this.panel.removeEventListener(f.end,this._onTouchEndFn);this.panel.removeEventListener(f.move,this._onTouchMoveFn);a.removeEventListener("scroll",this._onScrollFn);this.open=this.close=function(){};return this};t.exports=d},{decouple:2,emitter:3}],2:[function(e,t,n){"use strict";var i=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||function(e){window.setTimeout(e,1e3/60)}}();function o(e,t,n){var o,s=false;function r(e){o=e;a()}function a(){if(!s){i(u);s=true}}function u(){n.call(e,o);s=false}e.addEventListener(t,r,false)}t.exports=o},{}],3:[function(e,t,n){"use strict";var i=function(e,t){if(!(e instanceof t)){throw new TypeError("Cannot call a class as a function")}};n.__esModule=true;var o=function(){function e(){i(this,e)}e.prototype.on=function t(e,n){this._eventCollection=this._eventCollection||{};this._eventCollection[e]=this._eventCollection[e]||[];this._eventCollection[e].push(n);return this};e.prototype.once=function n(e,t){var n=this;function i(){n.off(e,i);t.apply(this,arguments)}i.listener=t;this.on(e,i);return this};e.prototype.off=function o(e,t){var n=undefined;if(!this._eventCollection||!(n=this._eventCollection[e])){return this}n.forEach(function(e,i){if(e===t||e.listener===t){n.splice(i,1)}});if(n.length===0){delete this._eventCollection[e]}return this};e.prototype.emit=function s(e){var t=this;for(var n=arguments.length,i=Array(n>1?n-1:0),o=1;o<n;o++){i[o-1]=arguments[o]}var s=undefined;if(!this._eventCollection||!(s=this._eventCollection[e])){return this}s=s.slice(0);s.forEach(function(e){return e.apply(t,i)});return this};return e}();n["default"]=o;t.exports=n["default"]},{}]},{},[1])(1)});
+      !function(t){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=t();else if("function"==typeof define&&define.amd)define([],t);else{var e;"undefined"!=typeof window?e=window:"undefined"!=typeof global?e=global:"undefined"!=typeof self&&(e=self),e.Slideout=t()}}(function(){var t,e,n;return function i(t,e,n){function o(r,a){if(!e[r]){if(!t[r]){var u=typeof require=="function"&&require;if(!a&&u)return u(r,!0);if(s)return s(r,!0);var l=new Error("Cannot find module '"+r+"'");throw l.code="MODULE_NOT_FOUND",l}var f=e[r]={exports:{}};t[r][0].call(f.exports,function(e){var n=t[r][1][e];return o(n?n:e)},f,f.exports,i,t,e,n)}return e[r].exports}var s=typeof require=="function"&&require;for(var r=0;r<n.length;r++)o(n[r]);return o}({1:[function(t,e,n){"use strict";var i=t("decouple");var o=t("emitter");var s;var r=false;var a=window.document;var u=a.documentElement;var l=window.navigator.msPointerEnabled;var f={start:l?"MSPointerDown":"touchstart",move:l?"MSPointerMove":"touchmove",end:l?"MSPointerUp":"touchend"};var h=function v(){var t=/^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;var e=a.getElementsByTagName("script")[0].style;for(var n in e){if(t.test(n)){return"-"+n.match(t)[0].toLowerCase()+"-"}}if("WebkitOpacity"in e){return"-webkit-"}if("KhtmlOpacity"in e){return"-khtml-"}return""}();function c(t,e){for(var n in e){if(e[n]){t[n]=e[n]}}return t}function p(t,e){t.prototype=c(t.prototype||{},e.prototype)}function d(t){while(t.parentNode){if(t.getAttribute("data-slideout-ignore")!==null){return t}t=t.parentNode}return null}function _(t){t=t||{};this._startOffsetX=0;this._currentOffsetX=0;this._opening=false;this._moved=false;this._opened=false;this._preventOpen=false;this._touch=t.touch===undefined?true:t.touch&&true;this._side=t.side||"left";this.panel=t.panel;this.menu=t.menu;if(!this.panel.classList.contains("slideout-panel")){this.panel.classList.add("slideout-panel")}if(!this.panel.classList.contains("slideout-panel-"+this._side)){this.panel.classList.add("slideout-panel-"+this._side)}if(!this.menu.classList.contains("slideout-menu")){this.menu.classList.add("slideout-menu")}if(!this.menu.classList.contains("slideout-menu-"+this._side)){this.menu.classList.add("slideout-menu-"+this._side)}this._fx=t.fx||"ease";this._duration=parseInt(t.duration,10)||300;this._tolerance=parseInt(t.tolerance,10)||70;this._padding=this._translateTo=parseInt(t.padding,10)||256;this._orientation=this._side==="right"?-1:1;this._translateTo*=this._orientation;if(this._touch){this._initTouchEvents()}}p(_,o);_.prototype.open=function(){var t=this;this.emit("beforeopen");if(!u.classList.contains("slideout-open")){u.classList.add("slideout-open")}this._setTransition();this._translateXTo(this._translateTo);this._opened=true;setTimeout(function(){t.panel.style.transition=t.panel.style["-webkit-transition"]="";t.emit("open")},this._duration+50);return this};_.prototype.close=function(){var t=this;if(!this.isOpen()&&!this._opening){return this}this.emit("beforeclose");this._setTransition();this._translateXTo(0);this._opened=false;setTimeout(function(){u.classList.remove("slideout-open");t.panel.style.transition=t.panel.style["-webkit-transition"]=t.panel.style[h+"transform"]=t.panel.style.transform="";t.emit("close")},this._duration+50);return this};_.prototype.toggle=function(){return this.isOpen()?this.close():this.open()};_.prototype.isOpen=function(){return this._opened};_.prototype._translateXTo=function(t){this._currentOffsetX=t;this.panel.style[h+"transform"]=this.panel.style.transform="translateX("+t+"px)";return this};_.prototype._setTransition=function(){this.panel.style[h+"transition"]=this.panel.style.transition=h+"transform "+this._duration+"ms "+this._fx;return this};_.prototype._initTouchEvents=function(){var t=this;this._onScrollFn=i(a,"scroll",function(){if(!t._moved){clearTimeout(s);r=true;s=setTimeout(function(){r=false},250)}});this._preventMove=function(e){if(t._moved){e.preventDefault()}};a.addEventListener(f.move,this._preventMove);this._resetTouchFn=function(e){if(typeof e.touches==="undefined"){return}t._moved=false;t._opening=false;t._startOffsetX=e.touches[0].pageX;t._preventOpen=!t._touch||!t.isOpen()&&t.menu.clientWidth!==0};this.panel.addEventListener(f.start,this._resetTouchFn);this._onTouchCancelFn=function(){t._moved=false;t._opening=false};this.panel.addEventListener("touchcancel",this._onTouchCancelFn);this._onTouchEndFn=function(){if(t._moved){t.emit("translateend");t._opening&&Math.abs(t._currentOffsetX)>t._tolerance?t.open():t.close()}t._moved=false};this.panel.addEventListener(f.end,this._onTouchEndFn);this._onTouchMoveFn=function(e){if(r||t._preventOpen||typeof e.touches==="undefined"||d(e.target)){return}var n=e.touches[0].clientX-t._startOffsetX;var i=t._currentOffsetX=n;if(Math.abs(i)>t._padding){return}if(Math.abs(n)>20){t._opening=true;var o=n*t._orientation;if(t._opened&&o>0||!t._opened&&o<0){return}if(!t._moved){t.emit("translatestart")}if(o<=0){i=n+t._padding*t._orientation;t._opening=false}if(!(t._moved&&u.classList.contains("slideout-open"))){u.classList.add("slideout-open")}t.panel.style[h+"transform"]=t.panel.style.transform="translateX("+i+"px)";t.emit("translate",i);t._moved=true}};this.panel.addEventListener(f.move,this._onTouchMoveFn);return this};_.prototype.enableTouch=function(){this._touch=true;return this};_.prototype.disableTouch=function(){this._touch=false;return this};_.prototype.destroy=function(){this.close();a.removeEventListener(f.move,this._preventMove);this.panel.removeEventListener(f.start,this._resetTouchFn);this.panel.removeEventListener("touchcancel",this._onTouchCancelFn);this.panel.removeEventListener(f.end,this._onTouchEndFn);this.panel.removeEventListener(f.move,this._onTouchMoveFn);a.removeEventListener("scroll",this._onScrollFn);this.open=this.close=function(){};return this};e.exports=_},{decouple:2,emitter:3}],2:[function(t,e,n){"use strict";var i=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||function(t){window.setTimeout(t,1e3/60)}}();function o(t,e,n){var o,s=false;function r(t){o=t;a()}function a(){if(!s){i(u);s=true}}function u(){n.call(t,o);s=false}t.addEventListener(e,r,false);return r}e.exports=o},{}],3:[function(t,e,n){"use strict";var i=function(t,e){if(!(t instanceof e)){throw new TypeError("Cannot call a class as a function")}};n.__esModule=true;var o=function(){function t(){i(this,t)}t.prototype.on=function e(t,n){this._eventCollection=this._eventCollection||{};this._eventCollection[t]=this._eventCollection[t]||[];this._eventCollection[t].push(n);return this};t.prototype.once=function n(t,e){var n=this;function i(){n.off(t,i);e.apply(this,arguments)}i.listener=e;this.on(t,i);return this};t.prototype.off=function o(t,e){var n=undefined;if(!this._eventCollection||!(n=this._eventCollection[t])){return this}n.forEach(function(t,i){if(t===e||t.listener===e){n.splice(i,1)}});if(n.length===0){delete this._eventCollection[t]}return this};t.prototype.emit=function s(t){var e=this;for(var n=arguments.length,i=Array(n>1?n-1:0),o=1;o<n;o++){i[o-1]=arguments[o]}var s=undefined;if(!this._eventCollection||!(s=this._eventCollection[t])){return this}s=s.slice(0);s.forEach(function(t){return t.apply(e,i)});return this};return t}();n["default"]=o;e.exports=n["default"]},{}]},{},[1])(1)});
 
       var slideout = new Slideout({
         'panel': document.getElementById('main'),

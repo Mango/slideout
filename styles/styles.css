@@ -25,7 +25,6 @@ body,
 }
 
 a {
-  color: #4B5;
   text-decoration: none;
 }
 
@@ -35,19 +34,6 @@ a {
 
 .menu a:hover {
   text-decoration: underline;
-}
-
-.menu-header {
-  border-bottom: 1px solid #2a2d2f;
-  padding: 20px 0 20px 60px;
-  background: url('../assets/github.png') no-repeat 15px 15px;
-  background-size: 32px;
-}
-
-.menu-header-title {
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  margin: 0;
 }
 
 .menu-section {
@@ -99,8 +85,7 @@ a {
   margin: 0 0 15px;
   color: #4B5;
   font-weight: 400;
-  padding-top: 82px;
-  background: url('../assets/mango-logo.png') no-repeat center top;
+  padding-top: 30px;
 }
 
 .subtitle {
@@ -143,6 +128,7 @@ a {
 
 .btn-fork {
   margin-left: 5px;
+  color: #4B5;
   background-color: #fff;
 }
 
@@ -344,45 +330,53 @@ a {
 
 #github-button {
   float: left;
-  width: 100px;
+  width: 112px;
+  margin-left: 10px;
 }
 
 /**
  * Slideout module styles
  */
 body {
-  width: 100%;
-  height: 100%;
+ width: 100%;
+ height: 100%;
 }
 
-.menu,
 .slideout-menu {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 0;
-  width: 256px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  display: none;
+ position: fixed;
+ top: 0;
+ bottom: 0;
+ width: 256px;
+ min-height: 100vh;
+ overflow-y: scroll;
+ -webkit-overflow-scrolling: touch;
+ z-index: 0;
+ display: none;
 }
 
-.panel,
+.slideout-menu-left {
+ left: 0;
+}
+
+.slideout-menu-right {
+ right: 0;
+}
+
 .slideout-panel {
-  position: relative;
-  z-index: 1;
+ position: relative;
+ z-index: 1;
+ will-change: transform;
+ min-height: 100vh;
 }
 
 .slideout-open,
 .slideout-open body,
 .slideout-open .slideout-panel {
-  overflow: hidden;
+ overflow: hidden;
 }
 
 .slideout-open .slideout-menu {
-  display: block;
+ display: block;
 }
 
 /* Animation
@@ -419,3 +413,5 @@ body {
   -webkit-animation-iteration-count: 4;
   animation-iteration-count: 4;
 }
+
+.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
