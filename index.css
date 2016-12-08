@@ -40,3 +40,30 @@ body {
 .slideout-open .slideout-menu {
   display: block;
 }
+
+/*!*================  Button  =================*!*/
+/*#sidebar-btn{*/
+  /*display:inline;*/
+  /*vertical-align: middle;*/
+  /*width:20px;*/
+  /*height:15px;*/
+  /*cursor:pointer;*/
+  /*margin:20px;*/
+  /*position:absolute;*/
+  /*top:0px;*/
+/*}*/
+
+/*#sidebar-btn span{*/
+  /*height:1px;*/
+  /*background:#111;*/
+  /*margin-bottom:5px;*/
+  /*display:block;*/
+/*}*/
+
+/*#sidebar-btn span:nth-child(2){*/
+  /*width:75%;*/
+/*}*/
+
+/*#sidebar-btn span:nth-child(3){*/
+  /*width:50%;*/
+/*}*/
