@@ -16,6 +16,8 @@ var closeEvent = false;
 var slideout = new Slideout({
   'panel': doc.getElementById('panel'),
   'menu': doc.getElementById('menu'),
+  'itemToMove': 'menu',
+  // 'side': 'right',
 });
 
 slideout
@@ -184,15 +186,15 @@ describe('Slideout', function () {
     });
   });
 
-  describe('.destroy()', function() {
-    it('should destroy the instance internals allowing a new one to be created in it\'s place.', function(){
-      slideout.destroy();
-      slideout = new Slideout({
-        'panel': doc.getElementById('panel'),
-        'menu': doc.getElementById('menu')
-      });
-      slideout.open();
-      setTimeout(function(){ slideout.close(); }, 750);
-    });
-  });
+  // describe('.destroy()', function() {
+  //   it('should destroy the instance internals allowing a new one to be created in it\'s place.', function(){
+  //     slideout.destroy();
+  //     slideout = new Slideout({
+  //       'panel': doc.getElementById('panel'),
+  //       'menu': doc.getElementById('menu')
+  //     });
+  //     slideout.open();
+  //     setTimeout(function(){ slideout.close(); }, 750);
+  //   });
+  // });
 });

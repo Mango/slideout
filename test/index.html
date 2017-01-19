@@ -13,6 +13,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/1.13.0/mocha.min.css">
     <link rel="stylesheet" href="test.css">
     <link rel="stylesheet" href="../index.css">
+    <style>
+      .slideout-menu {
+        z-index: 9999;
+        display: block;
+        will-change: transform;
+      }
+
+      .slideout-menu-left {
+        left: -256px;
+      }
+
+      .slideout-menu-right {
+        right: -256px;
+      }
+
+      .slideout-panel:before {
+        content: '';
+        display: block;
+        background-color: rgba(0,0,0,0);
+        transition: background-color 0.5s ease-in-out;
+      }
+
+      .slideout-open .slideout-panel:before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: rgba(0,0,0,.5);
+        z-index: 99;
+      }
+    </style>
     <title>Slideout tests</title>
   </head>
   <body>

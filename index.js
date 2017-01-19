@@ -72,6 +72,7 @@ function Slideout(options) {
   // Sets panel
   this.panel = options.panel;
   this.menu = options.menu;
+  this.itemToMove = options.itemToMove === 'menu' ? this.menu : this.panel;
 
   // Sets options
   this._touch = options.touch === undefined ? true : options.touch && true;
@@ -121,7 +122,7 @@ Slideout.prototype.open = function() {
   this._translateXTo(this._translateTo);
   this._opened = true;
   setTimeout(function() {
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.itemToMove.style.transition = self.itemToMove.style['-webkit-transition'] = '';
     self.emit('open');
   }, this._duration + 50);
   return this;
@@ -141,7 +142,7 @@ Slideout.prototype.close = function() {
   this._opened = false;
   setTimeout(function() {
     html.classList.remove('slideout-open');
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
+    self.itemToMove.style.transition = self.itemToMove.style['-webkit-transition'] = self.itemToMove.style[prefix + 'transform'] = self.itemToMove.style.transform = '';
     self.emit('close');
   }, this._duration + 50);
   return this;
@@ -166,7 +167,7 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+  this.itemToMove.style[prefix + 'transform'] = this.itemToMove.transform = 'translateX(' + translateX + 'px)';
   return this;
 };
 
@@ -174,7 +175,7 @@ Slideout.prototype._translateXTo = function(translateX) {
  * Set transition properties
  */
 Slideout.prototype._setTransition = function() {
-  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._easing;
+  this.itemToMove.style[prefix + 'transition'] = this.itemToMove.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._easing;
   return this;
 };
 
@@ -219,7 +220,8 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
-    self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
+    self._preventOpen = !self._touch;
+    // self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
   };
 
   this.panel.addEventListener(touch.start, this._resetTouchFn);
@@ -251,6 +253,7 @@ Slideout.prototype._initTouchEvents = function() {
    * Translates panel on touchmove
    */
   this._onTouchMoveFn = function(eve) {
+
     if (
       scrolling ||
       self._preventOpen ||
@@ -262,6 +265,7 @@ Slideout.prototype._initTouchEvents = function() {
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
     var translateX = self._currentOffsetX = dif_x;
+
 
     if (Math.abs(translateX) > self._padding) {
       return;
@@ -290,7 +294,7 @@ Slideout.prototype._initTouchEvents = function() {
         html.classList.add('slideout-open');
       }
 
-      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
+      self.itemToMove.style[prefix + 'transform'] = self.itemToMove.transform = 'translateX(' + translateX + 'px)';
       self.emit('translate', translateX);
       self._moved = true;
     }
