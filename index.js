@@ -72,6 +72,7 @@ function Slideout(options) {
   // Sets panel
   this.panel = options.panel;
   this.menu = options.menu;
+  this.dimmer = doc.querySelector('.slideout-dimmer');
   this.itemToMove = options.itemToMove === 'menu' ? this.menu : this.panel;
 
   // Sets options
@@ -98,6 +99,15 @@ function Slideout(options) {
     this.menu.classList.add('slideout-menu-' + this._side);
   }
 
+  var self = this;
+  this._closeByDimmer = function(eve) {
+    if (self._opened) {
+      eve.preventDefault();
+      eve.stopPropagation();
+      self.close();
+    }
+  };
+
   // Init touch events
   if (this._touch) {
     this._initTouchEvents();
@@ -120,9 +130,12 @@ Slideout.prototype.open = function() {
   }
   this._setTransition();
   this._translateXTo(this._translateTo);
+  this.panel.addEventListener('click', this._closeByDimmer, true);
   this._opened = true;
   setTimeout(function() {
-    self.itemToMove.style.transition = self.itemToMove.style['-webkit-transition'] = '';
+    self.itemToMove.style.transition = self.itemToMove.style['-webkit-transition'] = null;
+    self.dimmer.style.transition = self.dimmer.style['-webkit-transition'] = null;
+    self.dimmer.style.opacity = null;
     self.emit('open');
   }, this._duration + 50);
   return this;
@@ -139,10 +152,13 @@ Slideout.prototype.close = function() {
   this.emit('beforeclose');
   this._setTransition();
   this._translateXTo(0);
+  this.panel.removeEventListener('click', this._closeByDimmer);
   this._opened = false;
   setTimeout(function() {
     html.classList.remove('slideout-open');
-    self.itemToMove.style.transition = self.itemToMove.style['-webkit-transition'] = self.itemToMove.style[prefix + 'transform'] = self.itemToMove.style.transform = '';
+    self.itemToMove.style.transition = self.itemToMove.style['-webkit-transition'] = self.itemToMove.style[prefix + 'transform'] = self.itemToMove.style.transform = null;
+    self.dimmer.style.transition = self.dimmer.style['-webkit-transition'] = null;
+    self.dimmer.style.opacity = null;
     self.emit('close');
   }, this._duration + 50);
   return this;
@@ -168,6 +184,7 @@ Slideout.prototype.isOpen = function() {
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
   this.itemToMove.style[prefix + 'transform'] = this.itemToMove.transform = 'translateX(' + translateX + 'px)';
+  this.dimmer.style.opacity = (translateX / this.menu.offsetWidth).toFixed(4); // smooth
   return this;
 };
 
@@ -175,7 +192,8 @@ Slideout.prototype._translateXTo = function(translateX) {
  * Set transition properties
  */
 Slideout.prototype._setTransition = function() {
-  this.itemToMove.style[prefix + 'transition'] = this.itemToMove.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._easing;
+  this.itemToMove.style['-webkit-transition'] = this.itemToMove.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._easing;
+  this.dimmer.style['-webkit-transition'] = this.dimmer.style.transition = 'opacity ' + this._duration + 'ms ' + this._easing;
   return this;
 };
 
@@ -225,6 +243,7 @@ Slideout.prototype._initTouchEvents = function() {
   };
 
   this.panel.addEventListener(touch.start, this._resetTouchFn);
+  this.menu.addEventListener(touch.start, this._resetTouchFn);
 
   /**
    * Resets values on touchcancel
@@ -235,6 +254,7 @@ Slideout.prototype._initTouchEvents = function() {
   };
 
   this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
+  this.menu.addEventListener('touchcancel', this._onTouchCancelFn);
 
   /**
    * Toggles slideout on touchend
@@ -248,12 +268,12 @@ Slideout.prototype._initTouchEvents = function() {
   };
 
   this.panel.addEventListener(touch.end, this._onTouchEndFn);
+  this.menu.addEventListener(touch.end, this._onTouchEndFn);
 
   /**
    * Translates panel on touchmove
    */
   this._onTouchMoveFn = function(eve) {
-
     if (
       scrolling ||
       self._preventOpen ||
@@ -293,8 +313,7 @@ Slideout.prototype._initTouchEvents = function() {
       if (!(self._moved && html.classList.contains('slideout-open'))) {
         html.classList.add('slideout-open');
       }
-
-      self.itemToMove.style[prefix + 'transform'] = self.itemToMove.transform = 'translateX(' + translateX + 'px)';
+      self._translateXTo(translateX);
       self.emit('translate', translateX);
       self._moved = true;
     }
@@ -302,6 +321,7 @@ Slideout.prototype._initTouchEvents = function() {
   };
 
   this.panel.addEventListener(touch.move, this._onTouchMoveFn);
+  this.menu.addEventListener(touch.move, this._onTouchMoveFn);
 
   return this;
 };
