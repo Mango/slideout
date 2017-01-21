@@ -17,7 +17,7 @@ var slideout = new Slideout({
   'panel': doc.getElementById('panel'),
   'menu': doc.getElementById('menu'),
   'itemToMove': 'menu',
-  // 'side': 'right',
+  'side': 'left',
 });
 
 slideout

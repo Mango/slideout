@@ -4,36 +4,38 @@
  * Module dependencies
  */
 var decouple = require('decouple');
-var Emitter = require('emitter');
+var Emitter = require('jvent');
+
+/**
+ * Classnames
+ */
+var SLIDEOUT_PANEL = 'slideout-panel';
+var SLIDEOUT_MENU = 'slideout-menu';
+var SLIDEOUT_OPEN = 'slideout-open';
+
+/**
+ * CSS prefixed properties
+ */
+var WEBKIT_TRANSFORM = '-webkit-transform';
+var WEBKIT_TRANSITION = '-webkit-transition';
 
 /**
  * Privates
  */
 var scrollTimeout;
+
 var scrolling = false;
-var doc = window.document;
-var html = doc.documentElement;
-var msPointerSupported = window.navigator.msPointerEnabled;
+
+var html = document.documentElement;
+
+var msPointerSupported = navigator.msPointerEnabled;
+
 var touch = {
   'start': msPointerSupported ? 'MSPointerDown' : 'touchstart',
   'move': msPointerSupported ? 'MSPointerMove' : 'touchmove',
   'end': msPointerSupported ? 'MSPointerUp' : 'touchend'
 };
-var prefix = (function prefix() {
-  var regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
-  var styleDeclaration = doc.getElementsByTagName('script')[0].style;
-  for (var prop in styleDeclaration) {
-    if (regex.test(prop)) {
-      return '-' + prop.match(regex)[0].toLowerCase() + '-';
-    }
-  }
-  // Nothing found so far? Webkit does not enumerate over the CSS properties of the style object.
-  // However (prop in style) returns the correct value, so we'll have to test for
-  // the precence of a specific property
-  if ('WebkitOpacity' in styleDeclaration) { return '-webkit-'; }
-  if ('KhtmlOpacity' in styleDeclaration) { return '-khtml-'; }
-  return '';
-}());
+
 function extend(destination, from) {
   for (var prop in from) {
     if (from[prop]) {
@@ -42,9 +44,11 @@ function extend(destination, from) {
   }
   return destination;
 }
+
 function inherits(child, uber) {
   child.prototype = extend(child.prototype || {}, uber.prototype);
 }
+
 function hasIgnoredElements(el) {
   while (el.parentNode) {
     if (el.getAttribute('data-slideout-ignore') !== null) {
@@ -69,11 +73,11 @@ function Slideout(options) {
   this._opened = false;
   this._preventOpen = false;
 
-  // Sets panel
+  // Sets slideout elements
   this.panel = options.panel;
   this.menu = options.menu;
-  this.dimmer = doc.querySelector('.slideout-dimmer');
-  this.itemToMove = options.itemToMove === 'menu' ? this.menu : this.panel;
+  this.itemToMove = options.itemToMove === 'panel' ? this.panel : this.menu;
+  this.dimmer = document.querySelector('.slideout-dimmer');
 
   // Sets options
   this._touch = options.touch === undefined ? true : options.touch && true;
@@ -86,17 +90,17 @@ function Slideout(options) {
   this._translateTo *= this._orientation;
 
   // Sets  classnames
-  if (!this.panel.classList.contains('slideout-panel')) {
-    this.panel.classList.add('slideout-panel');
+  if (!this.panel.classList.contains(SLIDEOUT_PANEL)) {
+    this.panel.classList.add(SLIDEOUT_PANEL);
   }
-  if (!this.panel.classList.contains('slideout-panel-' + this._side)) {
-    this.panel.classList.add('slideout-panel-' + this._side);
+  if (!this.panel.classList.contains(SLIDEOUT_PANEL + '-' + this._side)) {
+    this.panel.classList.add(SLIDEOUT_PANEL + '-' + this._side);
   }
-  if (!this.menu.classList.contains('slideout-menu')) {
-    this.menu.classList.add('slideout-menu');
+  if (!this.menu.classList.contains(SLIDEOUT_MENU)) {
+    this.menu.classList.add(SLIDEOUT_MENU);
   }
-  if (!this.menu.classList.contains('slideout-menu-' + this._side)) {
-    this.menu.classList.add('slideout-menu-' + this._side);
+  if (!this.menu.classList.contains(SLIDEOUT_MENU + '-' + this._side)) {
+    this.menu.classList.add(SLIDEOUT_MENU + '-' + this._side);
   }
 
   var self = this;
@@ -125,17 +129,15 @@ inherits(Slideout, Emitter);
 Slideout.prototype.open = function() {
   var self = this;
   this.emit('beforeopen');
-  if (!html.classList.contains('slideout-open')) {
-    html.classList.add('slideout-open');
+  if (!html.classList.contains(SLIDEOUT_OPEN)) {
+    html.classList.add(SLIDEOUT_OPEN);
   }
-  this._setTransition();
+  this._addTransition();
   this._translateXTo(this._translateTo);
   this.panel.addEventListener('click', this._closeByDimmer, true);
   this._opened = true;
   setTimeout(function() {
-    self.itemToMove.style.transition = self.itemToMove.style['-webkit-transition'] = null;
-    self.dimmer.style.transition = self.dimmer.style['-webkit-transition'] = null;
-    self.dimmer.style.opacity = null;
+    self._removeTransition();
     self.emit('open');
   }, this._duration + 50);
   return this;
@@ -150,15 +152,14 @@ Slideout.prototype.close = function() {
     return this;
   }
   this.emit('beforeclose');
-  this._setTransition();
+  this._addTransition();
   this._translateXTo(0);
   this.panel.removeEventListener('click', this._closeByDimmer);
   this._opened = false;
   setTimeout(function() {
-    html.classList.remove('slideout-open');
-    self.itemToMove.style.transition = self.itemToMove.style['-webkit-transition'] = self.itemToMove.style[prefix + 'transform'] = self.itemToMove.style.transform = null;
-    self.dimmer.style.transition = self.dimmer.style['-webkit-transition'] = null;
-    self.dimmer.style.opacity = null;
+    html.classList.remove(SLIDEOUT_OPEN);
+    self.itemToMove.style[WEBKIT_TRANSFORM] = self.itemToMove.style.transform = null;
+    self._removeTransition();
     self.emit('close');
   }, this._duration + 50);
   return this;
@@ -183,17 +184,28 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.itemToMove.style[prefix + 'transform'] = this.itemToMove.transform = 'translateX(' + translateX + 'px)';
-  this.dimmer.style.opacity = (translateX / this.menu.offsetWidth).toFixed(4); // smooth
+  this.itemToMove.style[WEBKIT_TRANSFORM] = this.itemToMove.transform = 'translateX(' + translateX + 'px)';
+  this.dimmer.style.opacity = (Math.abs(translateX) / this.menu.offsetWidth).toFixed(4); // smooth
   return this;
 };
 
 /**
- * Set transition properties
+ * Add transition properties
  */
-Slideout.prototype._setTransition = function() {
-  this.itemToMove.style['-webkit-transition'] = this.itemToMove.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._easing;
-  this.dimmer.style['-webkit-transition'] = this.dimmer.style.transition = 'opacity ' + this._duration + 'ms ' + this._easing;
+Slideout.prototype._addTransition = function() {
+  this.itemToMove.style[WEBKIT_TRANSITION] = WEBKIT_TRANSFORM + ' ' + this._duration + 'ms ' + this._easing;
+  this.itemToMove.style.transition = 'transform ' + this._duration + 'ms ' + this._easing;
+  this.dimmer.style[WEBKIT_TRANSITION] = this.dimmer.style.transition = 'opacity ' + this._duration + 'ms ' + this._easing;
+  return this;
+};
+
+/**
+ * Remove transition properties
+ */
+Slideout.prototype._removeTransition = function() {
+  this.itemToMove.style.transition = this.itemToMove.style[WEBKIT_TRANSITION] = null;
+  this.dimmer.style.transition = this.dimmer.style[WEBKIT_TRANSITION] = null;
+  this.dimmer.style.opacity = null;
   return this;
 };
 
@@ -206,7 +218,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Decouple scroll event
    */
-  this._onScrollFn = decouple(doc, 'scroll', function() {
+  this._onScrollFn = decouple(document, 'scroll', function() {
     if (!self._moved) {
       clearTimeout(scrollTimeout);
       scrolling = true;
@@ -225,7 +237,7 @@ Slideout.prototype._initTouchEvents = function() {
     }
   };
 
-  doc.addEventListener(touch.move, this._preventMove);
+  document.addEventListener(touch.move, this._preventMove);
 
   /**
    * Resets values on touchstart
@@ -310,8 +322,8 @@ Slideout.prototype._initTouchEvents = function() {
         self._opening = false;
       }
 
-      if (!(self._moved && html.classList.contains('slideout-open'))) {
-        html.classList.add('slideout-open');
+      if (!(self._moved && html.classList.contains(SLIDEOUT_OPEN))) {
+        html.classList.add(SLIDEOUT_OPEN);
       }
       self._translateXTo(translateX);
       self.emit('translate', translateX);
@@ -350,12 +362,12 @@ Slideout.prototype.destroy = function() {
   this.close();
 
   // Remove event listeners
-  doc.removeEventListener(touch.move, this._preventMove);
+  document.removeEventListener(touch.move, this._preventMove);
   this.panel.removeEventListener(touch.start, this._resetTouchFn);
   this.panel.removeEventListener('touchcancel', this._onTouchCancelFn);
   this.panel.removeEventListener(touch.end, this._onTouchEndFn);
   this.panel.removeEventListener(touch.move, this._onTouchMoveFn);
-  doc.removeEventListener('scroll', this._onScrollFn);
+  document.removeEventListener('scroll', this._onScrollFn);
 
   // Remove methods
   this.open = this.close = function() {};

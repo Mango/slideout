@@ -8,21 +8,23 @@
     "build": "node browserify.js",
     "test": "npm run build && istanbul cover _mocha",
     "dist": "node browserify.js && uglifyjs ./dist/slideout.js -m -o ./dist/slideout.min.js",
+    "webpack": "webpack && uglifyjs ./dist/slideout.js -m -o ./dist/slideout.min.js",
     "hint": "jshint index.js"
   },
   "dependencies": {
-    "decouple": "0.0.2",
-    "emitter": "git+https://github.com/Mango/emitter.git#0.0.7"
+    "decouple": "1.0.0",
+    "jvent": "1.0.2"
   },
   "devDependencies": {
     "better-assert": "1.0.2",
-    "browserify": "13.1.1",
+    "browserify": "13.3.0",
     "coveralls": "2.11.15",
     "istanbul": "0.4.5",
     "jsdom": "9.8.3",
     "jshint": "2.9.4",
     "mocha": "3.1.2",
-    "uglify-js": "2.7.4"
+    "uglify-js": "2.7.5",
+    "webpack": "^2.2.0"
   },
   "main": "index.js",
   "keywords": [
