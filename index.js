@@ -89,6 +89,8 @@ function Slideout(options) {
   this._orientation = this._side === 'right' ? -1 : 1;
   this._translateTo *= this._orientation;
 
+  this._grabWidth = parseInt(options.grabWidth, 10) || Math.round(html.clientWidth / 3);
+
   // Sets  classnames
   if (!this.panel.classList.contains(SLIDEOUT_PANEL)) {
     this.panel.classList.add(SLIDEOUT_PANEL);
@@ -250,8 +252,12 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
-    self._preventOpen = !self._touch;
-    // self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
+
+    var offset = self._startOffsetX;
+    if (self._side === 'right') {
+      offset = html.clientWidth - self._startOffsetX;
+    }
+    self._preventOpen = !self._touch || (this === self.panel && offset > self._grabWidth);
   };
 
   this.panel.addEventListener(touch.start, this._resetTouchFn);
