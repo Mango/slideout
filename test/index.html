@@ -13,44 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/1.13.0/mocha.min.css">
     <link rel="stylesheet" href="test.css">
     <link rel="stylesheet" href="../index.css">
-    <style>
-      .slideout-menu {
-        z-index: 3;
-        display: block;
-        will-change: transform;
-      }
-
-      .slideout-menu-left {
-        left: -256px;
-      }
-
-      .slideout-menu-right {
-        right: -256px;
-      }
-
-      .slideout-dimmer {
-        visibility: hidden;
-        opacity: 0;
-        z-index: -1;
-        pointer-events: none;
-        background-color: rgba(0,0,0,.5);
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-      }
-
-      .slideout-open .slideout-dimmer {
-        visibility: visible;
-        opacity: 1;
-        z-index: 2;
-      }
-    </style>
     <title>Slideout tests</title>
   </head>
   <body>
-
     <nav id="menu" class="menu">
       <a href="https://github.com/mango/slideout" target="_blank">
         <header class="menu-header">

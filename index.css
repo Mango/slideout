@@ -11,16 +11,19 @@ body {
   min-height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  z-index: 0;
-  display: none;
+  z-index: 3;
+  display: block;
+  will-change: transform;
+  touch-action: pan-y;
+  -ms-touch-action: pan-y;
 }
 
 .slideout-menu-left {
-  left: 0;
+  left: -256px;
 }
 
 .slideout-menu-right {
-  right: 0;
+  right: -256px;
 }
 
 .slideout-panel {
@@ -29,6 +32,21 @@ body {
   will-change: transform;
   background-color: #FFF; /* A background-color is required */
   min-height: 100vh;
+  /*touch-action: pan-y;
+  -ms-touch-action: pan-y;*/
+}
+
+.slideout-dimmer {
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: rgba(0,0,0,.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .slideout-open,
@@ -39,4 +57,10 @@ body {
 
 .slideout-open .slideout-menu {
   display: block;
+}
+
+.slideout-open .slideout-dimmer {
+  visibility: visible;
+  opacity: 1;
+  z-index: 2;
 }
