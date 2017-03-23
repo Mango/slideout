@@ -244,6 +244,7 @@ Slideout.prototype._initTouchEvents = function() {
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;
+    return true;
   };
 
   this.panel.addEventListener(touch.end, this._onTouchEndFn);
