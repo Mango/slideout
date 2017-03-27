@@ -2,41 +2,41 @@ var Slideout =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -47,7 +47,7 @@ var Slideout =
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -56,13 +56,13 @@ var Slideout =
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
@@ -80,7 +80,7 @@ var requestAnimFrame = (function() {
     function (callback) {
       window.setTimeout(callback, 1000 / 60);
     };
-}());
+}().bind(window));
 
 function decouple(node, event, fn) {
   var eve,
@@ -353,6 +353,7 @@ function Slideout(options) {
 
   // Sets default values
   this._startOffsetX = 0;
+  this._startOffsetY = 0;
   this._currentOffsetX = 0;
   this._opening = false;
   this._moved = false;
@@ -538,6 +539,7 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
+    self._startOffsetY = eve.touches[0].pageY;
 
     var offset = self._startOffsetX;
     if (self._side === 'right') {
@@ -555,6 +557,7 @@ Slideout.prototype._initTouchEvents = function() {
   this._onTouchCancelFn = function() {
     self._moved = false;
     self._opening = false;
+    self._preventOpen = false;
   };
 
   this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
@@ -568,6 +571,7 @@ Slideout.prototype._initTouchEvents = function() {
       self.emit('translateend');
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
+    self._preventOpen = false;
     self._moved = false;
   };
 
@@ -588,6 +592,7 @@ Slideout.prototype._initTouchEvents = function() {
     }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
+    var dif_y = eve.touches[0].clientY - self._startOffsetY;
     var translateX = self._currentOffsetX = dif_x;
 
 
@@ -620,6 +625,9 @@ Slideout.prototype._initTouchEvents = function() {
       self._translateXTo(translateX);
       self.emit('translate', translateX);
       self._moved = true;
+    } else if (Math.abs(dif_y) > 40 && !self._opening) {
+      self._preventOpen = true;
+      return;
     }
 
   };
