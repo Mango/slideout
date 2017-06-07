@@ -233,7 +233,6 @@ Slideout.prototype._initTouchEvents = function() {
   this._onTouchCancelFn = function() {
     self._moved = false;
     self._opening = false;
-    self._preventOpen = false;
   };
 
   this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
@@ -247,7 +246,6 @@ Slideout.prototype._initTouchEvents = function() {
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;
-    self._preventOpen = false;
   };
 
   this.panel.addEventListener(touch.end, this._onTouchEndFn);
@@ -273,7 +271,7 @@ Slideout.prototype._initTouchEvents = function() {
       return;
     }
 
-    if (Math.abs(dif_x) > 20 && Math.abs(dif_y) * this._verticalRatio <= Math.abs(dif_x)) {
+    if (Math.abs(dif_x) > 20 && Math.abs(dif_y) * self._verticalRatio <= Math.abs(dif_x)) {
 
       self._opening = true;
 
