@@ -233,6 +233,7 @@ Slideout.prototype._initTouchEvents = function() {
   this._onTouchCancelFn = function() {
     self._moved = false;
     self._opening = false;
+    self._preventOpen = false;
   };
 
   this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
@@ -246,6 +247,7 @@ Slideout.prototype._initTouchEvents = function() {
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;
+    self._preventOpen = false;
   };
 
   this.panel.addEventListener(touch.end, this._onTouchEndFn);
