@@ -63,6 +63,7 @@ function Slideout(options) {
 
   // Sets default values
   this._startOffsetX = 0;
+  this._startOffsetY = 0;
   this._currentOffsetX = 0;
   this._opening = false;
   this._moved = false;
@@ -81,6 +82,7 @@ function Slideout(options) {
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
   this._orientation = this._side === 'right' ? -1 : 1;
+  this._verticalRatio = options.verticalRatio || 2;
   this._translateTo *= this._orientation;
 
   // Sets  classnames
@@ -219,6 +221,7 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
+    self._startOffsetY = eve.touches[0].pageY;
     self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
   };
 
@@ -261,13 +264,14 @@ Slideout.prototype._initTouchEvents = function() {
     }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
+    var dif_y = eve.touches[0].clientY - self._startOffsetY;
     var translateX = self._currentOffsetX = dif_x;
 
     if (Math.abs(translateX) > self._padding) {
       return;
     }
 
-    if (Math.abs(dif_x) > 20) {
+    if (Math.abs(dif_x) > 20 && Math.abs(dif_y) * this._verticalRatio <= Math.abs(dif_x)) {
 
       self._opening = true;
 
