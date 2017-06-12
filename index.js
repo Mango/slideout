@@ -233,6 +233,7 @@ Slideout.prototype._initTouchEvents = function() {
   this._onTouchCancelFn = function() {
     self._moved = false;
     self._opening = false;
+    self._preventOpen = false;
   };
 
   this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
@@ -244,7 +245,13 @@ Slideout.prototype._initTouchEvents = function() {
     if (self._moved) {
       self.emit('translateend');
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
+    } else if (self._currentOffsetX !== 0){
+      // Reset the slide when it's stuck and lost track of _currentOffsetX
+      self._opened = true;
+      self._startOffsetX = 0;
+      self.close();
     }
+    self._preventOpen = false;
     self._moved = false;
   };
 
