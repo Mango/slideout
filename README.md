@@ -462,7 +462,7 @@ slideout.on('close', function () {
 ```
 
 Demo: http://codepen.io/pazguille/pen/ZBxdgw
-
+Bootstrap4 demo: https://codepen.io/anon/pen/yzdRaN
 
 ### How to disable dragging on some elements.
 You can use the attribute `data-slideout-ignore` to disable dragging on some elements:
