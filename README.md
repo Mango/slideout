@@ -104,7 +104,7 @@ body {
 }
 ```
 
-Then you just include Slideout.js and create a new instance with some options:
+Then you just include Slideout.js, create a new instance with some options and call the toggle method:
 
 ```html
 <script src="dist/slideout.min.js"></script>
@@ -114,6 +114,11 @@ Then you just include Slideout.js and create a new instance with some options:
     'menu': document.getElementById('menu'),
     'padding': 256,
     'tolerance': 70
+  });
+
+  // Toggle button
+  document.querySelector('.toggle-button').addEventListener('click', function() {
+    slideout.toggle();
   });
 </script>
 ```
