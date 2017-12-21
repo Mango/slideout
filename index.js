@@ -5,13 +5,13 @@
  */
 var decouple = require('decouple');
 var Emitter = require('emitter');
+var doc = require('global/document');
 
 /**
  * Privates
  */
 var scrollTimeout;
 var scrolling = false;
-var doc = window.document;
 var html = doc.documentElement;
 var msPointerSupported = window.navigator.msPointerEnabled;
 var touch = {

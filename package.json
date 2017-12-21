@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "decouple": "0.0.2",
-    "emitter": "git+https://github.com/Mango/emitter.git#0.0.7"
+    "emitter": "git+https://github.com/Mango/emitter.git#0.0.7",
+    "global": "^4.3.2"
   },
   "devDependencies": {
     "better-assert": "1.0.2",
