@@ -1,7 +1,7 @@
 module.exports = {
-  entry: './index.js',
+  entry: __dirname + '/index.js',
   output: {
-    path: './dist',
+    path: __dirname + '/dist',
     filename: 'slideout.js',
     library: 'Slideout',
   },

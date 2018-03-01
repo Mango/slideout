@@ -24,18 +24,12 @@
 Slideout is available on cdnjs
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/2.0.0/slideout.min.js"></script>
 ```
 
 Also you can use one of many package managers
 
     $ npm install slideout
-
-    $ spm install slideout
-
-    $ bower install slideout.js
-
-    $ component install mango/slideout
 
 ## Usage
 
@@ -61,36 +55,57 @@ Add the Slideout.js styles (index.css) in your web application.
 
 ```css
 body {
-  width: 100%;
-  height: 100%;
+  min-height: 100vh;
 }
 
 .slideout-menu {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 256px;
-  min-height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
   z-index: 0;
-  display: none;
+  width: 256px;
+  height: 100%;
+  min-height: 100vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  display: block;
 }
 
-.slideout-menu-left {
-  left: 0;
+.slideout-move.slideout-menu {
+  z-index: 3;
+  will-change: transform;
 }
 
-.slideout-menu-right {
-  right: 0;
-}
-
-.slideout-panel {
+.slideout-move.slideout-panel {
   position: relative;
   z-index: 1;
   will-change: transform;
+}
+
+.slideout-move.slideout-menu-left {
+  left: -256px;
+}
+
+.slideout-move.slideout-menu-right {
+  right: -256px;
+}
+
+.slideout-panel {
   background-color: #FFF; /* A background-color is required */
   min-height: 100vh;
+}
+
+.slideout-dimmer {
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: rgba(0,0,0,.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .slideout-open,
@@ -101,6 +116,12 @@ body {
 
 .slideout-open .slideout-menu {
   display: block;
+}
+
+.slideout-open .slideout-dimmer {
+  visibility: visible;
+  opacity: 1;
+  z-index: 2;
 }
 ```
 
@@ -133,27 +154,57 @@ Then you just include Slideout.js and create a new instance with some options:
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <style>
       body {
-        width: 100%;
-        height: 100%;
+        min-height: 100vh;
       }
 
       .slideout-menu {
         position: fixed;
-        left: 0;
         top: 0;
         bottom: 0;
-        right: 0;
         z-index: 0;
         width: 256px;
-        overflow-y: scroll;
+        height: 100%;
+        min-height: 100vh;
+        overflow: auto;
         -webkit-overflow-scrolling: touch;
-        display: none;
+        display: block;
       }
 
-      .slideout-panel {
+      .slideout-move.slideout-menu {
+        z-index: 3;
+        will-change: transform;
+      }
+
+      .slideout-move.slideout-panel {
         position: relative;
         z-index: 1;
         will-change: transform;
+      }
+
+      .slideout-move.slideout-menu-left {
+        left: -256px;
+      }
+
+      .slideout-move.slideout-menu-right {
+        right: -256px;
+      }
+
+      .slideout-panel {
+        background-color: #FFF; /* A background-color is required */
+        min-height: 100vh;
+      }
+
+      .slideout-dimmer {
+        visibility: hidden;
+        opacity: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-color: rgba(0,0,0,.5);
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
       }
 
       .slideout-open,
@@ -164,6 +215,12 @@ Then you just include Slideout.js and create a new instance with some options:
 
       .slideout-open .slideout-menu {
         display: block;
+      }
+
+      .slideout-open .slideout-dimmer {
+        visibility: visible;
+        opacity: 1;
+        z-index: 2;
       }
     </style>
   </head>
@@ -229,6 +286,8 @@ Create a new instance of `Slideout`.
 - `[options.tolerance]` (Number) - The number of `px` needed for the menu can be opened completely, otherwise it closes. Default: `70`.
 - `[options.touch]` (Boolean) - Set this option to false to disable Slideout touch events. Default: `true`.
 - `[options.side]` (String) - The side to open the slideout (`left` or `right`). Default: `left`.
+- `[options.itemToMove]` (String) - The side to open the slideout (`menu` or `panel`). Default: `menu`.
+- `[options.grabWidth]` (Number) - Set the touch region on the far left hand side so the menu will only be allowed to open if sliding within. Default: 1/3 of the screen.
 
 ```js
 var slideout = new Slideout({
@@ -241,14 +300,14 @@ var slideout = new Slideout({
 ```
 
 ### Slideout.open();
-Opens the slideout menu. It emits `beforeopen` and `open` events.
+Opens the slideout menu. It emits `before:open` and `open` events.
 
 ```js
 slideout.open();
 ```
 
 ### Slideout.close();
-Closes the slideout menu. It emits `beforeclose` and `close` events.
+Closes the slideout menu. It emits `before:close` and `close` events.
 
 ```js
 slideout.close();
@@ -313,18 +372,18 @@ slideout.emit('open');
 
 An instance of Slideout emits the following events:
 
-- `beforeclose`
+- `before:close`
 - `close`
-- `beforeopen`
+- `before:open`
 - `open`
-- `translatestart`
+- `translate:start`
 - `translate`
-- `translateend`
+- `translate:end`
 
-The slideout emits `translatestart`, `translate` and `translateend` events only when it is opening/closing via touch events.
+The slideout emits `translate:start`, `translate` and `translate:end` events only when it is opening/closing via touch events.
 
 ```js
-slideout.on('translatestart', function() {
+slideout.on('translate:start', function() {
   console.log('Start');
 });
 
@@ -332,7 +391,7 @@ slideout.on('translate', function(translated) {
   console.log('Translate: ' + translated); // 120 in px
 });
 
-slideout.on('translateend', function() {
+slideout.on('translate:end', function() {
   console.log('End');
 });
 
@@ -442,12 +501,12 @@ slideout.on('translate', function(translated) {
   fixed.style.transform = 'translateX(' + translated + 'px)';
 });
 
-slideout.on('beforeopen', function () {
+slideout.on('before:open', function () {
   fixed.style.transition = 'transform 300ms ease';
   fixed.style.transform = 'translateX(256px)';
 });
 
-slideout.on('beforeclose', function () {
+slideout.on('before:close', function () {
   fixed.style.transition = 'transform 300ms ease';
   fixed.style.transform = 'translateX(0px)';
 });
@@ -484,48 +543,6 @@ You can use the attribute `data-slideout-ignore` to disable dragging on some ele
   </div>
 </main>
 ```
-
-### How to add an overlay to close the menu on click.
-You can do that using the powerful `slideout` API and a little extra CSS:
-
-```css
-.panel:before {
-  content: '';
-  display: block;
-  background-color: rgba(0,0,0,0);
-  transition: background-color 0.5s ease-in-out;
-}
-
-.panel-open:before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: rgba(0,0,0,.5);
-  z-index: 99;
-}
-```
-
-```js
-function close(eve) {
-  eve.preventDefault();
-  slideout.close();
-}
-
-slideout
-  .on('beforeopen', function() {
-    this.panel.classList.add('panel-open');
-  })
-  .on('open', function() {
-    this.panel.addEventListener('click', close);
-  })
-  .on('beforeclose', function() {
-    this.panel.classList.remove('panel-open');
-    this.panel.removeEventListener('click', close);
-  });
-```
-
-Demo: http://codepen.io/pazguille/pen/BQYRYK
 
 ## With :heart: by
 - Guille Paz (Front-end developer | Web standards lover)

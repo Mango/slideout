@@ -2,8 +2,9 @@ if (exports) {
   var fs = require('fs');
   var jsdom = require('jsdom').jsdom;
   var html = fs.readFileSync('./test/index.html', 'utf-8');
-  var document = jsdom(html);
+  document = jsdom(html);
   window = document.defaultView;
+  navigator = window.navigator;
   var Slideout = require('../');
   var assert = require('better-assert');
 }
@@ -21,13 +22,13 @@ var slideout = new Slideout({
 });
 
 slideout
-  .on('beforeopen', function() {
+  .on('before:open', function() {
     beforeopenEvent = true;
   })
   .on('open', function() {
     openEvent = true;
   })
-  .on('beforeclose', function() {
+  .on('before:close', function() {
     beforecloseEvent = true;
   })
   .on('close', function() {
@@ -56,7 +57,8 @@ describe('Slideout', function () {
       'isOpen',
       '_initTouchEvents',
       '_translateXTo',
-      '_setTransition',
+      '_addTransition',
+      '_removeTransition',
       'on',
       'once',
       'off',
@@ -107,6 +109,7 @@ describe('Slideout', function () {
     assert(slideout.panel.className.search('slideout-panel-left') !== -1);
     assert(slideout.menu.className.search('slideout-menu') !== -1);
     assert(slideout.menu.className.search('slideout-menu-left') !== -1);
+    assert(slideout.itemToMove.className.search('slideout-move') !== -1);
   });
 
   describe('.open()', function () {
@@ -116,9 +119,9 @@ describe('Slideout', function () {
       assert(doc.documentElement.className.search('slideout-open') !== -1);
     });
 
-    it('should translateX the panel to the given padding.', function () {
-      assert(slideout.panel.style.transform === 'translateX(256px)');
-      assert(slideout.panel.style.transition.search(/transform 300ms ease/) !== -1);
+    it('should translateX the itemToMove to the given padding.', function () {
+      assert(slideout.itemToMove.style.transform === 'translateX(256px)');
+      assert(slideout.itemToMove.style.transition.search(/transform 300ms ease/) !== -1);
     });
 
     it('should set _opened to true.', function () {
@@ -156,8 +159,8 @@ describe('Slideout', function () {
     });
 
     it('should translateX the panel to 0.', function () {
-      assert(slideout.panel.style.transform === '');
-      assert(slideout.panel.style.transition === '');
+      assert(slideout.itemToMove.style.transform === null);
+      assert(slideout.itemToMove.style.transition === null);
     });
 
     it('should set _opened to false.', function () {

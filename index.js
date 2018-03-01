@@ -3,7 +3,6 @@
 /**
  * Module dependencies
  */
-var decouple = require('decouple');
 var Emitter = require('jvent');
 
 /**
@@ -12,6 +11,7 @@ var Emitter = require('jvent');
 var SLIDEOUT_PANEL = 'slideout-panel';
 var SLIDEOUT_MENU = 'slideout-menu';
 var SLIDEOUT_OPEN = 'slideout-open';
+var SLIDEOUT_MOVE = 'slideout-move';
 
 /**
  * CSS prefixed properties
@@ -77,7 +77,9 @@ function Slideout(options) {
   this.panel = options.panel;
   this.menu = options.menu;
   this.itemToMove = options.itemToMove === 'panel' ? this.panel : this.menu;
-  this.dimmer = document.querySelector('.slideout-dimmer');
+  this.dimmer = document.createElement('div');
+  this.dimmer.className = 'slideout-dimmer';
+  this.panel.insertBefore(this.dimmer, this.panel.firstChild);
 
   // Sets options
   this._touch = options.touch === undefined ? true : options.touch && true;
@@ -103,6 +105,11 @@ function Slideout(options) {
   }
   if (!this.menu.classList.contains(SLIDEOUT_MENU + '-' + this._side)) {
     this.menu.classList.add(SLIDEOUT_MENU + '-' + this._side);
+  }
+  if (options.itemToMove === 'panel') {
+    this.panel.classList.add(SLIDEOUT_MOVE);
+  } else {
+    this.menu.classList.add(SLIDEOUT_MOVE);
   }
 
   var self = this;
@@ -130,7 +137,7 @@ inherits(Slideout, Emitter);
  */
 Slideout.prototype.open = function() {
   var self = this;
-  this.emit('beforeopen');
+  this.emit('before:open');
   if (!html.classList.contains(SLIDEOUT_OPEN)) {
     html.classList.add(SLIDEOUT_OPEN);
   }
@@ -153,7 +160,7 @@ Slideout.prototype.close = function() {
   if (!this.isOpen() && !this._opening) {
     return this;
   }
-  this.emit('beforeclose');
+  this.emit('before:close');
   this._addTransition();
   this._translateXTo(0);
   this.panel.removeEventListener('click', this._closeByDimmer);
@@ -186,7 +193,7 @@ Slideout.prototype.isOpen = function() {
  */
 Slideout.prototype._translateXTo = function(translateX) {
   this._currentOffsetX = translateX;
-  this.itemToMove.style[WEBKIT_TRANSFORM] = this.itemToMove.transform = 'translateX(' + translateX + 'px)';
+  this.itemToMove.style[WEBKIT_TRANSFORM] = this.itemToMove.style.transform = 'translateX(' + translateX + 'px)';
   this.dimmer.style.opacity = (Math.abs(translateX) / this.menu.offsetWidth).toFixed(4); // smooth
   return this;
 };
@@ -220,7 +227,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Decouple scroll event
    */
-  this._onScrollFn = decouple(document, 'scroll', function() {
+   this._onScrollFn = function _onScrollFn() {
     if (!self._moved) {
       clearTimeout(scrollTimeout);
       scrolling = true;
@@ -228,18 +235,8 @@ Slideout.prototype._initTouchEvents = function() {
         scrolling = false;
       }, 250);
     }
-  });
-
-  /**
-   * Prevents touchmove event if slideout is moving
-   */
-  this._preventMove = function(eve) {
-    if (self._moved) {
-      eve.preventDefault();
-    }
   };
-
-  document.addEventListener(touch.move, this._preventMove);
+  document.addEventListener('scroll', this._onScrollFn, { passive: true });
 
   /**
    * Resets values on touchstart
@@ -279,7 +276,7 @@ Slideout.prototype._initTouchEvents = function() {
    */
   this._onTouchEndFn = function() {
     if (self._moved) {
-      self.emit('translateend');
+      self.emit('translate:end');
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;
@@ -320,7 +317,7 @@ Slideout.prototype._initTouchEvents = function() {
       }
 
       if (!self._moved) {
-        self.emit('translatestart');
+        self.emit('translate:start');
       }
 
       if (oriented_dif_x <= 0) {
@@ -338,8 +335,8 @@ Slideout.prototype._initTouchEvents = function() {
 
   };
 
-  this.panel.addEventListener(touch.move, this._onTouchMoveFn);
-  this.menu.addEventListener(touch.move, this._onTouchMoveFn);
+  this.panel.addEventListener(touch.move, this._onTouchMoveFn, { passive: true });
+  this.menu.addEventListener(touch.move, this._onTouchMoveFn, { passive: true });
 
   return this;
 };
@@ -368,7 +365,6 @@ Slideout.prototype.destroy = function() {
   this.close();
 
   // Remove event listeners
-  document.removeEventListener(touch.move, this._preventMove);
   this.panel.removeEventListener(touch.start, this._resetTouchFn);
   this.panel.removeEventListener('touchcancel', this._onTouchCancelFn);
   this.panel.removeEventListener(touch.end, this._onTouchEndFn);
