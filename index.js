@@ -3,6 +3,7 @@
 /**
  * Module dependencies
  */
+var decouple = require('decouple');
 var Emitter = require('jvent');
 
 /**
@@ -227,7 +228,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Decouple scroll event
    */
-   this._onScrollFn = function _onScrollFn() {
+   this._onScrollFn = decouple(document, 'scroll', function() {
     if (!self._moved) {
       clearTimeout(scrollTimeout);
       scrolling = true;
@@ -235,8 +236,17 @@ Slideout.prototype._initTouchEvents = function() {
         scrolling = false;
       }, 250);
     }
+  });
+
+ /**
+  * Prevents touchmove event if slideout is moving
+  */
+  this._preventMove = function(eve) {
+    if (self._moved) {
+      eve.preventDefault();
+    }
   };
-  document.addEventListener('scroll', this._onScrollFn, { passive: true });
+  document.addEventListener(touch.move, this._preventMove);
 
   /**
    * Resets values on touchstart
@@ -365,11 +375,12 @@ Slideout.prototype.destroy = function() {
   this.close();
 
   // Remove event listeners
+  document.removeEventListener('scroll', this._onScrollFn);
+  document.removeEventListener(touch.move, this._preventMove);
   this.panel.removeEventListener(touch.start, this._resetTouchFn);
   this.panel.removeEventListener('touchcancel', this._onTouchCancelFn);
   this.panel.removeEventListener(touch.end, this._onTouchEndFn);
   this.panel.removeEventListener(touch.move, this._onTouchMoveFn);
-  document.removeEventListener('scroll', this._onScrollFn);
 
   // Remove methods
   this.open = this.close = function() {};
