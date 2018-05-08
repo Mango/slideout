@@ -207,7 +207,7 @@ Slideout.prototype._initTouchEvents = function() {
     }
   };
 
-  doc.addEventListener(touch.move, this._preventMove);
+  doc.addEventListener(touch.move, this._preventMove, {passive: false});
 
   /**
    * Resets values on touchstart
@@ -298,7 +298,7 @@ Slideout.prototype._initTouchEvents = function() {
 
   };
 
-  this.panel.addEventListener(touch.move, this._onTouchMoveFn);
+  this.panel.addEventListener(touch.move, this._onTouchMoveFn, {passive: false});
 
   return this;
 };
