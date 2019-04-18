@@ -3,7 +3,6 @@
 /**
  * Module dependencies
  */
-var decouple = require('decouple');
 var Emitter = require('jvent');
 
 /**
@@ -23,8 +22,6 @@ var WEBKIT_TRANSITION = '-webkit-transition';
 /**
  * Privates
  */
-var scrollTimeout;
-
 var scrolling = false;
 
 var html = document.documentElement;
@@ -36,6 +33,9 @@ var touch = {
   'move': msPointerSupported ? 'MSPointerMove' : 'touchmove',
   'end': msPointerSupported ? 'MSPointerUp' : 'touchend'
 };
+
+var touchPassiveListener = touch.start === 'touchstart' ? { passive: true, capture: false } : false;
+var movePassiveListener = touch.start === 'touchstart' ? { passive: false, capture: false } : false;
 
 function extend(destination, from) {
   for (var prop in from) {
@@ -68,6 +68,7 @@ function Slideout(options) {
 
   // Sets default values
   this._startOffsetX = 0;
+  this._startOffsetY = 0;
   this._currentOffsetX = 0;
   this._opening = false;
   this._moved = false;
@@ -225,19 +226,6 @@ Slideout.prototype._removeTransition = function() {
 Slideout.prototype._initTouchEvents = function() {
   var self = this;
 
-  /**
-   * Decouple scroll event
-   */
-   this._onScrollFn = decouple(document, 'scroll', function() {
-    if (!self._moved) {
-      clearTimeout(scrollTimeout);
-      scrolling = true;
-      scrollTimeout = setTimeout(function() {
-        scrolling = false;
-      }, 250);
-    }
-  });
-
  /**
   * Prevents touchmove event if slideout is moving
   */
@@ -246,7 +234,7 @@ Slideout.prototype._initTouchEvents = function() {
       eve.preventDefault();
     }
   };
-  document.addEventListener(touch.move, this._preventMove);
+  document.addEventListener(touch.move, this._preventMove, movePassiveListener);
 
   /**
    * Resets values on touchstart
@@ -255,10 +243,10 @@ Slideout.prototype._initTouchEvents = function() {
     if (typeof eve.touches === 'undefined') {
       return;
     }
-
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
+    self._startOffsetY = eve.touches[0].pageY;
 
     var offset = self._startOffsetX;
     if (self._side === 'right') {
@@ -267,8 +255,8 @@ Slideout.prototype._initTouchEvents = function() {
     self._preventOpen = !self._touch || (this === self.panel && offset > self._grabWidth);
   };
 
-  this.panel.addEventListener(touch.start, this._resetTouchFn);
-  this.menu.addEventListener(touch.start, this._resetTouchFn);
+  this.panel.addEventListener(touch.start, this._resetTouchFn, touchPassiveListener);
+  this.menu.addEventListener(touch.start, this._resetTouchFn, touchPassiveListener);
 
   /**
    * Resets values on touchcancel
@@ -290,10 +278,11 @@ Slideout.prototype._initTouchEvents = function() {
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
     }
     self._moved = false;
+    scrolling = false;
   };
 
-  this.panel.addEventListener(touch.end, this._onTouchEndFn);
-  this.menu.addEventListener(touch.end, this._onTouchEndFn);
+  this.panel.addEventListener(touch.end, this._onTouchEndFn, touchPassiveListener);
+  this.menu.addEventListener(touch.end, this._onTouchEndFn, touchPassiveListener);
 
   /**
    * Translates panel on touchmove
@@ -308,9 +297,22 @@ Slideout.prototype._initTouchEvents = function() {
       return;
     }
 
-    var dif_x = eve.touches[0].clientX - self._startOffsetX;
-    var translateX = self._currentOffsetX = dif_x;
+    var dif_x = eve.touches[0].pageX - self._startOffsetX;
+    var dif_y = eve.touches[0].pageY - self._startOffsetY;
+    var touchAngle = (Math.atan2(Math.abs(dif_y), Math.abs(dif_x)) * 180) / Math.PI;
+    var isScrolling = touchAngle > 45;
 
+    if (isScrolling && !self._opening) {
+      scrolling = true;
+      return;
+    }
+
+    if (eve.cancelable) {
+      eve.preventDefault();
+    }
+    eve.stopPropagation();
+
+    var translateX = self._currentOffsetX = dif_x;
 
     if (Math.abs(translateX) > self._padding) {
       return;
@@ -345,8 +347,8 @@ Slideout.prototype._initTouchEvents = function() {
 
   };
 
-  this.panel.addEventListener(touch.move, this._onTouchMoveFn, { passive: true });
-  this.menu.addEventListener(touch.move, this._onTouchMoveFn, { passive: true });
+  this.panel.addEventListener(touch.move, this._onTouchMoveFn, movePassiveListener);
+  this.menu.addEventListener(touch.move, this._onTouchMoveFn, movePassiveListener);
 
   return this;
 };
@@ -375,12 +377,11 @@ Slideout.prototype.destroy = function() {
   this.close();
 
   // Remove event listeners
-  document.removeEventListener('scroll', this._onScrollFn);
-  document.removeEventListener(touch.move, this._preventMove);
-  this.panel.removeEventListener(touch.start, this._resetTouchFn);
+  document.removeEventListener(touch.move, this._preventMove, movePassiveListener);
+  this.panel.removeEventListener(touch.start, this._resetTouchFn, touchPassiveListener);
   this.panel.removeEventListener('touchcancel', this._onTouchCancelFn);
-  this.panel.removeEventListener(touch.end, this._onTouchEndFn);
-  this.panel.removeEventListener(touch.move, this._onTouchMoveFn);
+  this.panel.removeEventListener(touch.end, this._onTouchEndFn, touchPassiveListener);
+  this.panel.removeEventListener(touch.move, this._onTouchMoveFn, movePassiveListener);
 
   // Remove methods
   this.open = this.close = function() {};

@@ -6,12 +6,12 @@
   "version": "2.0.0",
   "scripts": {
     "build": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
     "test": "npm run build && istanbul cover _mocha",
     "dist": "webpack --mode production && uglifyjs ./dist/slideout.js -m -o ./dist/slideout.min.js",
     "hint": "jshint index.js"
   },
   "dependencies": {
-    "decouple": "^1.0.1",
     "jvent": "1.0.2"
   },
   "devDependencies": {
