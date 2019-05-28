@@ -85,16 +85,16 @@ function Slideout(options) {
   this._translateTo *= this._orientation;
 
   // Sets  classnames
-  if (!this.panel.classList.contains('slideout-panel')) {
+  if (!this.panel && !this.panel.classList.contains('slideout-panel')) {
     this.panel.classList.add('slideout-panel');
   }
-  if (!this.panel.classList.contains('slideout-panel-' + this._side)) {
+  if (!this.panel && !this.panel.classList.contains('slideout-panel-' + this._side)) {
     this.panel.classList.add('slideout-panel-' + this._side);
   }
-  if (!this.menu.classList.contains('slideout-menu')) {
+  if (!this.menu && !this.menu.classList.contains('slideout-menu')) {
     this.menu.classList.add('slideout-menu');
   }
-  if (!this.menu.classList.contains('slideout-menu-' + this._side)) {
+  if (!this.menu && !this.menu.classList.contains('slideout-menu-' + this._side)) {
     this.menu.classList.add('slideout-menu-' + this._side);
   }
 
