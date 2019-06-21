@@ -219,6 +219,7 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
     self._opening = false;
     self._startOffsetX = eve.touches[0].pageX;
+    self._startOffsetY = eve.touches[0].pageY;
     self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
   };
 
@@ -261,7 +262,13 @@ Slideout.prototype._initTouchEvents = function() {
     }
 
     var dif_x = eve.touches[0].clientX - self._startOffsetX;
+    var dif_y = eve.touches[0].clientY - self._startOffsetY;
     var translateX = self._currentOffsetX = dif_x;
+    var diff = 25;
+      
+    if((dif_y < (diff * -1) || dif_y > diff) && self._moved === false) {
+      return;
+    }
 
     if (Math.abs(translateX) > self._padding) {
       return;
