@@ -8,12 +8,13 @@
  */
 const decouple = require('decouple');
 const Emitter = require('emitter');
+const detectIt = require('detect-it');
 require('default-passive-events');
 /**
  * Privates
  */
-let scrollTimeout;
-let scrolling = false;
+var scrollTimeout;
+var scrolling = false;
 const doc = window.document;
 const html = doc.documentElement;
 const msPointerSupported = window.navigator.msPointerEnabled;
@@ -25,7 +26,7 @@ const touch = {
 const prefix = (function prefix () {
   const regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
   const styleDeclaration = doc.getElementsByTagName('script')[0].style;
-  for (const prop in styleDeclaration) {
+  for (var prop in styleDeclaration) {
     if (regex.test(prop)) {
       return '-' + prop.match(regex)[0].toLowerCase() + '-';
     }
@@ -43,7 +44,7 @@ const prefix = (function prefix () {
 }());
 
 function extend (destination, from) {
-  for (const prop in from) {
+  for (var prop in from) {
     if (from[prop]) {
       destination[prop] = from[prop];
     }
@@ -77,16 +78,8 @@ function hasIgnoredElements (el) {
  * and https: //developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
  * for more explanations
  */
-let supportsPassive = false;
-try {
-  const opts = Object.defineProperty({}, 'passive', {
-    get () {
-      supportsPassive = true;
-    }
-  });
-  window.addEventListener('testPassive', null, opts);
-  window.removeEventListener('testPassive', null, opts);
-} catch (e) { }
+var supportsPassive = detectIt.supportsPassive;
+
 /**
  * Slideout constructor
  */
@@ -293,7 +286,7 @@ Slideout.prototype._initTouchEvents = function () {
     }
 
     const dif_x = eve.touches[0].clientX - self._startOffsetX;
-    let translateX = self._currentOffsetX = dif_x;
+    const translateX = self._currentOffsetX = dif_x;
 
     if (Math.abs(translateX) > self._padding) {
       return;
