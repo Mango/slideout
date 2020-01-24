@@ -1,28 +1,31 @@
+/* eslint-disable no-mixed-operators */
+/* eslint-disable camelcase */
+/* eslint-disable semi */
 'use strict';
 
 /**
  * Module dependencies
  */
-var decouple = require('decouple');
-var Emitter = require('emitter');
-
+const decouple = require('decouple');
+const Emitter = require('emitter');
+require('default-passive-events');
 /**
  * Privates
  */
-var scrollTimeout;
-var scrolling = false;
-var doc = window.document;
-var html = doc.documentElement;
-var msPointerSupported = window.navigator.msPointerEnabled;
-var touch = {
+let scrollTimeout;
+let scrolling = false;
+const doc = window.document;
+const html = doc.documentElement;
+const msPointerSupported = window.navigator.msPointerEnabled;
+const touch = {
   'start': msPointerSupported ? 'MSPointerDown' : 'touchstart',
   'move': msPointerSupported ? 'MSPointerMove' : 'touchmove',
   'end': msPointerSupported ? 'MSPointerUp' : 'touchend'
 };
-var prefix = (function prefix() {
-  var regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
-  var styleDeclaration = doc.getElementsByTagName('script')[0].style;
-  for (var prop in styleDeclaration) {
+const prefix = (function prefix () {
+  const regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
+  const styleDeclaration = doc.getElementsByTagName('script')[0].style;
+  for (const prop in styleDeclaration) {
     if (regex.test(prop)) {
       return '-' + prop.match(regex)[0].toLowerCase() + '-';
     }
@@ -30,22 +33,29 @@ var prefix = (function prefix() {
   // Nothing found so far? Webkit does not enumerate over the CSS properties of the style object.
   // However (prop in style) returns the correct value, so we'll have to test for
   // the precence of a specific property
-  if ('WebkitOpacity' in styleDeclaration) { return '-webkit-'; }
-  if ('KhtmlOpacity' in styleDeclaration) { return '-khtml-'; }
+  if ('WebkitOpacity' in styleDeclaration) {
+    return '-webkit-';
+  }
+  if ('KhtmlOpacity' in styleDeclaration) {
+    return '-khtml-';
+  }
   return '';
 }());
-function extend(destination, from) {
-  for (var prop in from) {
+
+function extend (destination, from) {
+  for (const prop in from) {
     if (from[prop]) {
       destination[prop] = from[prop];
     }
   }
   return destination;
 }
-function inherits(child, uber) {
+
+function inherits (child, uber) {
   child.prototype = extend(child.prototype || {}, uber.prototype);
 }
-function hasIgnoredElements(el) {
+
+function hasIgnoredElements (el) {
   while (el.parentNode) {
     if (el.getAttribute('data-slideout-ignore') !== null) {
       return el;
@@ -56,9 +66,31 @@ function hasIgnoredElements(el) {
 }
 
 /**
+ * Passive event listeners
+ * Passive event listeners are a new feature in the DOM spec that enable developers to opt - in
+ * to better scroll performance by eliminating the need for scrolling to block on touch and
+ * wheel event listeners.Developers can annotate touch and wheel listeners with { passive: true }
+ * to indicate that they will never invoke preventDefault.This feature shipped in Chrome 51,
+ * Firefox 49 and landed in WebKit.
+ *
+ * Check out https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md
+ * and https: //developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+ * for more explanations
+ */
+let supportsPassive = false;
+try {
+  const opts = Object.defineProperty({}, 'passive', {
+    get () {
+      supportsPassive = true;
+    }
+  });
+  window.addEventListener('testPassive', null, opts);
+  window.removeEventListener('testPassive', null, opts);
+} catch (e) { }
+/**
  * Slideout constructor
  */
-function Slideout(options) {
+function Slideout (options) {
   options = options || {};
 
   // Sets default values
@@ -68,20 +100,12 @@ function Slideout(options) {
   this._moved = false;
   this._opened = false;
   this._preventOpen = false;
+  this._touch = options.touch === undefined ? true : options.touch && true;
+  this._side = options.side || 'left';
 
   // Sets panel
   this.panel = options.panel;
   this.menu = options.menu;
-
-  // Sets options
-  this._touch = options.touch === undefined ? true : options.touch && true;
-  this._side = options.side || 'left';
-  this._easing = options.fx || options.easing || 'ease';
-  this._duration = parseInt(options.duration, 10) || 300;
-  this._tolerance = parseInt(options.tolerance, 10) || 70;
-  this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
-  this._orientation = this._side === 'right' ? -1 : 1;
-  this._translateTo *= this._orientation;
 
   // Sets  classnames
   if (!this.panel.classList.contains('slideout-panel')) {
@@ -97,6 +121,14 @@ function Slideout(options) {
     this.menu.classList.add('slideout-menu-' + this._side);
   }
 
+  // Sets options
+  this._fx = options.fx || 'ease';
+  this._duration = parseInt(options.duration, 10) || 300;
+  this._tolerance = parseInt(options.tolerance, 10) || 70;
+  this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
+  this._orientation = this._side === 'right' ? -1 : 1;
+  this._translateTo *= this._orientation;
+
   // Init touch events
   if (this._touch) {
     this._initTouchEvents();
@@ -111,8 +143,8 @@ inherits(Slideout, Emitter);
 /**
  * Opens the slideout menu.
  */
-Slideout.prototype.open = function() {
-  var self = this;
+Slideout.prototype.open = function () {
+  const self = this;
   this.emit('beforeopen');
   if (!html.classList.contains('slideout-open')) {
     html.classList.add('slideout-open');
@@ -120,7 +152,7 @@ Slideout.prototype.open = function() {
   this._setTransition();
   this._translateXTo(this._translateTo);
   this._opened = true;
-  setTimeout(function() {
+  setTimeout(function () {
     self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
     self.emit('open');
   }, this._duration + 50);
@@ -130,8 +162,8 @@ Slideout.prototype.open = function() {
 /**
  * Closes slideout menu.
  */
-Slideout.prototype.close = function() {
-  var self = this;
+Slideout.prototype.close = function () {
+  const self = this;
   if (!this.isOpen() && !this._opening) {
     return this;
   }
@@ -139,7 +171,7 @@ Slideout.prototype.close = function() {
   this._setTransition();
   this._translateXTo(0);
   this._opened = false;
-  setTimeout(function() {
+  setTimeout(function () {
     html.classList.remove('slideout-open');
     self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
     self.emit('close');
@@ -150,21 +182,21 @@ Slideout.prototype.close = function() {
 /**
  * Toggles (open/close) slideout menu.
  */
-Slideout.prototype.toggle = function() {
+Slideout.prototype.toggle = function () {
   return this.isOpen() ? this.close() : this.open();
 };
 
 /**
  * Returns true if the slideout is currently open, and false if it is closed.
  */
-Slideout.prototype.isOpen = function() {
+Slideout.prototype.isOpen = function () {
   return this._opened;
 };
 
 /**
  * Translates panel and updates currentOffset with a given X point
  */
-Slideout.prototype._translateXTo = function(translateX) {
+Slideout.prototype._translateXTo = function (translateX) {
   this._currentOffsetX = translateX;
   this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
   return this;
@@ -173,25 +205,25 @@ Slideout.prototype._translateXTo = function(translateX) {
 /**
  * Set transition properties
  */
-Slideout.prototype._setTransition = function() {
-  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._easing;
+Slideout.prototype._setTransition = function () {
+  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
   return this;
 };
 
 /**
  * Initializes touch event
  */
-Slideout.prototype._initTouchEvents = function() {
-  var self = this;
+Slideout.prototype._initTouchEvents = function () {
+  const self = this;
 
   /**
    * Decouple scroll event
    */
-  this._onScrollFn = decouple(doc, 'scroll', function() {
+  this._onScrollFn = decouple(doc, 'scroll', function () {
     if (!self._moved) {
       clearTimeout(scrollTimeout);
       scrolling = true;
-      scrollTimeout = setTimeout(function() {
+      scrollTimeout = setTimeout(function () {
         scrolling = false;
       }, 250);
     }
@@ -200,9 +232,9 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Prevents touchmove event if slideout is moving
    */
-  this._preventMove = function(eve) {
+  this._preventMove = function (eve) {
     if (self._moved) {
-      eve.preventDefault();
+      if (supportsPassive) { eve.preventDefault(); }
     }
   };
 
@@ -211,7 +243,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Resets values on touchstart
    */
-  this._resetTouchFn = function(eve) {
+  this._resetTouchFn = function (eve) {
     if (typeof eve.touches === 'undefined') {
       return;
     }
@@ -227,7 +259,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Resets values on touchcancel
    */
-  this._onTouchCancelFn = function() {
+  this._onTouchCancelFn = function () {
     self._moved = false;
     self._opening = false;
   };
@@ -237,7 +269,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Toggles slideout on touchend
    */
-  this._onTouchEndFn = function() {
+  this._onTouchEndFn = function () {
     if (self._moved) {
       self.emit('translateend');
       (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
@@ -250,7 +282,7 @@ Slideout.prototype._initTouchEvents = function() {
   /**
    * Translates panel on touchmove
    */
-  this._onTouchMoveFn = function(eve) {
+  this._onTouchMoveFn = function (eve) {
     if (
       scrolling ||
       self._preventOpen ||
@@ -260,18 +292,17 @@ Slideout.prototype._initTouchEvents = function() {
       return;
     }
 
-    var dif_x = eve.touches[0].clientX - self._startOffsetX;
-    var translateX = self._currentOffsetX = dif_x;
+    const dif_x = eve.touches[0].clientX - self._startOffsetX;
+    let translateX = self._currentOffsetX = dif_x;
 
     if (Math.abs(translateX) > self._padding) {
       return;
     }
 
     if (Math.abs(dif_x) > 20) {
-
       self._opening = true;
 
-      var oriented_dif_x = dif_x * self._orientation;
+      const oriented_dif_x = dif_x * self._orientation;
 
       if (self._opened && oriented_dif_x > 0 || !self._opened && oriented_dif_x < 0) {
         return;
@@ -294,7 +325,6 @@ Slideout.prototype._initTouchEvents = function() {
       self.emit('translate', translateX);
       self._moved = true;
     }
-
   };
 
   this.panel.addEventListener(touch.move, this._onTouchMoveFn);
@@ -305,7 +335,7 @@ Slideout.prototype._initTouchEvents = function() {
 /**
  * Enable opening the slideout via touch events.
  */
-Slideout.prototype.enableTouch = function() {
+Slideout.prototype.enableTouch = function () {
   this._touch = true;
   return this;
 };
@@ -313,7 +343,7 @@ Slideout.prototype.enableTouch = function() {
 /**
  * Disable opening the slideout via touch events.
  */
-Slideout.prototype.disableTouch = function() {
+Slideout.prototype.disableTouch = function () {
   this._touch = false;
   return this;
 };
@@ -321,7 +351,7 @@ Slideout.prototype.disableTouch = function() {
 /**
  * Destroy an instance of slideout.
  */
-Slideout.prototype.destroy = function() {
+Slideout.prototype.destroy = function () {
   // Close before clean
   this.close();
 
@@ -334,7 +364,7 @@ Slideout.prototype.destroy = function() {
   doc.removeEventListener('scroll', this._onScrollFn);
 
   // Remove methods
-  this.open = this.close = function() {};
+  this.open = this.close = function () { };
 
   // Return the instance so it can be easily dereferenced
   return this;

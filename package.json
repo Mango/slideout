@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "decouple": "0.0.2",
+    "default-passive-events": "^1.0.10",
     "emitter": "git+https://github.com/Mango/emitter.git#0.0.7"
   },
   "devDependencies": {
