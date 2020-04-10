@@ -206,7 +206,7 @@ Slideout.prototype._initTouchEvents = function() {
     }
   };
 
-  doc.addEventListener(touch.move, this._preventMove);
+  doc.addEventListener(touch.move, this._preventMove, {passive: true});
 
   /**
    * Resets values on touchstart
@@ -222,7 +222,7 @@ Slideout.prototype._initTouchEvents = function() {
     self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
   };
 
-  this.panel.addEventListener(touch.start, this._resetTouchFn);
+  this.panel.addEventListener(touch.start, this._resetTouchFn, {passive: true});
 
   /**
    * Resets values on touchcancel
@@ -232,7 +232,7 @@ Slideout.prototype._initTouchEvents = function() {
     self._opening = false;
   };
 
-  this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
+  this.panel.addEventListener('touchcancel', this._onTouchCancelFn, {passive: true});
 
   /**
    * Toggles slideout on touchend
@@ -245,7 +245,7 @@ Slideout.prototype._initTouchEvents = function() {
     self._moved = false;
   };
 
-  this.panel.addEventListener(touch.end, this._onTouchEndFn);
+  this.panel.addEventListener(touch.end, this._onTouchEndFn, {passive: true});
 
   /**
    * Translates panel on touchmove
@@ -297,7 +297,7 @@ Slideout.prototype._initTouchEvents = function() {
 
   };
 
-  this.panel.addEventListener(touch.move, this._onTouchMoveFn);
+  this.panel.addEventListener(touch.move, this._onTouchMoveFn, {passive: true});
 
   return this;
 };
