@@ -76,7 +76,7 @@ function Slideout(options) {
   // Sets options
   this._touch = options.touch === undefined ? true : options.touch && true;
   this._side = options.side || 'left';
-  this._easing = options.fx || options.easing || 'ease';
+  this._easing = options.fx || options.easing || 'ease';
   this._duration = parseInt(options.duration, 10) || 300;
   this._tolerance = parseInt(options.tolerance, 10) || 70;
   this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
