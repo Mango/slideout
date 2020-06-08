@@ -9,7 +9,7 @@ body {
   bottom: 0;
   width: 256px;
   min-height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   z-index: 0;
   display: none;
